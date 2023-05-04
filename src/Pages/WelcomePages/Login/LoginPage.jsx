@@ -3,7 +3,7 @@ export default function LoginPage() {
   return (
    <div>
       <h1>
-        je suis là page de login
+        Je travaille ici aujourd'hui
       </h1>
     </div>
   )
