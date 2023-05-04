@@ -13,7 +13,7 @@ export default function HomePage() {
     </Helmet>
    <Container>
       <h1>
-        FREEDASH
+        FREEDASH CROLLOT
       </h1>
 
 
