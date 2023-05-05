@@ -4,6 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box } from '@mui/material';
 
+import illustration from '../../../assets/illustrations/404_illustration.png';
 
 // ----------------------------------------------------------------------
 
@@ -32,9 +33,9 @@ export default function Page404() {
 
           <Box
             component="img"
-            src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/c2bc2e125473161.611a5843596f7.png"
+            src={illustration}
             alt="404 Illustration"
-            sx={{ mx: 'auto',  mb: '2rem', maxHeight: '30rem', borderRadius: '10px'}}
+            sx={{ mx: 'auto',  mb: '2rem', maxHeight: '30rem' }} 
           />
 
           <Typography variant="h6" sx={{ color: 'text.secondary', mb: '2rem'}}>
