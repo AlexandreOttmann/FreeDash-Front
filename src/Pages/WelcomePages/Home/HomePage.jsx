@@ -3,21 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import { Grid, Card, Container, Typography, Button } from '@mui/material';
 import Iconify from '../../../components/iconify/Iconify';
 
+// Images
+import preview from '../../../assets/preview.jpg';
+
 import { styled } from '@mui/material/styles';
-
-// ----------------------------------------------------------------------
-
-const StyledCard = styled('div')(({ theme }) => ({
-  margin: 'auto',
-  display: 'flex',
-  borderRadius: '10px',
-  alignItems: 'center',
-  width: theme.spacing(50),
-  height: theme.spacing(8),
-  justifyContent: 'center',
-  marginBottom: theme.spacing(3),
-  backgroundColor: 'red'
-}));
 
 // ----------------------------------------------------------------------
 
@@ -25,98 +14,120 @@ export default function HomePage() {
 
   return (
     <>
-    <Helmet>
-      <title>
-        HomePage - FreeDash
-      </title>
-    </Helmet>
-   <Container>
-    
-      <h1>
-        FreeDash
-      </h1>
+      <Helmet>
+        <title>
+          HomePage - FreeDash
+        </title>
+      </Helmet>
 
-      <Typography 
-        variant="body1"
+      <Container
+        sx={{
+          marginX: {xs: "0.05rem", md: "auto"}
+        }}
       >
-        Soyez en total contrôle, en permanence.<br/>
-        Gérez vos missions à la perfection avec FreeDash.
-      </Typography>
 
-      <Link 
-        to="/register"
-      >
+        <Link to="/">
+          <Typography variant="h1">
+            FreeDash
+          </Typography>
+        </Link>
+
+        <Typography
+          variant="h4"
+          sx={{
+            marginTop: "3rem",
+            marginBottom: "5rem"
+          }}
+          >
+          Vous êtes freelance et vous cherchez à optimiser votre activité ?<br/>
+          Découvrez comment FreeDash vous aide à gérer vos projets, vos clients et votre facturation en toute simplicité.
+        </Typography>
+
+        <Link 
+          to="/register"
+        >
           <Button
             variant="contained"
+            sx={{
+              marginBottom: "5rem"
+            }}
             startIcon={<Iconify icon="bi:lightning-charge-fill" />}
-            >
-            Get started
+          >
+            Rejoignez-nous
           </Button>
-      </Link>
+        </Link>
 
-        
-      <Container>
-        <Grid container spacing={3}>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <StyledCard>
-                <Typography variant="button">
-                  Photo
-                </Typography>
-            </StyledCard>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <StyledCard>
-                <Typography variant="button">
-                  Photo
-                </Typography>
-            </StyledCard>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <StyledCard>
-                <Typography variant="button">
-                  Photo
-                </Typography>
-            </StyledCard>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <StyledCard>
-                <Typography variant="button">
-                  Photo
-                </Typography>
-            </StyledCard>
-          </Grid>
           
-        </Grid>
-      </Container>
+          <Container>
+            <Grid container 
+              spacing={10}
+              sx={{
+                marginBottom: "5rem"
+              }}
+            >
 
+              <Grid item 
+                xs={12}
+                sm={6} 
+                md={6}
+                sx={{
+                  width: "100%",
+                  margin: "auto"
+                }}
+              >
+                <Card>
+                    <img src={preview} alt="Dashboard preview" />
+                </Card>
+              </Grid>
 
-      <ul>
-        <li>
-          <Link to="/register">Créer un compte</Link>
-        </li>
+              <Grid item 
+                xs={12} 
+                sm={6} 
+                md={6}
+                sx={{
+                width: "100%",
+                  margin: "auto"
+                }}  
+              >
+                <Typography variant="h5">
+                  Accédez à toutes les informations nécessaires pour une bonne gestion de votre activité, le tout centralisé et accessible sur une seule et même page.
+                </Typography>
+              </Grid>
+            </Grid>
+          </Container>
 
-        <li>
-          <Link to="/login">Se connecter</Link>
-        </li>
+          <Container>
+            <Grid container spacing={10}>
+              <Grid item 
+                xs={12} 
+                sm={6} 
+                md={6}
+                sx={{
+                width: "100%",
+                  margin: "auto"
+                }}
+              >
+              <Typography variant="h5">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis facere placeat nobis doloremque recusandae fuga ut animi tenetur at saepe.
+                </Typography>
+              </Grid>
 
-        <li>
-          <Link to="/contact">Contact</Link>
-        </li>
-
-        <li>
-          <Link to="/about">A propos</Link>
-        </li>
-
-        <li>
-          <Link to="/dashboard">dashboard</Link>
-        </li>
-      </ul>
-    </Container>
-    
+              <Grid item 
+                xs={12} 
+                sm={6} 
+                md={6}
+                sx={{
+                width: "100%",
+                  margin: "auto"
+                }}
+              >
+                <Card>
+                  <img src={preview} alt="Dashboard preview" />
+                </Card>
+              </Grid>
+            </Grid>
+          </Container>
+        </Container>
     </>
   )
 }
