@@ -6,8 +6,6 @@ import Iconify from '../../../components/iconify/Iconify';
 // Images
 import preview from '../../../assets/preview.jpg';
 
-import { styled } from '@mui/material/styles';
-
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
@@ -56,78 +54,76 @@ export default function HomePage() {
             Rejoignez-nous
           </Button>
         </Link>
-
-          
-          <Container>
-            <Grid container 
-              spacing={10}
+ 
+        <Container>
+          <Grid container 
+            spacing={10}
+            sx={{
+              marginBottom: "5rem"
+            }}
+          >
+            <Grid item 
+              xs={12}
+              sm={6} 
+              md={6}
               sx={{
-                marginBottom: "5rem"
+                width: "100%",
+                margin: "auto"
               }}
             >
-
-              <Grid item 
-                xs={12}
-                sm={6} 
-                md={6}
-                sx={{
-                  width: "100%",
-                  margin: "auto"
-                }}
-              >
-                <Card>
-                    <img src={preview} alt="Dashboard preview" />
-                </Card>
-              </Grid>
-
-              <Grid item 
-                xs={12} 
-                sm={6} 
-                md={6}
-                sx={{
-                width: "100%",
-                  margin: "auto"
-                }}  
-              >
-                <Typography variant="h5">
-                  Accédez à toutes les informations nécessaires pour une bonne gestion de votre activité, le tout centralisé et accessible sur une seule et même page.
-                </Typography>
-              </Grid>
-            </Grid>
-          </Container>
-
-          <Container>
-            <Grid container spacing={10}>
-              <Grid item 
-                xs={12} 
-                sm={6} 
-                md={6}
-                sx={{
-                width: "100%",
-                  margin: "auto"
-                }}
-              >
-              <Typography variant="h5">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis facere placeat nobis doloremque recusandae fuga ut animi tenetur at saepe.
-                </Typography>
-              </Grid>
-
-              <Grid item 
-                xs={12} 
-                sm={6} 
-                md={6}
-                sx={{
-                width: "100%",
-                  margin: "auto"
-                }}
-              >
-                <Card>
+              <Card>
                   <img src={preview} alt="Dashboard preview" />
-                </Card>
-              </Grid>
+              </Card>
             </Grid>
-          </Container>
+
+            <Grid item 
+              xs={12} 
+              sm={6} 
+              md={6}
+              sx={{
+              width: "100%",
+                margin: "auto"
+              }}  
+            >
+              <Typography variant="h5">
+                Accédez à toutes les informations nécessaires pour une bonne gestion de votre activité, le tout centralisé et accessible sur une seule et même page.
+              </Typography>
+            </Grid>
+          </Grid>
         </Container>
+
+        <Container>
+          <Grid container spacing={10}>
+            <Grid item 
+              xs={12} 
+              sm={6} 
+              md={6}
+              sx={{
+              width: "100%",
+                margin: "auto"
+              }}
+            >
+            <Typography variant="h5">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis facere placeat nobis doloremque recusandae fuga ut animi tenetur at saepe.
+              </Typography>
+            </Grid>
+
+            <Grid item 
+              xs={12} 
+              sm={6} 
+              md={6}
+              sx={{
+              width: "100%",
+                margin: "auto"
+              }}
+            >
+              <Card>
+                <img src={preview} alt="Dashboard preview" />
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
+      </Container>
     </>
   )
 }
