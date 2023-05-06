@@ -10,6 +10,7 @@ import AboutPage from './Pages/WelcomePages/About/AboutPage';
 import LoginPage from './Pages/WelcomePages/Login/LoginPage';
 import RegisterPage from './Pages/WelcomePages/Register/RegisterPage';
 import ContactPage from './Pages/WelcomePages/Contact/ContactPage';
+import Page404 from './Pages/WelcomePages/404/Page404';
 
 
 //DashBoardPages
@@ -30,14 +31,15 @@ export default function Router() {
   const routes = useRoutes([
     {
       element: <HomeLayout />,
-      path: '/',
-      children: [
-        { path: '', element: <HomePage /> },
-        { path: 'about', element: <AboutPage /> },
-        { path: 'login', element: <LoginPage /> },
-        { path: 'register', element: <RegisterPage /> },
-        { path: 'contact', element: <ContactPage /> }
-      ]
+        path: '/',
+         children: [
+          { path: '', element: <HomePage /> },
+          { path: 'about', element: <AboutPage /> },
+          { path: 'login', element: <LoginPage /> },
+          { path: 'register', element: <RegisterPage /> },
+          { path: 'contact', element: <ContactPage /> },
+          { path: '*', element: <Page404 />}
+           ]
     },
     {
       element: <DashboardLayout />,
