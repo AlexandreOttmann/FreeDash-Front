@@ -1,4 +1,4 @@
-import {  useRoutes, Navigate } from 'react-router-dom';
+import { useRoutes, Navigate } from 'react-router-dom';
 //layouts
 import HomeLayout from './layouts/home';
 import DashboardLayout from './layouts//dashboard';
@@ -10,6 +10,7 @@ import AboutPage from './Pages/WelcomePages/About/AboutPage';
 import LoginPage from './Pages/WelcomePages/Login/LoginPage';
 import RegisterPage from './Pages/WelcomePages/Register/RegisterPage';
 import ContactPage from './Pages/WelcomePages/Contact/ContactPage';
+import Page404 from './Pages/WelcomePages/404/Page404';
 
 
 //DashBoardPages
@@ -37,23 +38,24 @@ export default function Router() {
           { path: 'about', element: <AboutPage /> },
           { path: 'login', element: <LoginPage /> },
           { path: 'register', element: <RegisterPage /> },
-          { path: 'contact', element: <ContactPage /> }
+          { path: 'contact', element: <ContactPage /> },
+          { path: '*', element: <Page404 />}
            ]
     },
     {
       element: <DashboardLayout />,
-        path: '/dashboard',
-          children: [
-            // { element: <Navigate to="/dashboard" />, index: true },
-            { path: '', element: <DashboardPage /> },
-            { path: 'profil', element: <ProfilPage /> },
-            { path: 'client', element: <ClientPage /> },
-            { path: 'client/:idclient', element: <ClientDetailsPage /> },
-            { path: 'newclient', element: <NewClientPage /> },
-            { path: 'mission', element: <MissionPage /> },
-            { path: 'mission/:idmission', element: <MissionDetailsPage /> },
-            { path: 'newmission', element: <NewMissionPage /> }
-          ],
+      path: '/dashboard',
+      children: [
+        // { element: <Navigate to="/dashboard" />, index: true },
+        { path: '', element: <DashboardPage /> },
+        { path: 'profil', element: <ProfilPage /> },
+        { path: 'client', element: <ClientPage /> },
+        { path: 'client/:idclient', element: <ClientDetailsPage /> },
+        { path: 'newclient', element: <NewClientPage /> },
+        { path: 'mission', element: <MissionPage /> },
+        { path: 'mission/:idmission', element: <MissionDetailsPage /> },
+        { path: 'newmission', element: <NewMissionPage /> }
+      ],
     },
     // {
     //   path: '*',
