@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import useResponsive from '../../hooks/useReponsive';
-import {Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Navbar from '../navbar/index';
-import Footer from '../footer/index';
+
 
 
 //@mui
@@ -33,18 +33,18 @@ const Main = styled('div')(({ theme }) => ({
   },
 }));
 
-export default function HomeLayout(){
+export default function HomeLayout() {
 
+  const [user, setUser] = useState(null)
+  const handleLogin = () => setUser({ id: '1', name: 'robin' });
 
-  
   const [open, setOpen] = useState(false);
-return(
+  return (
     <StyledRoot>
-        <Navbar onOpenNav={() => setOpen(true)}  isDashboard={false}/>
-          <Main>
-            <Outlet/>
-          </Main>
-        {/* <Footer/> */}
-  </StyledRoot>
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={false} isLogged={user} onLogoutClick={() => setUser(null)} />
+      <Main>
+        <Outlet context={handleLogin} />
+      </Main>
+    </StyledRoot>
   );
 }
