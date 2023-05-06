@@ -54,7 +54,7 @@ export default function AboutPage() {
         </Typography>
         <Grid container spacing={3}>
           {team.map((team) => (
-            <TeamCard key={team.id} post={team} />
+            <TeamCard key={team.avatar} post={team} />
           ))}
         </Grid>
       </Container >
