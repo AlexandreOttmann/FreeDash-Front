@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import {Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 
 //Component
 import Navbar from '../navbar/index';
 import Sidebar from '../sidebar/index';
-import Footer from '../footer/index';
+
 //@mui
 import { styled } from '@mui/material/styles';
 
@@ -33,17 +33,17 @@ const Main = styled('div')(({ theme }) => ({
   },
 }));
 
-export default function DashboardLayout(){
- const [open, setOpen] = useState(false);
-return(
+export default function DashboardLayout() {
+  const [open, setOpen] = useState(false);
+  return (
     <StyledRoot>
-      <Navbar onOpenNav={() => setOpen(true)}  isDashboard={true}/>
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} />
       <Sidebar openSide={open} onCloseSide={() => setOpen(false)} />
-        <Main>
-          <Outlet/>
-        </Main>
+      <Main>
+        <Outlet />
+      </Main>
       {/* <Footer/> */}
-    
-  </StyledRoot>
+
+    </StyledRoot>
   );
 }

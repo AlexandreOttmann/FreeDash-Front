@@ -10,6 +10,11 @@ import account from '../../_mock/account';
 
 const MENU_OPTIONS = [
   {
+    label: 'Dashboard',
+    icon: 'eva:settings-2-fill',
+      link: '/dashboard',
+  },
+  {
     label: 'Home',
     icon: 'eva:home-fill',
     link: '/',
@@ -19,18 +24,13 @@ const MENU_OPTIONS = [
     icon: 'eva:person-fill',
       link: '/profil',
   },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-      link: '/dashboard',
-  },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function AccountPopover({onLogoutClick}) {
   const [open, setOpen] = useState(null);
-
+ 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -105,7 +105,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={onLogoutClick} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </Popover>

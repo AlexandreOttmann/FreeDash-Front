@@ -10,7 +10,7 @@ const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ 
 const sideConfig = [
   {
     title: 'dashboard',
-    path: '/dashboard',
+    path: '/dashboard/',
     icon: icon('ic_analytics'),
   },
   {
@@ -24,13 +24,13 @@ const sideConfig = [
     icon: icon('ic_cart'),
   },
   {
-    title: 'blog',
-    path: '/dashboard/blog',
+    title: 'nouvelle mission',
+    path: '/dashboard/newmission',
     icon: icon('ic_blog'),
   },
   {
-    title: 'login',
-    path: '/login',
+    title: 'nouveau client',
+    path: '/dashboard/newclient',
     icon: icon('ic_lock'),
   },
   {
