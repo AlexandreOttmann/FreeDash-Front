@@ -110,7 +110,7 @@ export default function RegisterPage() {
       setErrMsg('Invalid Entry');
       return;
     }
-    console.log(e);
+    console.log(firstname, lastname, user, pwd);
     try {
       const response = await axios.post(
         REGISTER_URL,
@@ -154,8 +154,8 @@ export default function RegisterPage() {
               Rejoignez-nous !
             </Typography>
             <img
-              src="/assets/illustrations/illustration_register.png"
-              alt="illustration_register"
+              src="../../../../public/assets/illustrations/5256730.png"
+              alt="like_illustration"
             />
           </StyledSection>
         )}
@@ -263,7 +263,7 @@ export default function RegisterPage() {
                     />
                   </Tooltip>
                 </Stack>
-                <Button
+                <Button onClick={handleSubmit}
                   disabled={!validName || !validPwd || !validMatch ? true : false}
                 >
                   Sign Up

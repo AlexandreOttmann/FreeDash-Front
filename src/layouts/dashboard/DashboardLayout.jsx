@@ -6,6 +6,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../navbar/index';
 import Sidebar from '../sidebar/index';
 
+
 //@mui
 import { styled } from '@mui/material/styles';
 
@@ -34,9 +35,11 @@ const Main = styled('div')(({ theme }) => ({
 }));
 
 export default function DashboardLayout() {
+
   const [open, setOpen] = useState(false);
   return (
     <StyledRoot>
+
       <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} />
       <Sidebar openSide={open} onCloseSide={() => setOpen(false)} />
       <Main>
