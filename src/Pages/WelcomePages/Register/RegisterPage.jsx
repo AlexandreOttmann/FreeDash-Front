@@ -154,7 +154,7 @@ export default function RegisterPage() {
               Rejoignez-nous !
             </Typography>
             <img
-              src="./assets/illustrations/settings_illustration.png"
+              src="../../../../public/assets/illustrations/5256730.png"
               alt="like_illustration"
             />
           </StyledSection>
