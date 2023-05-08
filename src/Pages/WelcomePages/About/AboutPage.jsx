@@ -14,6 +14,11 @@ export default function AboutPage() {
       <Container>
         <Typography variant="h2">A propos de nous </Typography>
         <Typography variant="body1">Coucou c'est nous</Typography>
+        <Grid container spacing={3}>
+          {team.map((team) => (
+            <TeamCard key={team.avatar} post={team} />
+          ))}
+        </Grid>
         <Typography variant="h2">Mentions légales</Typography>
         <Typography variant="body1">
           Nom de l'entreprise : FreeDash
@@ -52,11 +57,6 @@ export default function AboutPage() {
         <Typography variant="body1">
           Les présentes mentions légales sont régies par la loi française. Tout litige relatif à l'utilisation de ce site internet de dashboard sera soumis à la juridiction compétente de la ville de [Ville de la juridiction compétente].
         </Typography>
-        <Grid container spacing={3}>
-          {team.map((team) => (
-            <TeamCard key={team.avatar} post={team} />
-          ))}
-        </Grid>
       </Container >
     </>
   )
