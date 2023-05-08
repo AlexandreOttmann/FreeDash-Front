@@ -13,7 +13,7 @@ export default function AboutPage() {
       </Helmet>
       <Container>
         <Typography variant="h2">A propos de nous </Typography>
-        <Typography variant="body1">Coucou c'est nous</Typography>
+        <Typography variant="body1">Description à venir</Typography>
         <Grid container spacing={3}>
           {team.map((team) => (
             <TeamCard key={team.avatar} post={team} />
