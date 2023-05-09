@@ -6,23 +6,52 @@ import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
 
+//store
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../../store/reducers/user';
+
 // ----------------------------------------------------------------------
 
+
+
+// eslint-disable-next-line react/prop-types
 export default function LoginForm({ onLoginClick }) {
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
+const dispatch = useDispatch();
 
-  const handleClick = () => {
-    navigate('/dashboard', { replace: true });
+
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+// ----------------- GPT
+  // const handleLogins = () => {
+  //   const credentials = { email, password };
+  //   axios.post('/api/login', credentials)
+  //     .then(response => {
+  //       dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+  //       navigate('/dashboard');
+  //     })
+  //     .catch(error => {
+  //       dispatch({ type: 'LOGIN_FAILURE', payload: error.response.data });
+  //     });
+  // };
+// ---------------------------
+  const handleLogin = () => {
+  //  console.log(email, password)
+
+   dispatch(login({email, password}))
   };
 
   return (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField name="email" label="Email address" onChange={e => setEmail(e.target.value)} />
         <TextField
           name="password"
+          onChange={e => setPassword(e.target.value)}
           label="Mot de Passe"
           type={showPassword ? 'text' : 'password'}
           InputProps={{
@@ -49,7 +78,7 @@ export default function LoginForm({ onLoginClick }) {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleLogin}>
         Login
       </LoadingButton>
       <LoadingButton sx={{ my: 5, bgcolor: 'red' }} size="small" type="submit" variant="contained" onClick={onLoginClick}>
@@ -58,3 +87,4 @@ export default function LoginForm({ onLoginClick }) {
     </>
   );
 }
+

@@ -3,6 +3,8 @@ import { useRoutes, Navigate } from 'react-router-dom';
 import HomeLayout from './layouts/home';
 import DashboardLayout from './layouts//dashboard';
 
+//Component
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 
 //WelcomePages
 import HomePage from './Pages/WelcomePages/Home/HomePage';
@@ -28,22 +30,24 @@ import ProfilPage from './Pages/Dashboard/Profil/ProfilPage';
 // ----------------------------------------------------------------------
 
 export default function Router() {
-  
+
+  // To replace with token check
+  const user = true;
   const routes = useRoutes([
     {
       element: <HomeLayout />,
-        path: '/',
-         children: [
-          { path: '', element: <HomePage /> },
-          { path: 'about', element: <AboutPage /> },
-          { path: 'login', element: <LoginPage /> },
-          { path: 'register', element: <RegisterPage /> },
-          { path: 'contact', element: <ContactPage /> },
-          { path: '*', element: <Page404 />}
-           ]
+      path: '/',
+      children: [
+        { path: '', element: <HomePage /> },
+        { path: 'about', element: <AboutPage /> },
+        { path: 'login', element: <LoginPage /> },
+        { path: 'register', element: <RegisterPage /> },
+        { path: 'contact', element: <ContactPage /> },
+        { path: '*', element: <Page404 /> }
+      ]
     },
     {
-      element: <DashboardLayout />,
+      element: <ProtectedRoute user={user} ><DashboardLayout /></ProtectedRoute>,
       path: '/dashboard',
       children: [
         // { element: <Navigate to="/dashboard" />, index: true },

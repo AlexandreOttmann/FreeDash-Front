@@ -4,20 +4,22 @@ import ThemeProvider from './theme'
 //routes
 import Router from "./routes";
 
-
-
+import store from './store/store'
 import "./App.css";
+import { Provider } from "react-redux";
 
 function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <ThemeProvider>
-        {/* <StyledChart> */}
-        <Router />
-        {/* </StyledChart> */}
-        </ThemeProvider>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <ThemeProvider>
+          {/* <StyledChart> */}
+          <Router />
+          {/* </StyledChart> */}
+          </ThemeProvider>
+        </BrowserRouter>
+      </Provider>
     </HelmetProvider>
   );
 }
