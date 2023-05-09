@@ -59,7 +59,6 @@ export default function AboutPage() {
           <Typography variant="body1" style={styles.paragraph}>Ce site internet de dashboard collecte des données personnelles telles que des adresses e-mail et des noms d'utilisateur pour permettre aux utilisateurs de se connecter et d'utiliser les services de dashboard. <br />
             Nous nous engageons à protéger les données personnelles des utilisateurs conformément à la réglementation en vigueur et à ne pas les vendre, louer ou transmettre à des tiers. Les utilisateurs ont le droit de demander la suppression de leurs données personnelles à tout moment.<br />
           </Typography>
-
           <Typography variant='h3' style={styles.title}>Cookies :</Typography>
           <Typography variant="body1" style={styles.paragraph}>
             Ce site internet de dashboard utilise des cookies pour améliorer l'expérience utilisateur et fournir des informations sur la manière dont les utilisateurs interagissent avec le site. <br />
@@ -80,6 +79,11 @@ export default function AboutPage() {
             Tout litige relatif à l'utilisation de ce site internet de dashboard sera soumis à la juridiction compétente de la ville de [Ville de la juridiction compétente].
           </Typography>
         </section>
+        <Grid container spacing={3}>
+          {team.map((team) => (
+            <TeamCard key={team.avatar} post={team} />
+          ))}
+        </Grid>
       </Container >
     </>
   )
