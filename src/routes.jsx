@@ -31,6 +31,9 @@ import ProfilPage from './Pages/Dashboard/Profil/ProfilPage';
 
 export default function Router() {
 
+
+  // To replace with token check
+
   const user = true;
   const routes = useRoutes([
     {

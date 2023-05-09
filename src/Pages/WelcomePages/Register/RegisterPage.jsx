@@ -5,7 +5,7 @@ import './index.css';
 // Component
 import Iconify from '../../../components/iconify';
 // api & hooks
-import axios from '../../../api/axios';
+import { axiosInstance } from'../../../api/axios';
 import useResponsive from '../../../hooks/useReponsive';
 //@mui
 import { styled } from '@mui/material/styles';
@@ -114,7 +114,7 @@ export default function RegisterPage() {
     console.log(firstname, lastname, user, pwd);
 
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         REGISTER_URL,
         JSON.stringify({ firstname, lastname, user, pwd }),
         {
