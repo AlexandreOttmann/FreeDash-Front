@@ -79,11 +79,6 @@ export default function AboutPage() {
             Tout litige relatif à l'utilisation de ce site internet de dashboard sera soumis à la juridiction compétente de la ville de [Ville de la juridiction compétente].
           </Typography>
         </section>
-        <Grid container spacing={3}>
-          {team.map((team) => (
-            <TeamCard key={team.avatar} post={team} />
-          ))}
-        </Grid>
       </Container >
     </>
   )

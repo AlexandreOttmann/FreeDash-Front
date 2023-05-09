@@ -46,7 +46,7 @@ export default function Router() {
       ]
     },
     {
-      element: <ProtectedRoute user={user} ><DashboardLayout /></ProtectedRoute>,
+      element: <ProtectedRoute user={user}><DashboardLayout /></ProtectedRoute>,
       path: '/dashboard',
       children: [
         // { element: <Navigate to="/dashboard" />, index: true },
