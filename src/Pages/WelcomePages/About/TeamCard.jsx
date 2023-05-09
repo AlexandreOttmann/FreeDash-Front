@@ -2,10 +2,6 @@ import PropTypes from 'prop-types';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
-// utils
-// import { fDate } from '../../../utils/formatTime';
-// import { fShortenNumber } from '../../../utils/formatNumber';
-//
 import SvgColor from '../../../components/svg-color';
 import Iconify from '../../../components/iconify';
 
@@ -51,28 +47,20 @@ const StyledCover = styled('img')({
 
 // ----------------------------------------------------------------------
 
-BlogPostCard.propTypes = {
+TeamCard.propTypes = {
   post: PropTypes.object.isRequired,
   index: PropTypes.number,
 };
 
-export default function BlogPostCard({ post, index }) {
+export default function TeamCard({ post, index }) {
   const { avatar, displayName, role, cover } = post;
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
-
-  // const POST_INFO = [
-  //   { number: comment, icon: 'eva:message-circle-fill' },
-  //   { number: view, icon: 'eva:eye-fill' },
-  //   { number: share, icon: 'eva:share-fill' },
-  // ];
-
+  
   return (
-    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
+    <Grid item xs={12} sm={index === 0 ? 12 : 6} md={index === 0 ? 6 : 3}>
       <Card sx={{ position: 'relative' }}>
         <StyledCardMedia
           sx={{
-            ...((latestPostLarge || latestPost) && {
+            ...(index === 0 || index === 1 || index === 2) && {
               pt: 'calc(100% * 4 / 3)',
               '&:after': {
                 top: 0,
@@ -82,8 +70,8 @@ export default function BlogPostCard({ post, index }) {
                 position: 'absolute',
                 bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
               },
-            }),
-            ...(latestPostLarge && {
+            },
+            ...(index === 0 && {
               pt: {
                 xs: 'calc(100% * 4 / 3)',
                 sm: 'calc(100% * 3 / 4.66)',
@@ -101,20 +89,20 @@ export default function BlogPostCard({ post, index }) {
               bottom: -15,
               position: 'absolute',
               color: 'background.paper',
-              ...((latestPostLarge || latestPost) && { display: 'none' }),
+              ...(index === 0 || index === 1 || index === 2) && { display: 'none' },
             }}
           />
           <StyledAvatar
             alt={displayName}
             src={avatar}
             sx={{
-              ...((latestPostLarge || latestPost) && {
+              ...(index === 0 || index === 1 || index === 2) && {
                 zIndex: 9,
                 top: 24,
                 left: 24,
                 width: 40,
                 height: 40,
-              }),
+              },
             }}
           />
 
@@ -124,15 +112,14 @@ export default function BlogPostCard({ post, index }) {
         <CardContent
           sx={{
             pt: 4,
-            ...((latestPostLarge || latestPost) && {
+            ...(index === 0 || index === 1 || index === 2) && {
               bottom: 0,
               width: '100%',
               position: 'absolute',
-            }),
+            },
           }}
         >
           <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-            {/* {fDate(createdAt)} */}
           </Typography>
 
           <StyledTitle
@@ -140,35 +127,30 @@ export default function BlogPostCard({ post, index }) {
             variant="subtitle2"
             underline="hover"
             sx={{
-              ...(latestPostLarge && { typography: 'h5', height: 60 }),
-              ...((latestPostLarge || latestPost) && {
+              ...(index === 0 && { typography: 'h5', height: 60 }),
+              ...(index === 0 || index === 1 || index === 2) && {
                 color: 'common.white',
-              }),
+              },
             }}
           >
             {displayName}
           </StyledTitle>
 
           <StyledInfo>
-
             <Box
-
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 ml: index === 0 ? 0 : 1.5,
-                ...((latestPostLarge || latestPost) && {
+                ...(index === 0 || index === 1 || index === 2) && {
                   color: 'grey.500',
-                }),
+                },    
               }}
             >
               {role}
               <Iconify icon={'eva:share-fill'} sx={{ width: 16, height: 16, mr: 0.5 }} />
-
             </Box>
-
           </StyledInfo>
-
         </CardContent>
       </Card>
     </Grid>

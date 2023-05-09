@@ -62,8 +62,8 @@ export default function LoginPage() {
           <StyledSection>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Content de vous revoir !
-            </Typography>
-            <img src="/assets/illustrations/5250065.png" alt="login" />
+           </Typography>
+            <img src="/assets/illustrations/illustration_login.png" alt="login" />
           </StyledSection>
         )}
 
