@@ -110,7 +110,9 @@ export default function RegisterPage() {
       setErrMsg('Invalid Entry');
       return;
     }
-    console.log(e);
+
+    console.log(firstname, lastname, user, pwd);
+
     try {
       const response = await axiosInstance.post(
         REGISTER_URL,
@@ -263,7 +265,7 @@ export default function RegisterPage() {
                     />
                   </Tooltip>
                 </Stack>
-                <Button
+                <Button onClick={handleSubmit}
                   disabled={!validName || !validPwd || !validMatch ? true : false}
                 >
                   Sign Up

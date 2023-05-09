@@ -6,8 +6,6 @@ const account = {
 
 export default account;
 
-
-
 // eslint-disable-next-line no-unused-vars
 const user = [{
   user_id: 1,
@@ -141,3 +139,8 @@ const user = [{
     }
   ]
 }]
+
+
+
+
+
