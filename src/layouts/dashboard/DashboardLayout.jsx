@@ -9,6 +9,9 @@ import Sidebar from '../sidebar/index';
 //@mui
 import { styled } from '@mui/material/styles';
 
+//utils
+import isLogged from '../../utils/isLogged';
+
 //--------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -35,15 +38,18 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+
+
+  const user = isLogged()
+  console.log(user)
   return (
     <StyledRoot>
-      <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} />
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} isLogged={user} />
       <Sidebar openSide={open} onCloseSide={() => setOpen(false)} />
       <Main>
         <Outlet />
       </Main>
       {/* <Footer/> */}
-
     </StyledRoot>
   );
 }

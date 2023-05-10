@@ -1,10 +1,12 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, Route } from 'react-router-dom';
 
-export const ProtectedRoute = ({ user, redirectPath = '/login', children }) => {
-  if (!user) {
-    return <Navigate to={redirectPath} replace />;
-  }
+export const ProtectedRoute = ({ children, ...rest }) => {
+  const isAuthenticated = localStorage.getItem('jwt') !== null
 
-  return children ? children : <Outlet />;
+  return isAuthenticated ? (
+    <></>
+  ) : (
+    <Navigate to="/login" replace />
+  )
 };
