@@ -8,6 +8,8 @@ import Navbar from '../navbar/index';
 //@mui
 import { styled } from '@mui/material/styles';
 
+//utils
+import isLogged from '../../utils/isLogged';
 
 //--------------------------
 
@@ -35,8 +37,7 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function HomeLayout() {
 
-  let user = localStorage.getItem('jwt') !== null
-
+  const user = isLogged()
 
   const [open, setOpen] = useState(false);
   return (

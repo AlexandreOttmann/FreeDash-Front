@@ -22,6 +22,7 @@ import useResponsive from '../../hooks/useReponsive';
 // components
 import Iconify from '../../components/iconify/Iconify';
 import Logo from '../../components/logo/Logo';
+import DarkToggle from '../../components/button/DarkToggle';
 //
 import { StyledNavItem } from '../../components/side-section/styles';
 import AccountPopover from './AccountPopover';
@@ -157,7 +158,7 @@ export default function Navbar({
           </>
         )}
         <Box sx={{ flexGrow: 1 }} />
-
+        <DarkToggle />
         <Stack
           direction="row"
           alignItems="center"

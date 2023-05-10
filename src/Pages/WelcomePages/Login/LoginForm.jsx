@@ -39,15 +39,16 @@ export default function LoginForm() {
   //     });
   // };
   // ---------------------------
-  const handleLogin = () => {
-    //  console.log(email, password)
+  const handleLogin = (e) => {
+    e.preventDefault()
     try {
       // If we're logged, we retrieve jwt from localStorage that's just been fetched,
       // if it exist, we navigate to dashboard, a protected route
-      dispatch(login({ email, password }))
-      if (localStorage.getItem('jwt')) {
-        navigate('/dashboard')
-      }
+      dispatch(login({
+        email, password, resolve() {
+          navigate('/dashboard')
+        }
+      }))
       setEmail('')
       setPassword('')
     } catch (err) {
@@ -55,10 +56,16 @@ export default function LoginForm() {
     }
   };
 
-  const handleDemoLogin = () => {
+  const handleDemoLogin = (e) => {
+    e.preventDefault()
     try {
-      dispatch(login({ email: 'john@mail.com', password: 'changeme' }))
-      navigate('/dashboard')
+      dispatch(login({
+        email: 'john@mail.com', password: 'changeme', resolve() {
+          navigate('/dashboard')
+        }
+      }))
+      setEmail('')
+      setPassword('')
     } catch (err) {
       console.log(err)
     }

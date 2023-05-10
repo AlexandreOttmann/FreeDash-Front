@@ -52,7 +52,6 @@ export default function Router() {
       element: <><ProtectedRoute /><DashboardLayout /></>,
       path: '/dashboard',
       children: [
-        // { element: <Navigate to="/dashboard" />, index: true },
         { path: '', element: <DashboardPage /> },
         { path: 'profil', element: <ProfilPage /> },
         { path: 'client', element: <ClientPage /> },
