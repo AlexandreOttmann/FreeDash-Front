@@ -87,7 +87,7 @@ export default function LoginPage() {
               </Typography> */}
             </Divider>
 
-            <LoginForm onLoginClick={onLoginClick} />
+            <LoginForm />
           </StyledContent>
         </Container>
       </StyledRoot>

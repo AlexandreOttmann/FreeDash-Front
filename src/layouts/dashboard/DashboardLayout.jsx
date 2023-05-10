@@ -35,9 +35,12 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+
+  let user = localStorage.getItem('jwt') !== null
+
   return (
     <StyledRoot>
-      <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} />
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} isLogged={user} />
       <Sidebar openSide={open} onCloseSide={() => setOpen(false)} />
       <Main>
         <Outlet />

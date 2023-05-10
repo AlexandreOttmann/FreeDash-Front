@@ -15,10 +15,10 @@ import { login } from '../../../store/reducers/user';
 
 
 // eslint-disable-next-line react/prop-types
-export default function LoginForm({ onLoginClick }) {
+export default function LoginForm() {
   const navigate = useNavigate();
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
 
@@ -26,7 +26,7 @@ const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-// ----------------- GPT
+  // ----------------- GPT
   // const handleLogins = () => {
   //   const credentials = { email, password };
   //   axios.post('/api/login', credentials)
@@ -38,12 +38,31 @@ const dispatch = useDispatch();
   //       dispatch({ type: 'LOGIN_FAILURE', payload: error.response.data });
   //     });
   // };
-// ---------------------------
+  // ---------------------------
   const handleLogin = () => {
-  //  console.log(email, password)
-
-   dispatch(login({email, password}))
+    //  console.log(email, password)
+    try {
+      // If we're logged, we retrieve jwt from localStorage that's just been fetched,
+      // if it exist, we navigate to dashboard, a protected route
+      dispatch(login({ email, password }))
+      if (localStorage.getItem('jwt')) {
+        navigate('/dashboard')
+      }
+      setEmail('')
+      setPassword('')
+    } catch (err) {
+      console.log(err)
+    }
   };
+
+  const handleDemoLogin = () => {
+    try {
+      dispatch(login({ email: 'john@mail.com', password: 'changeme' }))
+      navigate('/dashboard')
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <>
@@ -81,7 +100,7 @@ const dispatch = useDispatch();
       <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleLogin}>
         Login
       </LoadingButton>
-      <LoadingButton sx={{ my: 5, bgcolor: 'red' }} size="small" type="submit" variant="contained" onClick={onLoginClick}>
+      <LoadingButton sx={{ my: 5, bgcolor: 'red' }} size="small" type="submit" variant="contained" onClick={handleDemoLogin}>
         Login DEMO
       </LoadingButton>
     </>

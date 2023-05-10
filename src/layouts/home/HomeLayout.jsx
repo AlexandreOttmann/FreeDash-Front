@@ -35,15 +35,15 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function HomeLayout() {
 
-  const [user, setUser] = useState(null)
-  const handleLogin = () => setUser({ id: '1', name: 'robin' });
+  let user = localStorage.getItem('jwt') !== null
+
 
   const [open, setOpen] = useState(false);
   return (
     <StyledRoot>
-      <Navbar onOpenNav={() => setOpen(true)} isDashboard={false} isLogged={user} onLogoutClick={() => setUser(null)} />
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={false} isLogged={user} />
       <Main>
-        <Outlet context={handleLogin} />
+        <Outlet />
       </Main>
     </StyledRoot>
   );

@@ -14,7 +14,7 @@ import {
   MenuItem,
   Button,
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom';
 // utils
 import { bgBlur } from '../../utils/cssStyles';
 //hooks
@@ -63,10 +63,11 @@ export default function Navbar({
   onOpenNav,
   isDashboard,
   isLogged,
-  onLogoutClick,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const navigate = useNavigate();
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -74,6 +75,11 @@ export default function Navbar({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const onLogoutClick = () => {
+    localStorage.clear('jwt')
+    navigate('/')
+  }
 
   const isDesktop = useResponsive('up', 'lg');
 

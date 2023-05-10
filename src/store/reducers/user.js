@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { createAction, createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 // import axios from 'axios';
 // import { createAppAsyncThunk } from '../../utils/redux';
@@ -24,7 +25,7 @@ export const initialState = {
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-  async ({email, password},) => {
+  async ({ email, password },) => {
     // On va aller récupérer depuis le state les credentials
     // Je récupère mon email et mon mot de passe
     console.log(email)
@@ -33,12 +34,13 @@ export const login = createAsyncThunk(
       email,
       password,
     });
-    console.log(data)
     // Pour sauvegarde mes informations, je transforme mon objet en chaine de caractère
     // Je stocke cette chaine de caractère dans le localStorage
-    localStorage.setItem('user', JSON.stringify(data));
+    localStorage.setItem('jwt', JSON.stringify(data));
     // Je type les données que je renvoie pour que le type soit transmis
     // dans la fonction de reducer
+    console.log(localStorage.getItem('jwt'))
+
     return data
   },
 );
@@ -53,7 +55,7 @@ export const logout = createAction('user/LOGOUT');
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCredentialsField, (state, action) => {
-    // Depuis les données reçues dans mon action
+      // Depuis les données reçues dans mon action
       const { field, value } = action.payload;
 
       // Pour accéder à la propriété email deux syntaxes possibles
