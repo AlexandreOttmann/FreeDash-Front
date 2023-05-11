@@ -14,7 +14,7 @@ import {
   MenuItem,
   Button,
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom';
 // utils
 import { bgBlur } from '../../utils/cssStyles';
 //hooks
@@ -22,6 +22,7 @@ import useResponsive from '../../hooks/useReponsive';
 // components
 import Iconify from '../../components/iconify/Iconify';
 import Logo from '../../components/logo/Logo';
+import DarkToggle from '../../components/button/DarkToggle';
 //
 import { StyledNavItem } from '../../components/side-section/styles';
 import AccountPopover from './AccountPopover';
@@ -63,10 +64,11 @@ export default function Navbar({
   onOpenNav,
   isDashboard,
   isLogged,
-  onLogoutClick,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const navigate = useNavigate();
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -74,6 +76,11 @@ export default function Navbar({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const onLogoutClick = () => {
+    localStorage.clear('jwt')
+    navigate('/')
+  }
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -151,7 +158,7 @@ export default function Navbar({
           </>
         )}
         <Box sx={{ flexGrow: 1 }} />
-
+        <DarkToggle />
         <Stack
           direction="row"
           alignItems="center"

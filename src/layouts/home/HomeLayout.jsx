@@ -8,6 +8,8 @@ import Navbar from '../navbar/index';
 //@mui
 import { styled } from '@mui/material/styles';
 
+//utils
+import isLogged from '../../utils/isLogged';
 
 //--------------------------
 
@@ -35,15 +37,14 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function HomeLayout() {
 
-  const [user, setUser] = useState(null)
-  const handleLogin = () => setUser({ id: '1', name: 'robin' });
+  const user = isLogged()
 
   const [open, setOpen] = useState(false);
   return (
     <StyledRoot>
-      <Navbar onOpenNav={() => setOpen(true)} isDashboard={false} isLogged={user} onLogoutClick={() => setUser(null)} />
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={false} isLogged={user} />
       <Main>
-        <Outlet context={handleLogin} />
+        <Outlet />
       </Main>
     </StyledRoot>
   );

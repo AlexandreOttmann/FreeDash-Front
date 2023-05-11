@@ -34,7 +34,7 @@ export default function Router() {
 
   // To replace with token check
 
-  const user = true;
+
   const routes = useRoutes([
     {
       element: <HomeLayout />,
@@ -49,10 +49,9 @@ export default function Router() {
       ]
     },
     {
-      element: <ProtectedRoute user={user} ><DashboardLayout /></ProtectedRoute>,
+      element: <><ProtectedRoute /><DashboardLayout /></>,
       path: '/dashboard',
       children: [
-        // { element: <Navigate to="/dashboard" />, index: true },
         { path: '', element: <DashboardPage /> },
         { path: 'profil', element: <ProfilPage /> },
         { path: 'client', element: <ClientPage /> },

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { createAction, createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 // import axios from 'axios';
 // import { createAppAsyncThunk } from '../../utils/redux';
@@ -17,6 +18,7 @@ export const initialState = {
     email: 'bouclierman@herocorp.io',
     password: 'jennifer',
   },
+  isDarkMode: localStorage.getItem('isDarkMode') === 'true',
   // Je déverse mes données, si elles existent je serai connecté
   // Sinon je reste déconnecté
   ...userData,
@@ -24,26 +26,25 @@ export const initialState = {
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-  async ({
-    email,
-    password
-  }, ) => {
+  async ({ email, password, resolve }) => {
     // On va aller récupérer depuis le state les credentials
     // Je récupère mon email et mon mot de passe
-    console.log(email)
-
-    const {
-      data
-    } = await axiosInstance.post('/login', {
+    const { data } = await axiosInstance.post('/login', {
       email,
       password,
-    });
-    console.log(data)
+    })
+      .then((data) => {
+        localStorage.setItem('jwt', JSON.stringify(data))
+        resolve()
+      })
+      .catch(err => console.log(err))
     // Pour sauvegarde mes informations, je transforme mon objet en chaine de caractère
     // Je stocke cette chaine de caractère dans le localStorage
-    localStorage.setItem('user', JSON.stringify(data));
+
+    // localStorage.setItem('jwt', JSON.stringify(data));
     // Je type les données que je renvoie pour que le type soit transmis
     // dans la fonction de reducer
+
     return data
   },
 );
@@ -53,6 +54,8 @@ export const changeCredentialsField = createAction('user/CHANGE_CREDENTIALS_FIEL
   field,
 }));
 
+export const toggleDarkMode = createAction('user/TOGGLE_DARK_MODE');
+
 export const logout = createAction('user/LOGOUT');
 
 const userReducer = createReducer(initialState, (builder) => {
@@ -60,7 +63,6 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(changeCredentialsField, (state, action) => {
       // Depuis les données reçues dans mon action
       const { field, value } = action.payload;
-
       // Pour accéder à la propriété email deux syntaxes possibles
       // state.credentials.email
       // state.credentials['email']
@@ -70,6 +72,10 @@ const userReducer = createReducer(initialState, (builder) => {
       // state.credentials[emailField];
       // `field` ici est soit 'email' soit 'password'
       state.credentials[field] = value;
+    })
+    .addCase(toggleDarkMode, (state) => {
+      state.isDarkMode = !state.isDarkMode;
+      localStorage.setItem('isDarkMode', state.isDarkMode)
     })
     .addCase(login.fulfilled, (state, action) => {
       // J'enregistre les informations retourner par mon API
@@ -99,5 +105,7 @@ const userReducer = createReducer(initialState, (builder) => {
       removeUserDataFromLocalStorage();
     });
 });
+
+
 
 export default userReducer;

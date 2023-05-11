@@ -1,9 +1,9 @@
 
 export default function DashboardPage() {
   return (
-   <div>
+    <div>
       <h1>
-        je suis là page Dashboard
+        je suis la page Dashboard
       </h1>
     </div>
   )
