@@ -24,12 +24,17 @@ export const initialState = {
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-  async ({email, password},) => {
+  async ({
+    email,
+    password
+  }, ) => {
     // On va aller récupérer depuis le state les credentials
     // Je récupère mon email et mon mot de passe
     console.log(email)
 
-    const { data } = await axiosInstance.post('/login', {
+    const {
+      data
+    } = await axiosInstance.post('/login', {
       email,
       password,
     });
@@ -53,7 +58,7 @@ export const logout = createAction('user/LOGOUT');
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCredentialsField, (state, action) => {
-    // Depuis les données reçues dans mon action
+      // Depuis les données reçues dans mon action
       const { field, value } = action.payload;
 
       // Pour accéder à la propriété email deux syntaxes possibles
