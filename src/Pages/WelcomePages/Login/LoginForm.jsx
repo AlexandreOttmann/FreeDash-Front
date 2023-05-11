@@ -60,7 +60,7 @@ export default function LoginForm() {
     e.preventDefault()
     try {
       dispatch(login({
-        email: 'john@mail.com', password: 'changeme', resolve() {
+        email: 'keny.legoat@gmail.com', password: '123456', resolve() {
           navigate('/dashboard')
         }
       }))
