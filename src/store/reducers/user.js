@@ -1,13 +1,16 @@
+//hooks
 import { useNavigate } from 'react-router';
+import jwt_decode from "jwt-decode";
 import { createAction, createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-// import axios from 'axios';
-// import { createAppAsyncThunk } from '../../utils/redux';
+import { useDispatch } from 'react-redux';
+//utils
 import { axiosInstance } from '../../api/axios'
-// import { LoginResponse } from '../../@types/user';
+import { retrieveUserId } from '../../utils/retrieveUserId';
 import { getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from '../../utils/user';
 
 // Je récupère les données stockées dans le localStorage
-const userData = getUserDataFromLocalStorage();
+// const userData = getUserDataFromLocalStorage();
+const userId = retrieveUserId()
 
 export const initialState = {
   logged: false,
@@ -19,35 +22,49 @@ export const initialState = {
     password: 'jennifer',
   },
   isDarkMode: localStorage.getItem('isDarkMode') === 'true',
-  // Je déverse mes données, si elles existent je serai connecté
-  // Sinon je reste déconnecté
-  ...userData,
+  userData: [],
+  userId: null,
+
 };
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-  async ({ email, password, resolve }) => {
+  async ({ email, password, resolve }, thunkAPI) => {
     // On va aller récupérer depuis le state les credentials
-    // Je récupère mon email et mon mot de passe
+
+    const state = thunkAPI.getState()
     const { data } = await axiosInstance.post('/login', {
       email,
       password,
     })
       .then((data) => {
         localStorage.setItem('jwt', JSON.stringify(data))
+        const decodedToken = jwt_decode(data.data.accessToken)
+        console.log('jeton décodé', decodedToken.id)
+        thunkAPI.dispatch(setToken(decodedToken))
         resolve()
+        return data
       })
       .catch(err => console.log(err))
-    // Pour sauvegarde mes informations, je transforme mon objet en chaine de caractère
-    // Je stocke cette chaine de caractère dans le localStorage
-
-    // localStorage.setItem('jwt', JSON.stringify(data));
-    // Je type les données que je renvoie pour que le type soit transmis
-    // dans la fonction de reducer
-
     return data
   },
 );
+
+
+export const retrieveUserData = createAsyncThunk('user/RETRIEVE_USER_DATA',
+  async (_, thunkAPI) => {
+    const token = localStorage.getItem('jwt')
+    const decodedToken = jwt_decode(token)
+    const userIdFromToken = decodedToken.id
+    const { data } = await axiosInstance.get(`/user/${userIdFromToken}`)
+    return data
+  }
+);
+
+export const setToken = createAction('user/SET_TOKEN', (token) => ({
+  payload: { token },
+}));
+
 
 export const changeCredentialsField = createAction('user/CHANGE_CREDENTIALS_FIELD', (value, field) => ({
   value,
@@ -58,30 +75,29 @@ export const toggleDarkMode = createAction('user/TOGGLE_DARK_MODE');
 
 export const logout = createAction('user/LOGOUT');
 
+
+
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCredentialsField, (state, action) => {
-      // Depuis les données reçues dans mon action
       const { field, value } = action.payload;
-      // Pour accéder à la propriété email deux syntaxes possibles
-      // state.credentials.email
-      // state.credentials['email']
-      // L'avantage de la seconde syntaxe est qu'elle permet d'utiliser
-      // une variable pour accéder à la propriété
-      // const emailField = 'email';
-      // state.credentials[emailField];
-      // `field` ici est soit 'email' soit 'password'
       state.credentials[field] = value;
     })
     .addCase(toggleDarkMode, (state) => {
       state.isDarkMode = !state.isDarkMode;
       localStorage.setItem('isDarkMode', state.isDarkMode)
     })
+    .addCase(retrieveUserData.fulfilled, (state, action) => {
+      state.userData = action.payload;
+    })
     .addCase(login.fulfilled, (state, action) => {
       // J'enregistre les informations retourner par mon API
       state.logged = action.payload.logged;
       state.pseudo = action.payload.pseudo;
       state.token = action.payload.token;
+
+      // const decodedToken = jwt_decode(action.payload.token);
+      // state.userId = decodedToken.id;
 
       // Je réinitialiser les credentials
       state.credentials.email = '';

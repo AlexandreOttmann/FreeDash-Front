@@ -12,7 +12,7 @@ const MENU_OPTIONS = [
   {
     label: 'Dashboard',
     icon: 'eva:settings-2-fill',
-      link: '/dashboard',
+    link: '/dashboard',
   },
   {
     label: 'Home',
@@ -22,15 +22,15 @@ const MENU_OPTIONS = [
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-      link: '/profil',
+    link: '/profil',
   },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover({onLogoutClick}) {
+export default function AccountPopover({ onLogoutClick, userData }) {
   const [open, setOpen] = useState(null);
- 
+
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -82,10 +82,10 @@ export default function AccountPopover({onLogoutClick}) {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {userData?.firstName + ' ' + userData?.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {userData?.email}
           </Typography>
         </Box>
 
@@ -93,12 +93,12 @@ export default function AccountPopover({onLogoutClick}) {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
-            <MenuItem 
-          
-            key={option.label} onClick={handleClose}>
-            <Link to={option.link} >
-              {option.label}
-          </Link> 
+            <MenuItem
+
+              key={option.label} onClick={handleClose}>
+              <Link to={option.link} >
+                {option.label}
+              </Link>
             </MenuItem>
           ))}
         </Stack>
