@@ -1,10 +1,21 @@
-import { useNavigate } from 'react-router';
-import { createAction, createReducer, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  useNavigate
+} from 'react-router';
+import {
+  createAction,
+  createReducer,
+  createAsyncThunk
+} from '@reduxjs/toolkit';
 // import axios from 'axios';
 // import { createAppAsyncThunk } from '../../utils/redux';
-import { axiosInstance } from '../../api/axios'
+import {
+  axiosInstance
+} from '../../api/axios'
 // import { LoginResponse } from '../../@types/user';
-import { getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from '../../utils/user';
+import {
+  getUserDataFromLocalStorage,
+  removeUserDataFromLocalStorage
+} from '../../utils/user';
 
 // Je récupère les données stockées dans le localStorage
 const userData = getUserDataFromLocalStorage();
@@ -26,13 +37,19 @@ export const initialState = {
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-  async ({ email, password, resolve }) => {
+  async ({
+    email,
+    password,
+    resolve
+  }) => {
     // On va aller récupérer depuis le state les credentials
     // Je récupère mon email et mon mot de passe
-    const { data } = await axiosInstance.post('/login', {
-      email,
-      password,
-    })
+    const {
+      data
+    } = await axiosInstance.post('/login', {
+        email,
+        password,
+      })
       .then((data) => {
         localStorage.setItem('jwt', JSON.stringify(data))
         resolve()
@@ -62,7 +79,10 @@ const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCredentialsField, (state, action) => {
       // Depuis les données reçues dans mon action
-      const { field, value } = action.payload;
+      const {
+        field,
+        value
+      } = action.payload;
       // Pour accéder à la propriété email deux syntaxes possibles
       // state.credentials.email
       // state.credentials['email']

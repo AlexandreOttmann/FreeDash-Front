@@ -16,6 +16,7 @@ import { UserListHead, UserListToolbar } from '../../../sections/@dashboard/user
 
 //mock
 import USERLIST from '../../../_mock/user';
+import { Link } from 'react-router-dom';
 
 
 //===============UTILS=================
@@ -164,10 +165,10 @@ export default function MissionPage() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Liste de vos missions
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
+          <Button component={Link} to="/dashboard/newmission" variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+            Nouvelle mission
           </Button>
         </Stack>
 
@@ -196,19 +197,19 @@ export default function MissionPage() {
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          <Checkbox sx={{ color: theme.palette.background.paper }} checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <Avatar alt={name} src={'/assets/images/avatars/avatar_1.jpg'} />
-                            <Typography variant="subtitle2" noWrap>
+                            <Typography component={Link} to="/dashboard/clients/${clientId}" variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
                               {name}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{commentary}</TableCell>
+                        <TableCell component={Link} to="/dashboard/missions/${missionId}" align="left" style={{ textDecoration: 'none' }}>{commentary}</TableCell>
 
                         <TableCell align="left">{totalPrice}€</TableCell>
 

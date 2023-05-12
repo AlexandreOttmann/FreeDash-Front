@@ -15,12 +15,12 @@ const sideConfig = [
   },
   {
     title: 'clients',
-    path: '/dashboard/client',
+    path: '/dashboard/clients',
     icon: icon('ic_user'),
   },
   {
     title: 'missions',
-    path: '/dashboard/mission',
+    path: '/dashboard/missions',
     icon: icon('ic_cart'),
   },
   {

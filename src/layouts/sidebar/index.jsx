@@ -35,19 +35,24 @@ Sidebar.propTypes = {
 };
 
 export default function Sidebar({ openSide, onCloseSide }) {
-  const  {pathname}  = useLocation();
+  const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
+  useEffect
 
   useEffect(() => {
- 
+
     if (openSide) {
       onCloseSide();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },  [ pathname]);
+  }, [pathname]);
 
-  const renderContent = (    
+  useEffect(() => {
+    console.log('Je suis dans la sidebar');
+  }, []);
+
+  const renderContent = (
     <Scrollbar
       sx={{
         height: 1,
@@ -76,7 +81,7 @@ export default function Sidebar({ openSide, onCloseSide }) {
         </Link>
       </Box>
 
-{/* items list, every link displayed on sidebar */}
+      {/* items list, every link displayed on sidebar */}
       <SideSection data={sideConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
@@ -105,7 +110,7 @@ export default function Sidebar({ openSide, onCloseSide }) {
         </Stack>
       </Box> */}
     </Scrollbar>
-    
+
   );
 
   return (

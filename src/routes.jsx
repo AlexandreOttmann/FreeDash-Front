@@ -17,10 +17,10 @@ import Page404 from './Pages/WelcomePages/404/Page404';
 
 //DashBoardPages
 import DashboardPage from './Pages/Dashboard/DashboardTable/Dashboard';
-import ClientPage from './Pages/Dashboard/Client/ClientPage';
+import ClientsPage from './Pages/Dashboard/Client/ClientsPage';
 import ClientDetailsPage from './Pages/Dashboard/Client/ClientDetailsPage';
 import NewClientPage from './Pages/Dashboard/Client/NewClientPage';
-import MissionPage from './Pages/Dashboard/Mission/MissionPage';
+import MissionsPage from './Pages/Dashboard/Mission/MissionsPage';
 import MissionDetailsPage from './Pages/Dashboard/Mission/MissionDetailsPage';
 import NewMissionPage from './Pages/Dashboard/Mission/NewMissionPage';
 import ProfilPage from './Pages/Dashboard/Profil/ProfilPage';
@@ -54,11 +54,11 @@ export default function Router() {
       children: [
         { path: '', element: <DashboardPage /> },
         { path: 'profil', element: <ProfilPage /> },
-        { path: 'client', element: <ClientPage /> },
-        { path: 'client/:idclient', element: <ClientDetailsPage /> },
+        { path: 'clients', element: <ClientsPage /> },
+        { path: 'clients/:idclient', element: <ClientDetailsPage /> },
         { path: 'newclient', element: <NewClientPage /> },
-        { path: 'mission', element: <MissionPage /> },
-        { path: 'mission/:idmission', element: <MissionDetailsPage /> },
+        { path: 'missions', element: <MissionsPage /> },
+        { path: 'missions/:idmission', element: <MissionDetailsPage /> },
         { path: 'newmission', element: <NewMissionPage /> }
       ],
     },

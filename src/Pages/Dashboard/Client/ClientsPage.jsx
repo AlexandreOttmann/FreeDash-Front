@@ -1,9 +1,9 @@
 
 export default function ClientPage() {
   return (
-   <div>
+    <div>
       <h1>
-        je suis là page ClientPage
+        je suis la page Clients Page
       </h1>
     </div>
   )
