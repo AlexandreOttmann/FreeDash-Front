@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-
+//store
+import { useDispatch, useSelector } from 'react-redux';
+import { retrieveUserData } from '../../store/reducers/user';
 //Component
 import Navbar from '../navbar/index';
 import Sidebar from '../sidebar/index';
@@ -41,7 +43,8 @@ export default function DashboardLayout() {
 
 
   const user = isLogged()
-  console.log(user)
+  console.log('reset')
+
   return (
     <StyledRoot>
       <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} isLogged={user} />

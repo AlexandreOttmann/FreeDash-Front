@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../../store/reducers/user';
 
 // ----------------------------------------------------------------------
-
+//utils
+import { retrieveUserId } from '../../../utils/retrieveUserId';
 
 
 // eslint-disable-next-line react/prop-types
@@ -20,7 +21,7 @@ export default function LoginForm() {
 
   const dispatch = useDispatch();
 
-
+  const retrieveId = retrieveUserId()
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');

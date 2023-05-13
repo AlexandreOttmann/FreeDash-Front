@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import {
@@ -17,6 +17,9 @@ import {
 import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom';
 // utils
 import { bgBlur } from '../../utils/cssStyles';
+//store
+import { useSelector, useDispatch } from 'react-redux';
+import { retrieveUserData } from '../../store/reducers/user';
 //hooks
 import useResponsive from '../../hooks/useReponsive';
 // components
@@ -81,6 +84,29 @@ export default function Navbar({
     localStorage.clear('jwt')
     navigate('/')
   }
+
+  //! TO DO : REQUEST USERID on API HERE TO DISPATCH DATA INTO NAVBAR
+
+  const dispatch = useDispatch()
+
+  const userData = useSelector((state) => state.user.userData)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        dispatch(retrieveUserData())
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (userData) {
+
+      fetchData();
+
+    }
+  }, [])
+
+
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -169,7 +195,7 @@ export default function Navbar({
         >
           {/* If I'm connected I display the Profil menu, if not => Display Login/Register */}
           {isLogged ? (
-            <AccountPopover onLogoutClick={onLogoutClick} />
+            <AccountPopover onLogoutClick={onLogoutClick} userData={userData[0]} />
           ) : (
             <>
               <Link underline="none" to="/login" component={RouterLink}>

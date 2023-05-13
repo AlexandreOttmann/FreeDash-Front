@@ -71,11 +71,10 @@ export default function MissionPage() {
       console.log(error);
     }
   }, []);
-  console.log(missions);
-
+  console.log('retour api:', missions)
   useEffect(() => {
     getMissions();
-  }, [getMissions]);
+  }, []);
   //========================================
 
   //==============UTILS FOR STATES====================
@@ -196,7 +195,9 @@ export default function MissionPage() {
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          <Checkbox sx={{ color: theme.palette.background.paper }} checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox sx={{ color: theme.palette.background.paper }}
+                            checked={selectedUser} onChange={(event) => handleClick(event, name)}
+                          />
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
