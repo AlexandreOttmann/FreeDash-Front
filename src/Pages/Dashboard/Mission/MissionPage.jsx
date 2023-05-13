@@ -71,7 +71,7 @@ export default function MissionPage() {
       console.log(error);
     }
   }, []);
-  console.log(missions)
+  console.log('retour api:', missions)
   useEffect(() => {
     getMissions();
   }, []);

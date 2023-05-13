@@ -43,7 +43,7 @@ export default function DashboardLayout() {
 
 
   const user = isLogged()
-
+  console.log('reset')
 
   return (
     <StyledRoot>
