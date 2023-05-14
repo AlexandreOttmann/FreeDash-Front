@@ -1,9 +1,9 @@
 
 export default function ProfilPage() {
   return (
-   <div>
+    <div>
       <h1>
-        je suis là page ProfilPage
+        je suis la page ProfilPage
       </h1>
     </div>
   )
