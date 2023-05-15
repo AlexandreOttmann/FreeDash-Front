@@ -195,7 +195,6 @@ export default function RegisterPage() {
                 >
                   {errMsg}
                 </p>
-
                 <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
                   S'inscrire
                 </Typography>
