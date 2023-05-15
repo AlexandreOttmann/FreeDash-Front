@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { useCallback, useEffect, useState } from 'react';
 import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
+import { Link } from 'react-router-dom';
+
 //api
 import { axiosInstance } from '../../../api/axios';
 //mui
@@ -16,8 +17,13 @@ import { UserListHead, UserListToolbar } from '../../../sections/@dashboard/user
 
 //mock
 import USERLIST from '../../../_mock/user';
+<<<<<<< HEAD:src/Pages/Dashboard/Mission/MissionsPage.jsx
 import { Link } from 'react-router-dom';
 
+=======
+//utils
+import { retrieveUserId } from '../../../utils/retrieveUserId';
+>>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1:src/Pages/Dashboard/Mission/MissionPage.jsx
 
 //===============UTILS=================
 
@@ -62,21 +68,24 @@ const TABLE_HEAD = [
 
 export default function MissionPage() {
 
+  const userId = retrieveUserId()
   //! ==============API=================
   const [missions, setMissions] = useState([]);
   const getMissions = useCallback(async () => {
     try {
+      //! => Change user ID from localStorage
+      // const response = await axiosInstance.get(`user/${userId}/mission`);
       const response = await axiosInstance.get('/user/1/mission');
+      console.log(response.data)
       setMissions(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error); 
     }
   }, []);
-  console.log(missions);
 
   useEffect(() => {
     getMissions();
-  }, [getMissions]);
+  }, []);
   //========================================
 
   //==============UTILS FOR STATES====================
@@ -190,8 +199,7 @@ export default function MissionPage() {
                 {/*! ===================mapping of our missions ==========================*/}
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, commentary, totalPrice, declarate, status } = row;
-                    // const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, commentary, totalPrice, declarate, status, client_id } = row;
                     const selectedUser = selected.indexOf(id) !== -1;
 
                     return (
@@ -203,13 +211,21 @@ export default function MissionPage() {
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <Avatar alt={name} src={'/assets/images/avatars/avatar_1.jpg'} />
+<<<<<<< HEAD:src/Pages/Dashboard/Mission/MissionsPage.jsx
                             <Typography component={Link} to="/dashboard/clients/${clientId}" variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
+=======
+                            <Typography component={Link} to={`/dashboard/clients/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
+>>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1:src/Pages/Dashboard/Mission/MissionPage.jsx
                               {name}
                             </Typography>
                           </Stack>
                         </TableCell>
 
+<<<<<<< HEAD:src/Pages/Dashboard/Mission/MissionsPage.jsx
                         <TableCell component={Link} to="/dashboard/missions/${missionId}" align="left" style={{ textDecoration: 'none' }}>{commentary}</TableCell>
+=======
+                        <TableCell align="left" style={{ textDecoration: 'none' }}><Link to={`/dashboard/missions/${id}`}>{commentary}</Link></TableCell>
+>>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1:src/Pages/Dashboard/Mission/MissionPage.jsx
 
                         <TableCell align="left">{totalPrice}€</TableCell>
 

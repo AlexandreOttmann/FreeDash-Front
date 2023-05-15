@@ -117,11 +117,13 @@ export default function RegisterPage() {
     try {
       const response = await axiosInstance.post(
         REGISTER_URL,
-        JSON.stringify({ firstname, lastname, user, pwd }),
         {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
+          firstName: firstname,
+          lastName: lastname,
+          email: user,
+          password: pwd
         }
+        // JSON.stringify({ firstname, lastname, user, pwd }),
       );
       // TODO: remove console.logs before deployment
       console.log(JSON.stringify(response?.data));
@@ -173,9 +175,9 @@ export default function RegisterPage() {
         )}
         {success ? (
           <StyledSection>
-            <h1>Success!</h1>
+            <Card>Success!</Card>
             <p>
-              <a href="#">Sign In</a>
+              <a to="/login">Connectez-vous</a>
             </p>
           </StyledSection>
         ) : (
@@ -193,7 +195,6 @@ export default function RegisterPage() {
                 >
                   {errMsg}
                 </p>
-
                 <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
                   S'inscrire
                 </Typography>

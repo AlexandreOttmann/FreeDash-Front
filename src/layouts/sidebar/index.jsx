@@ -8,6 +8,9 @@ import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/mater
 import account from '../../_mock/account';
 //! hooks
 import useResponsive from '../../hooks/useReponsive';
+//! store
+import { useDispatch, useSelector } from 'react-redux';
+import { retrieveUserData } from '../../store/reducers/user';
 //! components
 import Logo from '../../components/logo';
 import Scrollbar from '../../components/scrollbar/Scrollbar';
@@ -40,6 +43,25 @@ export default function Sidebar({ openSide, onCloseSide }) {
   const isDesktop = useResponsive('up', 'lg');
   useEffect
 
+  const dispatch = useDispatch()
+
+  const userData = useSelector((state) => state.user.userData)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        dispatch(retrieveUserData())
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (userData) {
+
+      fetchData();
+
+    }
+  }, [])
+
   useEffect(() => {
 
     if (openSide) {
@@ -47,11 +69,17 @@ export default function Sidebar({ openSide, onCloseSide }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+<<<<<<< HEAD
 
   useEffect(() => {
     console.log('Je suis dans la sidebar');
   }, []);
 
+=======
+
+
+
+>>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1
   const renderContent = (
     <Scrollbar
       sx={{
@@ -70,11 +98,11 @@ export default function Sidebar({ openSide, onCloseSide }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {userData?.firstName + ' ' + userData?.lastName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                {userData?.occupation}
               </Typography>
             </Box>
           </StyledAccount>

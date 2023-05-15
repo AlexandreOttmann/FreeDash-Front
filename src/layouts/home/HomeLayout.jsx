@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useResponsive from '../../hooks/useReponsive';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../navbar/index';
@@ -38,6 +38,10 @@ const Main = styled('div')(({ theme }) => ({
 export default function HomeLayout() {
 
   const user = isLogged()
+
+  useEffect(() => {
+    console.log('layout')
+  }, [])
 
   const [open, setOpen] = useState(false);
   return (
