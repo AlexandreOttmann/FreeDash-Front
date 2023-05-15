@@ -89,11 +89,11 @@ export default function Sidebar({ openSide, onCloseSide }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {userData[0]?.firstName + ' ' + userData[0]?.lastName}
+                {userData?.firstName + ' ' + userData?.lastName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {userData[0]?.occupation}
+                {userData?.occupation}
               </Typography>
             </Box>
           </StyledAccount>

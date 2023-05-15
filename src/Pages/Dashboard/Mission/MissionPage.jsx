@@ -71,9 +71,10 @@ export default function MissionPage() {
       //! => Change user ID from localStorage
       // const response = await axiosInstance.get(`user/${userId}/mission`);
       const response = await axiosInstance.get('/user/1/mission');
+      console.log(response.data)
       setMissions(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error); 
     }
   }, []);
 

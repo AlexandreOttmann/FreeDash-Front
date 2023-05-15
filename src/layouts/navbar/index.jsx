@@ -195,7 +195,7 @@ export default function Navbar({
         >
           {/* If I'm connected I display the Profil menu, if not => Display Login/Register */}
           {isLogged ? (
-            <AccountPopover onLogoutClick={onLogoutClick} userData={userData[0]} />
+            <AccountPopover onLogoutClick={onLogoutClick} userData={userData} />
           ) : (
             <>
               <Link underline="none" to="/login" component={RouterLink}>
