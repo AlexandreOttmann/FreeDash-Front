@@ -69,17 +69,9 @@ export default function Sidebar({ openSide, onCloseSide }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
-<<<<<<< HEAD
-
-  useEffect(() => {
-    console.log('Je suis dans la sidebar');
-  }, []);
-
-=======
 
 
 
->>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1
   const renderContent = (
     <Scrollbar
       sx={{

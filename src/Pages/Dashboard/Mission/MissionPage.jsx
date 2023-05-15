@@ -17,13 +17,8 @@ import { UserListHead, UserListToolbar } from '../../../sections/@dashboard/user
 
 //mock
 import USERLIST from '../../../_mock/user';
-<<<<<<< HEAD:src/Pages/Dashboard/Mission/MissionsPage.jsx
-import { Link } from 'react-router-dom';
-
-=======
 //utils
 import { retrieveUserId } from '../../../utils/retrieveUserId';
->>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1:src/Pages/Dashboard/Mission/MissionPage.jsx
 
 //===============UTILS=================
 
@@ -211,21 +206,13 @@ export default function MissionPage() {
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <Avatar alt={name} src={'/assets/images/avatars/avatar_1.jpg'} />
-<<<<<<< HEAD:src/Pages/Dashboard/Mission/MissionsPage.jsx
-                            <Typography component={Link} to="/dashboard/clients/${clientId}" variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
-=======
                             <Typography component={Link} to={`/dashboard/clients/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
->>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1:src/Pages/Dashboard/Mission/MissionPage.jsx
                               {name}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-<<<<<<< HEAD:src/Pages/Dashboard/Mission/MissionsPage.jsx
-                        <TableCell component={Link} to="/dashboard/missions/${missionId}" align="left" style={{ textDecoration: 'none' }}>{commentary}</TableCell>
-=======
                         <TableCell align="left" style={{ textDecoration: 'none' }}><Link to={`/dashboard/missions/${id}`}>{commentary}</Link></TableCell>
->>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1:src/Pages/Dashboard/Mission/MissionPage.jsx
 
                         <TableCell align="left">{totalPrice}€</TableCell>
 

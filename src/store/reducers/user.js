@@ -1,33 +1,27 @@
-<<<<<<< HEAD
+//hooks
 import {
   useNavigate
 } from 'react-router';
+import jwt_decode from "jwt-decode";
 import {
   createAction,
   createReducer,
   createAsyncThunk
 } from '@reduxjs/toolkit';
-// import axios from 'axios';
-// import { createAppAsyncThunk } from '../../utils/redux';
+import {
+  useDispatch
+} from 'react-redux';
+//utils
 import {
   axiosInstance
 } from '../../api/axios'
-// import { LoginResponse } from '../../@types/user';
+import {
+  retrieveUserId
+} from '../../utils/retrieveUserId';
 import {
   getUserDataFromLocalStorage,
   removeUserDataFromLocalStorage
 } from '../../utils/user';
-=======
-//hooks
-import { useNavigate } from 'react-router';
-import jwt_decode from "jwt-decode";
-import { createAction, createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
-//utils
-import { axiosInstance } from '../../api/axios'
-import { retrieveUserId } from '../../utils/retrieveUserId';
-import { getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from '../../utils/user';
->>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1
 
 // Je récupère les données stockées dans le localStorage
 // const userData = getUserDataFromLocalStorage();
@@ -50,30 +44,20 @@ export const initialState = {
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-<<<<<<< HEAD
   async ({
     email,
     password,
     resolve
-  }) => {
+  }, thunkAPI) => {
     // On va aller récupérer depuis le state les credentials
-    // Je récupère mon email et mon mot de passe
+
+    const state = thunkAPI.getState()
     const {
       data
     } = await axiosInstance.post('/login', {
         email,
         password,
       })
-=======
-  async ({ email, password, resolve }, thunkAPI) => {
-    // On va aller récupérer depuis le state les credentials
-
-    const state = thunkAPI.getState()
-    const { data } = await axiosInstance.post('/login', {
-      email,
-      password,
-    })
->>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1
       .then((data) => {
         localStorage.setItem('jwt', JSON.stringify(data))
         const decodedToken = jwt_decode(data.data.accessToken)
@@ -93,13 +77,17 @@ export const retrieveUserData = createAsyncThunk('user/RETRIEVE_USER_DATA',
     const token = localStorage.getItem('jwt')
     const decodedToken = jwt_decode(token)
     const userIdFromToken = decodedToken.id
-    const { data } = await axiosInstance.get(`/user/${userIdFromToken}`)
+    const {
+      data
+    } = await axiosInstance.get(`/user/${userIdFromToken}`)
     return data
   }
 );
 
 export const setToken = createAction('user/SET_TOKEN', (token) => ({
-  payload: { token },
+  payload: {
+    token
+  },
 }));
 
 
@@ -117,23 +105,10 @@ export const logout = createAction('user/LOGOUT');
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCredentialsField, (state, action) => {
-<<<<<<< HEAD
-      // Depuis les données reçues dans mon action
       const {
         field,
         value
       } = action.payload;
-      // Pour accéder à la propriété email deux syntaxes possibles
-      // state.credentials.email
-      // state.credentials['email']
-      // L'avantage de la seconde syntaxe est qu'elle permet d'utiliser
-      // une variable pour accéder à la propriété
-      // const emailField = 'email';
-      // state.credentials[emailField];
-      // `field` ici est soit 'email' soit 'password'
-=======
-      const { field, value } = action.payload;
->>>>>>> 27beae3ba669f53ed84f9369c08da965f423abc1
       state.credentials[field] = value;
     })
     .addCase(toggleDarkMode, (state) => {
