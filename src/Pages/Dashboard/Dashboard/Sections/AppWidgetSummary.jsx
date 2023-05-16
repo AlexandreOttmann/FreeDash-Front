@@ -30,12 +30,15 @@ AppWidgetSummary.propTypes = {
 };
 
 export default function AppWidgetSummary({ title, total, price, icon, color = 'primary', sx, ...other }) {
+
   return (
     <Card
       sx={{
         py: 5,
         boxShadow: 0,
         textAlign: 'center',
+        minHeight: 250,
+        maxHeight: 250,
         color: (theme) => theme.palette[color].darker,
         bgcolor: (theme) => theme.palette[color].main,
         ...sx,

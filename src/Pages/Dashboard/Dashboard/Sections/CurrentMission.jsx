@@ -53,7 +53,9 @@ export default function CurrentMission({ displayMissions }) {
                   <Typography variant="h5" align={'left'} >{mission.name}</Typography>
                   <Typography variant="h5" align={'right'} >{mission.startDate}</Typography>
                 </Box>
-                <Typography variant="subtitle2" align={'left'} >{mission.commentary}</Typography>
+                <Link to={`/dashboard/mission/${mission.id}`}>
+                  <Typography variant="subtitle2" align={'left'} >{mission.commentary}</Typography>
+                </Link>
               </Container>
             )
             )

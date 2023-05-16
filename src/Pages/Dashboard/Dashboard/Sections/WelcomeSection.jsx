@@ -29,17 +29,16 @@ export default function WelcomeSection({ color = 'primary', sx, ...other }) {
     <Card
       sx={{
         py: 2,
-        boxShadow: 0,
         paddingX: 3,
-        color: (theme) => theme.palette['primary'].darker,
-        bgcolor: (theme) => theme.palette['primary'].lighter,
+        color: 'black',
+        bgcolor: '#fff',
 
       }}
     >
       <Grid container spacing={3}>
 
         <Grid item xs={8} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 3 }}>
-          <Typography variant="h4" noWrap>Bienvenue sur votre Dashboard</Typography>
+          <Typography variant="h4" >Bienvenue sur votre Dashboard</Typography>
           <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
             Wesh Keny
           </Typography>
@@ -63,8 +62,6 @@ export default function WelcomeSection({ color = 'primary', sx, ...other }) {
             image={dashboard}
             height="250"
             alt="illustration" />
-
-
         </Grid>
       </Grid>
     </Card>

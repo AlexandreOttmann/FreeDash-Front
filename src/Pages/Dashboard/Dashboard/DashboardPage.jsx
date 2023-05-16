@@ -8,8 +8,8 @@ import Iconify from '../../../components/iconify/Iconify';
 import WelcomeSection from './Sections/WelcomeSection';
 import CurrentMission from './Sections/CurrentMission';
 import AppWidgetSummary from './Sections/AppWidgetSummary';
-
-
+import TopClientsSection from './Sections/TopClientsSection';
+import CalendarSection from './Sections/CalendarSection';
 //utils
 import { retrieveUserId } from '../../../utils/retrieveUserId';
 import { retrieveUserData } from '../../../store/reducers/user';
@@ -21,6 +21,8 @@ export default function DashboardPage() {
   const theme = useTheme();
 
   const [missions, setMissions] = useState([]);
+
+  const [topClients, setTopClients] = useState([]) // [ {name: 'client1', missions: 2}, {name: 'client2', missions: 1}
 
   const [clients, setClients] = useState([]);
   const [currentMissions, setCurrentMissions] = useState([]); // [  
@@ -57,6 +59,17 @@ export default function DashboardPage() {
     return uniqueClients.length
   }
 
+  const handleTopClients = (missions) => {
+    // handle 5 most recurrent clients from missions
+    const clients = missions.map(mission => mission.client)
+    const uniqueClients = [...new Set(clients)]
+    const topClients = uniqueClients.map(client => {
+      const ClientMissions = missions.filter(mission => mission.client === client)
+      return { name: ClientMissions[0].name, missions: ClientMissions.length }
+    })
+
+    return topClients
+  }
 
   const getMissions = useCallback(async () => {
     try {
@@ -84,6 +97,10 @@ export default function DashboardPage() {
 
       const totalClientFromApi = handleTotalClient(response.data)
       setTotalClient(totalClientFromApi)
+
+      const topClientsFromApi = handleTopClients(response.data)
+      setTopClients(topClientsFromApi)
+
     } catch (error) {
       console.log(error);
     }
@@ -116,16 +133,26 @@ export default function DashboardPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Total de Missons" total={totalMission} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Total de Missons" total={totalMission} color="info" icon={'material-symbols:add-box-outline-rounded'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Total de Clients" total={totalClient} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Total de Clients" total={totalClient} color="warning" icon={'material-symbols:person'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Missions non déclarées" total={totalMissionNotDeclared} price={totalRevenueNotDeclared} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Missions non déclarées" total={totalMissionNotDeclared} price={totalRevenueNotDeclared} color="error" icon={'ic:round-access-time-filled'} />
           </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <CalendarSection />
+          </Grid>
+
+
+          <Grid item xs={12} sm={6} md={4}>
+            <TopClientsSection clients={topClients} />
+          </Grid>
+
 
 
 
