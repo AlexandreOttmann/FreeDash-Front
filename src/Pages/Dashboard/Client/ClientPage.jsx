@@ -8,19 +8,10 @@ import { axiosInstance } from '../../../api/axios';
 import { useCallback, useEffect, useState } from 'react';
 
 // import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
-import { ClientCard, ClientSearch, ClientSort } from '../../../sections/@dashboard/user/clients';
+import { ClientCard, ClientSearch, ClientSort } from './section';
 // mock
-import Account from '../../../_mock/account';
+// import Account from '../../../_mock/account';
 import { retrieveUserId } from '../../../utils/retrieveUserId';
-
-
-// ----------------------------------------------------------------------
-
-const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' },
-];
 
 // ----------------------------------------------------------------------
 
@@ -34,13 +25,14 @@ export default function ClientsPage() {
 
   const getClients = useCallback(async () => {
     try {
-      const response = await axiosInstance.get('/user/1/client');
+      const response = await axiosInstance.get(`/user/1/clients`);
+      // const response = await axiosInstance.get(`/user/${userId}/clients`);
       setClients(response.data);
+      console.log(clients);
     } catch (error) {
       console.log(error);
     }
   }, []);
-  console.log(clients);
 
   useEffect(() => {
     getClients();
@@ -64,15 +56,13 @@ export default function ClientsPage() {
         </Stack>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <ClientSearch clients={Account} />
-          {/* <ClientSort options={SORT_OPTIONS} /> */}
+          <ClientSearch clients={clients} />
         </Stack>
-
-        {/* <Grid container spacing={3}>
-          {Account.map((post, index) => (
-            <ClientCard key={post.id} post={post} index={index} />
+        <Grid container spacing={3}>
+          {clients.map((client, index) => (
+            <ClientCard key={index} client={client} index={index} />
           ))}
-        </Grid> */}
+        </Grid>
       </Container>
     </>
   )
