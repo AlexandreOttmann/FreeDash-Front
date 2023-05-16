@@ -16,7 +16,7 @@ import Page404 from './Pages/WelcomePages/404/Page404';
 
 
 //DashBoardPages
-import DashboardPage from './Pages/Dashboard/DashboardTable/Dashboard';
+import DashboardPage from './Pages/Dashboard/Dashboard/DashboardPage';
 import ClientPage from './Pages/Dashboard/Client/ClientPage';
 import ClientDetailsPage from './Pages/Dashboard/Client/ClientDetailsPage';
 import NewClientPage from './Pages/Dashboard/Client/NewClientPage';

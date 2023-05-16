@@ -74,7 +74,7 @@ export default function MissionPage() {
       console.log(response.data)
       setMissions(response.data);
     } catch (error) {
-      console.log(error); 
+      console.log(error);
     }
   }, []);
 
