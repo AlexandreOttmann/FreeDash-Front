@@ -59,10 +59,11 @@ function ClientItem({ client, index }) {
   return (
     <Stack direction="row" alignItems="center" spacing={2} key={index}>
 
-      <Box component="img" alt={name} src={`/src/assets/images/avatars/avatar_${index + 1}.jpg`} sx={{ width: 48, height: 48, borderRadius: 10, flexShrink: 0 }} />
+      <Box component="img" alt={name} src={`/src/assets/images/avatars/avatar_${Math.floor(Math.random() * (24 - 1) + 1)
+        }.jpg`} sx={{ width: 48, height: 48, borderRadius: 10, flexShrink: 0 }} />
 
       <Box sx={{ minWidth: 240, flexGrow: 1 }}>
-        <Link color="inherit" variant="subtitle2" underline="hover" noWrap>
+        <Link color="inherit" variant="subtitle2" underline="hover" >
           {name}
         </Link>
 

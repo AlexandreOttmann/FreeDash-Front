@@ -8,15 +8,18 @@ import store from './store/store'
 import "./App.css";
 import { Provider } from "react-redux";
 
+//components
+import { StyledChart } from './components/charts'
+
 function App() {
   return (
     <HelmetProvider>
       <Provider store={store}>
         <BrowserRouter>
           <ThemeProvider>
-          {/* <StyledChart> */}
-          <Router />
-          {/* </StyledChart> */}
+
+            <StyledChart />
+            <Router />
           </ThemeProvider>
         </BrowserRouter>
       </Provider>
