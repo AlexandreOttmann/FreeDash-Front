@@ -1,12 +1,27 @@
 //hooks
-import { useNavigate } from 'react-router';
+import {
+  useNavigate
+} from 'react-router';
 import jwt_decode from "jwt-decode";
-import { createAction, createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
+import {
+  createAction,
+  createReducer,
+  createAsyncThunk
+} from '@reduxjs/toolkit';
+import {
+  useDispatch
+} from 'react-redux';
 //utils
-import { axiosInstance } from '../../api/axios'
-import { retrieveUserId } from '../../utils/retrieveUserId';
-import { getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from '../../utils/user';
+import {
+  axiosInstance
+} from '../../api/axios'
+import {
+  retrieveUserId
+} from '../../utils/retrieveUserId';
+import {
+  getUserDataFromLocalStorage,
+  removeUserDataFromLocalStorage
+} from '../../utils/user';
 
 // Je récupère les données stockées dans le localStorage
 // const userData = getUserDataFromLocalStorage();
@@ -29,14 +44,20 @@ export const initialState = {
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-  async ({ email, password, resolve }, thunkAPI) => {
+  async ({
+    email,
+    password,
+    resolve
+  }, thunkAPI) => {
     // On va aller récupérer depuis le state les credentials
 
     const state = thunkAPI.getState()
-    const { data } = await axiosInstance.post('/login', {
-      email,
-      password,
-    })
+    const {
+      data
+    } = await axiosInstance.post('/login', {
+        email,
+        password,
+      })
       .then((data) => {
         localStorage.setItem('jwt', JSON.stringify(data))
         const decodedToken = jwt_decode(data.data.accessToken)
@@ -56,13 +77,17 @@ export const retrieveUserData = createAsyncThunk('user/RETRIEVE_USER_DATA',
     const token = localStorage.getItem('jwt')
     const decodedToken = jwt_decode(token)
     const userIdFromToken = decodedToken.id
-    const { data } = await axiosInstance.get(`/user/${userIdFromToken}`)
+    const {
+      data
+    } = await axiosInstance.get(`/user/${userIdFromToken}`)
     return data
   }
 );
 
 export const setToken = createAction('user/SET_TOKEN', (token) => ({
-  payload: { token },
+  payload: {
+    token
+  },
 }));
 
 
@@ -80,7 +105,10 @@ export const logout = createAction('user/LOGOUT');
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCredentialsField, (state, action) => {
-      const { field, value } = action.payload;
+      const {
+        field,
+        value
+      } = action.payload;
       state.credentials[field] = value;
     })
     .addCase(toggleDarkMode, (state) => {

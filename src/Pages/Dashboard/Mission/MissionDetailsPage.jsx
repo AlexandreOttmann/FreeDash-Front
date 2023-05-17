@@ -1,9 +1,9 @@
 
 export default function MissionDetailsPage() {
   return (
-   <div>
+    <div>
       <h1>
-        je suis là page MissionDetailsPage
+        je suis la page Mission Details Page
       </h1>
     </div>
   )
