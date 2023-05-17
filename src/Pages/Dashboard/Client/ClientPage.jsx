@@ -7,8 +7,7 @@ import { Link } from 'react-router-dom';
 import { axiosInstance } from '../../../api/axios';
 import { useCallback, useEffect, useState } from 'react';
 
-// import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
-import { ClientCard, ClientSearch, ClientSort } from './section';
+import { ClientCard, ClientSearch } from './section';
 // mock
 // import Account from '../../../_mock/account';
 import { retrieveUserId } from '../../../utils/retrieveUserId';
@@ -18,17 +17,17 @@ import { retrieveUserId } from '../../../utils/retrieveUserId';
 
 export default function ClientsPage() {
 
-  const userId = retrieveUserId()
+  // const userId = retrieveUserId()
 
   //! ==============API=================
   const [clients, setClients] = useState([]);
 
   const getClients = useCallback(async () => {
     try {
-      const response = await axiosInstance.get(`/user/1/clients`);
+      const response = await axiosInstance.get('/user/1/clients');
       // const response = await axiosInstance.get(`/user/${userId}/clients`);
       setClients(response.data);
-      console.log(clients);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
