@@ -7,7 +7,6 @@ export const retrieveUserId = () => {
   if (token) {
     const decoded = jwt_decode(token)
     const userId = decoded.id;
-    console.log("l'user id", userId)
     return userId;
   } else {
     console.log('pas de token')
