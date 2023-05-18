@@ -77,7 +77,7 @@ export default function ClientCard({ client }) {
 
       const filteredList = response.data.filter(mission => mission.clientId !== id)
 
-      console.log('la reponse', filteredList)
+      // console.log('la reponse', filteredList)
 
       setMissionsNumber(response.data);
 
@@ -97,7 +97,7 @@ export default function ClientCard({ client }) {
     { number: id, icon: 'eva:file-text-outline' },
   ];
 
-  console.log(client)
+  // console.log(client)
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Card sx={{ position: 'relative', ...cardStyles }}>
