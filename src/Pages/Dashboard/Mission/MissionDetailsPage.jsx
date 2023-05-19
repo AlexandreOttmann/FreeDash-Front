@@ -95,6 +95,7 @@ export default function MissionDetailsPage() {
   }, [])
 
   return (
+
     <>
       <Helmet>
         <title> Détails de la mission | DashFree </title>

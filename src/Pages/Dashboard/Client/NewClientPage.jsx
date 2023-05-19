@@ -67,6 +67,7 @@ export default function NewClientPage() {
 
 
   return (
+
     <>
       <Helmet>
         <title> Nouveau Client | DashFree </title>
@@ -218,5 +219,6 @@ export default function NewClientPage() {
       </StyledRoot>
 
     </>
+
   )
 }
