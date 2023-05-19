@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import * as LottiePlayer from "@lottiefiles/lottie-player";
 
 
 //mui
@@ -32,12 +33,13 @@ export default function WelcomeSection({ color = 'primary', sx, ...other }) {
         paddingX: 3,
         color: 'black',
         bgcolor: '#fff',
+        minHeight: '100%',
 
       }}
     >
-      <Grid container spacing={3}>
+      <Grid container spacing={0}>
 
-        <Grid item xs={8} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 3 }}>
+        <Grid item xs={6} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 3 }}>
           <Typography variant="h4" >Bienvenue sur votre Dashboard</Typography>
           <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
             Wesh Keny
@@ -57,11 +59,14 @@ export default function WelcomeSection({ color = 'primary', sx, ...other }) {
         </Grid>
 
         <Grid item>
-          <CardMedia
-            component="img"
-            image={dashboard}
-            height="250"
-            alt="illustration" />
+          <lottie-player
+            autoplay
+            loop
+            mode="normal"
+            style={{ height: "300px" }}
+            src="https://assets6.lottiefiles.com/packages/lf20_BgywoUBeiL.json"
+          />
+
         </Grid>
       </Grid>
     </Card>

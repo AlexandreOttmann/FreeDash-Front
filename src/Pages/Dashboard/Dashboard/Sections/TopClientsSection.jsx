@@ -20,11 +20,12 @@ const StyledIcon = styled('div')(({ theme }) => ({
 export default function TopClientsSection({ clients }) {
 
   return (
-    <Card>
-      <CardHeader title={"Top Clients"} />
-
+    <Card sx={{ height: 500 }}>
       <Scrollbar>
-        <Stack spacing={3} sx={{ p: 3 }}>
+        <CardHeader title={"Top Clients"} />
+
+
+        <Stack spacing={3} sx={{ p: 3 }} >
           {clients.map((client, index) => {
             while (index < 5) {
               return (
@@ -34,18 +35,18 @@ export default function TopClientsSection({ clients }) {
           }
           )}
         </Stack>
+
+
+        <Divider />
+
+        <Link to='/dashboard/mission' >
+          <Box sx={{ p: 2, textAlign: 'right' }}>
+            <Button size="small" color="inherit" underline="hover" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
+              Toutes les missions
+            </Button>
+          </Box>
+        </Link>
       </Scrollbar>
-
-      <Divider />
-
-      <Link to='/dashboard/newmission' >
-        <Box sx={{ p: 2, textAlign: 'right' }}>
-          <Button size="small" color="inherit" underline="hover" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-            Toutes les missions
-          </Button>
-        </Box>
-      </Link>
-
     </Card>
 
   )
@@ -68,7 +69,7 @@ function ClientItem({ client, index }) {
         </Link>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-          Nombre de missions: {missions}
+          Nombre de missions: {missions.length}
         </Typography>
       </Box>
       {/* Displaying trophy for 3 first clients */}
@@ -94,11 +95,6 @@ function ClientItem({ client, index }) {
       )
 
       }
-
-
-
-
-
     </Stack>
   )
 }

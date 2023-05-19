@@ -15,6 +15,7 @@ import GlobalStyles from './globalStyles';
 import customShadows from './customShadows';
 import componentsOverride from './overrides';
 
+
 // ----------------------------------------------------------------------
 
 ThemeProvider.propTypes = {
@@ -50,7 +51,7 @@ export default function ThemeProvider({ children }) {
       shadows: shadows(),
       customShadows: customShadows(),
     }),
-    [isDarkMode]
+    [isDarkMode],
   );
 
   const theme = createTheme(themeOptions);

@@ -11,6 +11,7 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@lottiefiles/lottie-player": "^1.7.1",
     "@mui/x-date-pickers": "^6.4.0",
     "@react-pdf/renderer": "^3.1.9",
     "@reduxjs/toolkit": "^1.9.5",
