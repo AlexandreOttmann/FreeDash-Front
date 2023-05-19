@@ -11,6 +11,7 @@ import { ClientCard, ClientSearch } from './section';
 // mock
 // import Account from '../../../_mock/account';
 import { retrieveUserId } from '../../../utils/retrieveUserId';
+import { UserListToolbar } from '../../../sections/@dashboard/user';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +38,18 @@ export default function ClientsPage() {
     getClients();
   }, [getClients]);
 
-  //========================================
+  //==============UTILS FOR STATES====================
+
+  // const [selected, setSelected] = useState([]);
+  // const [filterName, setFilterName] = useState('');
+  // const [page, setPage] = useState(0);
+
+
+  // const handleFilterByName = (event) => {
+  //   setPage(0);
+  //   setFilterName(event.target.value);
+  // };
+
   return (
     <>
       <Helmet>
@@ -56,6 +68,8 @@ export default function ClientsPage() {
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <ClientSearch clients={clients} />
+          {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
+
         </Stack>
         <Grid container spacing={3}>
           {clients.map((client, index) => (
