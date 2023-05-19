@@ -1,9 +1,8 @@
 //mui
-import { styled } from '@mui/material/styles';
 import { Card, Typography, Grid, CardMedia, Avatar } from "@mui/material";
 
 //utils
-
+import { useParams } from "react-router";
 import illustration from '../../../../assets/illustrations/table_illustration.png'
 import { retrieveUserId } from '../../../../utils/retrieveUserId';
 import { useCallback, useEffect, useState } from 'react';
@@ -11,25 +10,24 @@ import { axiosInstance } from '../../../../api/axios';
 
 
 export default function DetailsSection() {
-
+  const { idclient } = useParams();
   const userId = retrieveUserId()
   //! ==============API=================
-  const [clients, setClients] = useState([]);
-  const getClients = useCallback(async () => {
+  const [client, setClient] = useState([]);
+  const getClient = useCallback(async () => {
     try {
-      const response = await axiosInstance.get('/user/1/clients');
-      // const response = await axiosInstance.get(`/user/${userId}/clients`);
-      console.log(response.data)
-      console.log(clients);
-      setClients(response.data);
+      const response = await axiosInstance.get(`/clients/2`);
+      // const response = await axiosInstance.get(`/user/${userId}/clients/${idclient}`);
+      console.log("client:", response.data)
+      setClient(response.data);
     } catch (error) {
       console.log(error);
     }
   }, []);
 
   useEffect(() => {
-    getClients();
-  }, [getClients]);
+    getClient();
+  }, [getClient]);
 
   return (
     <Card
@@ -48,10 +46,10 @@ export default function DetailsSection() {
             src={`/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
             sx={{ width: 100, height: 100 }}
           />
-          <Typography variant="h4" >Détails du client</Typography>
-          <Typography variant="h5" >Localisation: </Typography>
-          <Typography variant="h5" >Particulier ou société </Typography>
-          <Typography variant="h5" >Missions déja effectué avec ce client: </Typography>
+          <Typography variant="h4" >{client.firstName} {client.lastName}</Typography>
+          <Typography variant="h5" >Localisation: {client.city} </Typography>
+          <Typography variant="h5" > Particulier / Société: {client.role} </Typography>
+          <Typography variant="h5" > Missions déja effectué avec ce client:  </Typography>
 
         </Grid>
 

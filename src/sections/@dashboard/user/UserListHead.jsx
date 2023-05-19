@@ -52,7 +52,7 @@ export default function UserListHead({
         </TableCell>
         {headLabel.map((headCell) => (
           <TableCell
-            key={headCell.id}
+            key={crypto.randomUUID()}
             align={headCell.alignRight ? 'right' : 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
