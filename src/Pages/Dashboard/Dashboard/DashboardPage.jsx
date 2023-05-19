@@ -19,6 +19,7 @@ import { retrieveUserData } from '../../../store/reducers/user';
 
 import { axiosInstance } from '../../../api/axios'
 import { last } from 'lodash';
+import { fi } from 'date-fns/locale';
 
 
 export default function DashboardPage() {
@@ -67,22 +68,26 @@ export default function DashboardPage() {
     return revenueDeclared
   }
 
-  const handleTotalClient = (missions) => {
-    const clients = missions.map(mission => mission.client)
-    const uniqueClients = [...new Set(clients)]
-    return uniqueClients.length
+  const handleTotalClient = (clients) => {
+    return clients.length
   }
 
   const handleTopClients = (missions) => {
     // handle 5 most recurrent clients from missions
-    const clients = missions.map(mission => mission.client)
-    const uniqueClients = [...new Set(clients)]
-    const topClients = uniqueClients.map(client => {
-      const ClientMissions = missions.filter(mission => mission.client === client)
-      console.log(client)
-      return { name: ClientMissions[0].name, missions: ClientMissions.length, }
-    })
-    return topClients
+    // we got a value mission.clientFirstName and clientLastName to check the client name, we need to take it into account
+    const topClients = missions.reduce((acc, mission) => {
+      const clientName = `${mission.clientFirstName} ${mission.clientLastName}`
+      if (!acc[clientName]) {
+        acc[clientName] = { name: clientName, missions: [mission] }
+      } else {
+        acc[clientName].missions.push(mission)
+      }
+      return acc
+    }
+      , {})
+    const topClientsArray = Object.values(topClients)
+    topClientsArray.sort((a, b) => b.missions.length - a.missions.length)
+    return topClientsArray.slice(0, 5)
   }
 
   const handleRevenueEvolution = (missions) => {
@@ -90,7 +95,6 @@ export default function DashboardPage() {
     const filteredMissions = missions.filter(mission => mission.status !== 'En Cours' && new Date(mission.endDate) > new Date(new Date().setMonth(new Date().getMonth() - 11)))
 
     filteredMissions.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
-    console.log('filtered', filteredMissions)
     const revenueEvolution = new Array(11).fill(0);
     let previousRevenue = 0;
     filteredMissions.forEach(mission => {
@@ -112,41 +116,63 @@ export default function DashboardPage() {
       const formattedDate = `${(month.getMonth() + 1).toString().padStart(2, '0')}/${month.getDate().toString().padStart(2, '0')}/${month.getFullYear()}`;
       dates.push(formattedDate);
     }
-    console.log(dates)
+
     return dates
   }
 
 
   const handleMonthlyRevenue = (missions) => {
-    const filteredMissions = missions.filter(mission => mission.status !== 'En Cours' && new Date(mission.endDate) > new Date(new Date().setMonth(new Date().getMonth() - 11)))
+    const filteredMissions = missions.filter(mission => mission.status !== 'En Cours' && new Date(mission.endDate) > new Date(new Date().setMonth(new Date().getMonth() - 11)));
+    console.log('filtered', filteredMissions);
 
-    filteredMissions.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
     const monthlyRevenue = new Array(11).fill(0);
 
-
     filteredMissions.forEach(mission => {
+      const startDate = new Date(mission.startDate);
+      const endDate = new Date(mission.endDate);
+      const startMonth = startDate.getMonth();
+      const endMonth = endDate.getMonth();
+      const startYear = startDate.getFullYear();
+      const endYear = endDate.getFullYear();
+
+      const monthDiff = (endYear - startYear) * 12 + (endMonth - startMonth);
+      const totalMonths = Math.min(monthDiff + 1, 11);
+
+      const startOffset = new Date().getMonth() - startMonth;
+      const endOffset = new Date().getMonth() - endMonth;
+
+      for (let i = 0; i < totalMonths; i++) {
+        const monthIndex = (startOffset + i + 11) % 11;
+        monthlyRevenue[monthIndex] += +mission.totalPrice / totalMonths;
+      }
+    });
+
+    console.log('monthlyRevenue', monthlyRevenue);
+    return monthlyRevenue.reverse();
+  };
 
 
-      const endDate = new Date(mission.endDate)
-      const monthIndex = Math.abs(new Date().getMonth() + endDate.getMonth());
 
-      const revenue = +mission.totalPrice
-      monthlyRevenue[monthIndex + 3] = revenue
-    })
-    console.log(monthlyRevenue)
-    return monthlyRevenue
-  }
+  const getClients = useCallback(async () => {
+    try {
+      const response = await axiosInstance.get(`user/${userId}/clients`);
+      // const response = await axiosInstance.get(`/user/1/clients`);
 
+      setClients(response.data);
 
-
+      const totalClientFromApi = handleTotalClient(response.data)
+      setTotalClient(totalClientFromApi)
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
 
   const getMissions = useCallback(async () => {
     try {
       //! => Change user ID from localStorage
-      // const response = await axiosInstance.get(`user/${userId}/mission`);
-      const response = await axiosInstance.get('/user/1/mission');
-      console.log(response.data)
+      const response = await axiosInstance.get(`user/${userId}/mission`);
+      // const response = await axiosInstance.get('/user/1/mission');
 
       // set Mission NUmber
       setTotalMission(response.data.length);
@@ -168,10 +194,8 @@ export default function DashboardPage() {
       const revenueDeclaredFromApi = handleRevenueDeclared(response.data)
       setTotalRevenueDeclared(revenueDeclaredFromApi)
 
-      const totalClientFromApi = handleTotalClient(response.data)
-      setTotalClient(totalClientFromApi)
-
       const topClientsFromApi = handleTopClients(response.data)
+      console.log('TOP CLIENT', topClientsFromApi)
       setTopClients(topClientsFromApi)
 
       const revenueEvolutionFromApi = handleRevenueEvolution(response.data)
@@ -186,6 +210,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     getMissions();
+    getClients();
     const months = lastElevenMonths()
     setLastMonths(months)
   }, []);
@@ -269,14 +294,6 @@ export default function DashboardPage() {
               ]}
             />
           </Grid>
-
-
-
-
-
-
-
-
         </Grid>
       </Container>
     </>
