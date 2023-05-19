@@ -206,7 +206,7 @@ export default function MissionPage() {
                       <TableCell component="th" scope="row" padding="none">
                         <Stack direction="row" alignItems="center" spacing={2}>
                           <Avatar alt={name} src={'/assets/images/avatars/avatar_1.jpg'} />
-                          <Typography component={Link} to={`/dashboard/clients/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
+                          <Typography component={Link} to={`/dashboard/client/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
                             {clientFirstName} {clientLastName}
                           </Typography>
                         </Stack>

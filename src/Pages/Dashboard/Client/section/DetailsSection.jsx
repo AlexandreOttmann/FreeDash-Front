@@ -16,8 +16,7 @@ export default function DetailsSection() {
   const [client, setClient] = useState([]);
   const getClient = useCallback(async () => {
     try {
-      const response = await axiosInstance.get(`/clients/2`);
-      // const response = await axiosInstance.get(`/user/${userId}/clients/${idclient}`);
+      const response = await axiosInstance.get(`/clients/${idclient}`);
       console.log("client:", response.data)
       setClient(response.data);
     } catch (error) {

@@ -172,7 +172,7 @@ export default function ClientListMission(index) {
                 const selectedUser = selected.indexOf(id) !== -1;
                 console.log("j'ai cet id", id);
                 return (
-                  <TableRow hover key={index} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                  <TableRow hover key={Math.random(index)} tabIndex={-1} role="checkbox" selected={selectedUser}>
                     <TableCell padding="checkbox">
                       <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
                     </TableCell>
