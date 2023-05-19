@@ -99,13 +99,15 @@ export default function DashboardPage() {
     filteredMissions.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
     const revenueEvolution = new Array(11).fill(0);
     let previousRevenue = 0;
+
     filteredMissions.forEach(mission => {
       previousRevenue += +mission.totalPrice
 
       const endDate = new Date(mission.endDate)
       const monthIndex = Math.abs(new Date().getMonth() + endDate.getMonth());
-      revenueEvolution[monthIndex + 3] = previousRevenue
+      revenueEvolution[monthIndex + 2] = previousRevenue
     })
+    console.log('revenueEvolution', revenueEvolution)
     return revenueEvolution
   }
 
@@ -299,6 +301,5 @@ export default function DashboardPage() {
         </Grid>
       </Container>
     </>
-
   )
 }

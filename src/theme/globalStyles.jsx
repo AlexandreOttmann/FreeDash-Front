@@ -51,7 +51,8 @@ export default function GlobalStyles() {
           padding: 0,
         },
         a: {
-          color: '#3366FF',
+          color: '#5BE584',
+          textDecoration: 'none',
         }
       }}
     />
