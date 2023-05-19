@@ -22,7 +22,7 @@ import { de } from "date-fns/locale";
 
 
 
-export default function EditMission({ details, missionId }) {
+export default function EditMission({ details, missionId, handleClose }) {
   console.log('detail', details)
 
 
@@ -79,6 +79,7 @@ export default function EditMission({ details, missionId }) {
       console.log('requête lancée avec les données : ', response)
       setSuccess('La mission a bien été modifiée')
       setLoading(false)
+      handleClose()
     } catch (error) {
       console.log(error)
       setError('Une erreur est survenue')

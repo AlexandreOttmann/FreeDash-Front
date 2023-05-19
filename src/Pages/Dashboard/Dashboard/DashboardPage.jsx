@@ -2,8 +2,10 @@ import { Helmet } from 'react-helmet-async';
 import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
+
 // components
 import Iconify from '../../../components/iconify/Iconify';
+
 
 // sections
 import WelcomeSection from './Sections/WelcomeSection';
@@ -174,7 +176,7 @@ export default function DashboardPage() {
       const response = await axiosInstance.get(`user/${userId}/mission`);
       // const response = await axiosInstance.get('/user/1/mission');
 
-      // set Mission NUmber
+      // set Mission Number
       setTotalMission(response.data.length);
 
       // set All Missions

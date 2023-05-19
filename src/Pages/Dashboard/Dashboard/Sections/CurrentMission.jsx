@@ -12,21 +12,11 @@ export default function CurrentMission({ displayMissions }) {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    // speed: 1000,
     slidesToShow: 1,
-    // slidesToScroll: 1,
-    // autoplay: true,
-    // autoplaySpeed: 2000,
-    // cssEase: "linear",
-    // fade: true,
-    // adaptiveHeight: true,
-    // centerMode: true,
-    // centerPadding: "60px",
-    // variableWidth: true,
-    // rows: 2,
-    // slidesPerRow: 2,
-    // vertical: true,
-    // verticalSwiping: true,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2500,
   };
 
   return (
