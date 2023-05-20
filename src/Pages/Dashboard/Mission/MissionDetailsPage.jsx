@@ -1,6 +1,7 @@
 import { useState, useEffect, forwardRef } from "react";
 import { Helmet } from "react-helmet-async"
 import { useParams } from 'react-router';
+import { useNavigate } from "react-router-dom";
 //utils
 import { axiosInstance } from '../../../api/axios'
 import { retrieveUserId } from '../../../utils/retrieveUserId';
@@ -8,7 +9,7 @@ import { retrieveUserId } from '../../../utils/retrieveUserId';
 //mui
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Avatar, Container, Typography, Divider, Stack, Button, Card, CardContent, Box } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-
+import { useTheme } from '@mui/material/styles';
 //Component
 import EditMission from "./Sections/EditMission";
 import SvgColor from "../../../components/svg-color/SvgColor";
@@ -43,6 +44,10 @@ const StyledCover = styled('img')({
   position: 'absolute',
 });
 
+const StyledButton = styled('span')(({ theme }) => ({
+  mixBlendMode: 'difference',
+}));
+
 const StyledInfo = styled('div')(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
@@ -55,12 +60,34 @@ const StyledInfo = styled('div')(({ theme }) => ({
 
 
 export default function MissionDetailsPage() {
+  //hooks
+  const theme = useTheme()
+  const navigate = useNavigate();
 
   const [mission, setMission] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const [open, setOpen] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+
+  const handleDeleteClickOpen = () => {
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.delete(`/mission/${idmission}`)
+      navigate('/dashboard/mission')
+    } catch (error) {
+      console.log("La mission n'a pas pu être supprimée", error)
+    }
+  }
+
 
   const { idmission } = useParams()
 
@@ -77,7 +104,6 @@ export default function MissionDetailsPage() {
     setLoading(true)
     try {
       const response = await axiosInstance.get(`/mission/${idmission}`)
-      // const response = await axiosInstance.get(`/user/1/clients`)
       console.log(response.data)
       setMission(response.data)
       setLoading(false)
@@ -91,7 +117,6 @@ export default function MissionDetailsPage() {
 
   useEffect(() => {
     GetMission()
-    console.log(mission)
   }, [])
 
   return (
@@ -135,10 +160,12 @@ export default function MissionDetailsPage() {
               {mission?.clientFirstName} {mission?.clientLastName}
             </Typography>
 
-            <StyledCover alt={mission?.clientFirstName} src="/src/assets/images/covers/cover_12.jpg" />
+            <StyledCover alt={mission?.clientFirstName} src="/src/assets/images/covers/cover_1.jpg" />
 
             <StyledInfo>
-              <Button variant="outline" sx={{ minHeight: 50 }} onClick={handleClickOpen}>Modifier la mission</Button>
+              <StyledButton>
+                <Button variant="text" sx={{ minHeight: 50 }} onClick={handleClickOpen}>Modifier la mission</Button>
+              </StyledButton>
             </StyledInfo>
           </StyledCardMedia>
 
@@ -150,7 +177,7 @@ export default function MissionDetailsPage() {
             <Divider />
 
             <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mt: 3 }}>
-              <Stack spacing={2} sx={{ width: { md: '50%' } }}>
+              <Stack spacing={2} sx={{ width: { md: '100%' } }}>
                 <Typography variant="subtitle2" gutterBottom>
                   Date de début
                 </Typography>
@@ -190,7 +217,7 @@ export default function MissionDetailsPage() {
                   Déclarée
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {mission?.declared ? 'Oui' : 'Non'}
+                  {mission?.declarate ? 'Oui' : 'Non'}
                 </Typography>
 
                 <Typography variant="subtitle2" gutterBottom>
@@ -200,19 +227,39 @@ export default function MissionDetailsPage() {
                   {mission?.commentary}
                 </Typography>
 
+
+                <StyledInfo>
+                  <Button onClick={handleDeleteClickOpen}>
+                    Supprimer la mission
+                  </Button>
+                </StyledInfo>
               </Stack>
-
             </Stack>
-
-
-
-
-
-
           </Stack>
 
         </Card>
         {/* </Card > */}
+
+
+
+        <Dialog
+          open={openDelete}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseDelete}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle sx={{ color: theme.palette.error.main }}>Supprimer la mission</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Etes vous sur de vouloir supprimer cette mission ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDelete} sx={{ color: theme.palette.success.main }}>Annuler</Button>
+            <Button onClick={handleDelete} sx={{ color: theme.palette.error.main }}>Supprimer</Button>
+          </DialogActions>
+        </Dialog>
 
 
         <Dialog

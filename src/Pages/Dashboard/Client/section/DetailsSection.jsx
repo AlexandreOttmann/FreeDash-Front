@@ -9,24 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { axiosInstance } from '../../../../api/axios';
 
 
-export default function DetailsSection() {
-  const { idclient } = useParams();
-  const userId = retrieveUserId()
-  //! ==============API=================
-  const [client, setClient] = useState([]);
-  const getClient = useCallback(async () => {
-    try {
-      const response = await axiosInstance.get(`/clients/${idclient}`);
-      console.log("client:", response.data)
-      setClient(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    getClient();
-  }, [getClient]);
+export default function DetailsSection({ client, missionsNumber }) {
 
   return (
     <Card
@@ -47,8 +30,8 @@ export default function DetailsSection() {
           />
           <Typography variant="h4" >{client.firstName} {client.lastName}</Typography>
           <Typography variant="h5" >Localisation: {client.city} </Typography>
-          <Typography variant="h5" > Particulier / Société: {client.role} </Typography>
-          <Typography variant="h5" > Missions déja effectué avec ce client:  </Typography>
+          <Typography variant="h5" > {client.provenance} </Typography>
+          <Typography variant="h5" > Missions déja effectué avec ce client:  {missionsNumber}</Typography>
 
         </Grid>
 

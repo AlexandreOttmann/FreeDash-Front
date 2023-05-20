@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent, Button } from '@mui/material';
+import { Box, Card, Grid, Avatar, Typography, CardContent, Button } from '@mui/material';
 
 // utils
 import { fDatefr } from '../../../../utils/formatTime';
@@ -63,7 +64,7 @@ ClientCard.propTypes = {
 
 export default function ClientCard({ client }) {
 
-  const { firstName, lastName, createdAt, id } = client;
+  const { firstName, lastName, createdAt, id, email } = client;
 
 
   const userId = retrieveUserId()
@@ -101,60 +102,60 @@ export default function ClientCard({ client }) {
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Card sx={{ position: 'relative', ...cardStyles }}>
-        <StyledCardMedia>
-          <SvgColor
-            color="paper"
-            src="/assets/icons/shape-avatar.svg"
-            sx={{
-              width: 80,
-              height: 36,
-              zIndex: 9,
-              bottom: -15,
-              position: 'absolute',
-              color: 'background.paper',
-            }}
-          />
-          <StyledAvatar
-            alt={firstName}
-            src={`../../../../assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
-          />
+        <Link to={`/dashboard/client/${id}`} >
+          <StyledCardMedia>
+            <SvgColor
+              color="paper"
+              src="/assets/icons/shape-avatar.svg"
+              sx={{
+                width: 80,
+                height: 36,
+                zIndex: 9,
+                bottom: -15,
+                position: 'absolute',
+                color: 'background.paper',
+              }}
+            />
+            <StyledAvatar
+              alt={firstName}
+              src={`../../../../assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
+            />
 
-          <StyledCover alt={firstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
-        </StyledCardMedia>
+            <StyledCover alt={firstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
+          </StyledCardMedia>
 
-        <CardContent>
+          <CardContent>
 
-          <Typography variant="h4">
-            {`${firstName} ${lastName}`}
-          </Typography>
-          <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-            Date de création : {fDatefr(createdAt)}
-          </Typography>
+            <Typography variant="h4">
+              {`${firstName} ${lastName}`}
+            </Typography>
+            <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
+              Date de création : {fDatefr(createdAt)}
+            </Typography>
 
 
-          <StyledInfo>
-            {POST_INFO.map((info, index) => (
+            <StyledInfo>
+
               <Box
-                key={index}
+
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   ml: 1.5,
                 }}
               >
-                <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
+                {/* <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} /> */}
+                <Typography variant="caption">{email}</Typography>
               </Box>
-            ))}
-          </StyledInfo>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
-            <Link href={`/dashboard/client/${id}`} underline="none">
+
+            </StyledInfo>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
               <Button size="medium" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
                 Détails du client
               </Button>
-            </Link>
-          </Box>
-        </CardContent>
+            </Box>
+          </CardContent>
+        </Link>
       </Card>
     </Grid >
   );
