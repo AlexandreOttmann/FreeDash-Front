@@ -78,7 +78,7 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>Modifier la mission</DialogTitle>
+        <DialogTitle>Modifier les informations du client</DialogTitle>
         <DialogContent>
           <EditClient details={client} handleClose={handleClose} />
         </DialogContent>
