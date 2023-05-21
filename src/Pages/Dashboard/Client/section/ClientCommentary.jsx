@@ -6,13 +6,14 @@ export default function ClientCommentary({ client }) {
   return (
     <Card
       sx={{
+        my: 3,
         py: 2,
         paddingX: 3,
-        color: 'black',
-        bgcolor: '#fff',
-
       }}>
-      <Typography variant="body1">
+      <Typography variant="h6" sx={{ fontWeight: 'bold' }} gutterBottom>
+        Commentaire :
+      </Typography>
+      <Typography variant="body2">
         {client.commentary}
       </Typography>
     </Card >

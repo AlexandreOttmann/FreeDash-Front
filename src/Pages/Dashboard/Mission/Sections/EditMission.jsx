@@ -17,8 +17,7 @@ import dayjs from "dayjs";
 
 import { retrieveUserId } from '../../../../utils/retrieveUserId';
 import { axiosInstance } from "../../../../api/axios";
-import { set } from "lodash";
-import { de } from "date-fns/locale";
+
 
 
 
@@ -79,6 +78,7 @@ export default function EditMission({ details, missionId, handleClose }) {
       console.log('requête lancée avec les données : ', response)
       setSuccess('La mission a bien été modifiée')
       setLoading(false)
+      window.location.reload();
       handleClose()
     } catch (error) {
       console.log(error)
@@ -102,8 +102,6 @@ export default function EditMission({ details, missionId, handleClose }) {
     setStartDate(formattedStartDate);
     setEndDate(formattedEndDate);
 
-    console.log(formattedStartDate);
-    console.log('startDate', startDate);
 
   }, [details])
 

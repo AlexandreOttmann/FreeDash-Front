@@ -39,10 +39,10 @@ export default function TopClientsSection({ clients }) {
 
         <Divider />
 
-        <Link to='/dashboard/mission' >
+        <Link to='/dashboard/client' >
           <Box sx={{ p: 2, textAlign: 'right' }}>
             <Button size="small" color="inherit" underline="hover" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-              Toutes les missions
+              Tous les clients
             </Button>
           </Box>
         </Link>
@@ -56,6 +56,7 @@ export default function TopClientsSection({ clients }) {
 
 
 function ClientItem({ client, index }) {
+
   const { name, missions } = client;
   return (
     <Stack direction="row" alignItems="center" spacing={2} key={index}>
@@ -64,7 +65,7 @@ function ClientItem({ client, index }) {
         }.jpg`} sx={{ width: 48, height: 48, borderRadius: 10, flexShrink: 0 }} />
 
       <Box sx={{ minWidth: 240, flexGrow: 1 }}>
-        <Link color="inherit" variant="subtitle2" underline="hover" >
+        <Link color="inherit" variant="subtitle2" underline="hover" to={`/dashboard/client/${missions[0].clientId}`}>
           {name}
         </Link>
 

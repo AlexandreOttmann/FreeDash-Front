@@ -249,15 +249,15 @@ export default function MissionDetailsPage() {
           onClose={handleCloseDelete}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle sx={{ color: theme.palette.error.main }}>Supprimer la mission</DialogTitle>
+          <DialogTitle color="error">Supprimer la mission</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Etes vous sur de vouloir supprimer cette mission ?
+              Êtes-vous sûr de vouloir supprimer cette mission ?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDelete} sx={{ color: theme.palette.success.main }}>Annuler</Button>
-            <Button onClick={handleDelete} sx={{ color: theme.palette.error.main }}>Supprimer</Button>
+            <Button onClick={handleCloseDelete} color="success">Annuler</Button>
+            <Button onClick={handleDelete} color="error">Supprimer</Button>
           </DialogActions>
         </Dialog>
 
