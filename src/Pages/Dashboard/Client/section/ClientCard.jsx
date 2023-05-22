@@ -76,8 +76,8 @@ export default function ClientCard({ client }) {
 
   const getMissionsNumber = useCallback(async () => {
     try {
-      const response = await axiosInstance.get(`user/1/mission`);
-      // const response = await axiosInstance.get(`user/${userId}/mission`);
+      // const response = await axiosInstance.get(`user/1/mission`);
+      const response = await axiosInstance.get(`user/${userId}/mission`);
 
       const filteredList = response.data.filter(mission => mission.clientId !== id)
 
@@ -95,11 +95,6 @@ export default function ClientCard({ client }) {
     getMissionsNumber()
   }, [getMissionsNumber])
 
-
-  //! number à modifier pour prendre le nombre de missions du client ici j'ai mis id en attendant pour afficher un nombre
-  const POST_INFO = [
-    { number: id, icon: 'eva:file-text-outline' },
-  ];
 
   // console.log(client)
   return (

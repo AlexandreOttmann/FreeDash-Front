@@ -10,11 +10,10 @@ import { axiosInstance } from '../../../api/axios';
 import { retrieveUserId } from '../../../utils/retrieveUserId';
 
 // @mui
-import { styled, alpha } from '@mui/material/styles';
+import { styled} from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 
 import {
-  Stack,
   Button,
   Container,
   Typography,
@@ -24,11 +23,7 @@ import {
   DialogContentText,
   DialogTitle,
   Slide,
-  Avatar,
-  Card,
 } from '@mui/material';
-// components
-import Iconify from '../../../components/iconify';
 // sections
 import DetailsSection from './section/DetailsSection';
 import ClientListMission from './section/ClientListMission';
@@ -44,9 +39,9 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 
 
-const StyledButton = styled('span')(({ theme }) => ({
-  mixBlendMode: 'difference',
-}));
+// const StyledButton = styled('span')(({ theme }) => ({
+//   mixBlendMode: 'difference',
+// }));
 
 const StyledInfo = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -74,7 +69,6 @@ export default function ClientDetailsPage() {
   const [totalGain, setTotalGain] = useState(0);
 
   const [openDelete, setOpenDelete] = useState(false)
-
 
 
   //handle modal
