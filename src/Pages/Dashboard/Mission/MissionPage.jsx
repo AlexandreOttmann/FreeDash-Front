@@ -96,7 +96,7 @@ export default function MissionPage() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);

@@ -4,10 +4,11 @@ import Scrollbar from "../../../../components/scrollbar/Scrollbar";
 import { Link } from "react-router-dom";
 import Label from "../../../../components/label/Label";
 import Iconify from "../../../../components/iconify/Iconify";
-import { useCallback, useEffect, useState } from "react";
-import { axiosInstance } from "../../../../api/axios";
-import { retrieveUserId } from "../../../../utils/retrieveUserId";
+import { useState } from "react";
+
 import { filter } from "lodash";
+
+
 
 
 // ----------------------------------------------------------------------
@@ -53,27 +54,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 
-export default function ClientListMission(index) {
-
-  // const userId = retrieveUserId()
-  //! ==============API=================
-  const [missions, setMissions] = useState([]);
-  const getMissions = useCallback(async () => {
-    try {
-      //! => Change user ID from localStorage
-      // const response = await axiosInstance.get(`user/${userId}/mission`);
-      const response = await axiosInstance.get('/user/1/mission');
-      console.log(response.data)
-      setMissions(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    getMissions();
-  }, []);
-
+export default function ClientListMission({ missions, index }) {
   //==============UTILS FOR STATES====================
 
   const [open, setOpen] = useState(null);
@@ -88,7 +69,7 @@ export default function ClientListMission(index) {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
   const handleOpenMenu = (event) => {
@@ -177,11 +158,11 @@ export default function ClientListMission(index) {
                       <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
                     </TableCell>
 
-                    <TableCell component="th" scope="row" padding="none">
+                    <TableCell component="th" scope="row" padding="none" >
                       <Stack direction="row" alignItems="center" spacing={2}>
                         <Avatar alt={name} src={`/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
-                        <Typography component={Link} to={`/dashboard/mission/${client_id}`} variant="subtitle2" noWrap>
-                          {commentary}
+                        <Typography component={Link} to={`/dashboard/mission/${id}`} variant="subtitle2" noWrap >
+                          {name}
                         </Typography>
                       </Stack>
                     </TableCell>

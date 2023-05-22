@@ -26,7 +26,7 @@ export default function ClientSearch({ clients }) {
       popupIcon={null}
       PopperComponent={StyledPopper}
       options={clients}
-      getOptionLabel={(clients) => clients.title}
+      getOptionLabel={(clients) => clients.firstName + ' ' + clients.lastName}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       renderInput={(params) => (
         <TextField
