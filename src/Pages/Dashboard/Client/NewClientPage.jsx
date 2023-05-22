@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async"
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 //mui
 import { styled } from '@mui/material/styles';
 import { Link, Container, Typography, Divider, Stack, Button, Card, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
@@ -21,6 +21,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 export default function NewClientPage() {
 
   const userId = retrieveUserId()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [lastName, setLastName] = useState('')
@@ -58,6 +59,8 @@ export default function NewClientPage() {
       console.log(response)
       setSuccess('Le client a bien été ajouté')
       setLoading(false)
+      navigate('/dashboard/client')
+
     } catch (error) {
       console.log(error)
       setError('Une erreur est survenue')

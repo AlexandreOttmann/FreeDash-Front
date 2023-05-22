@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async"
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 //mui
 import { styled } from '@mui/material/styles';
 import { Container, Typography, Divider, Stack, Button, Card, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
@@ -28,6 +28,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 export default function NewMissionPage() {
 
   const userId = retrieveUserId()
+  const navigate = useNavigate()
 
   const now = dayjs()
   const weekLater = dayjs().add(7, 'day')
@@ -81,6 +82,8 @@ export default function NewMissionPage() {
       console.log('requête lancée avec les données : ', response)
       setSuccess('La mission a bien été ajoutée')
       setLoading(false)
+      navigate('/dashboard/mission')
+
     } catch (error) {
       console.log(error)
       setError('Une erreur est survenue')
