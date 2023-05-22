@@ -18,15 +18,15 @@ import { UserListToolbar } from '../../../sections/@dashboard/user';
 
 export default function ClientsPage() {
 
-  // const userId = retrieveUserId()
+  const userId = retrieveUserId()
 
   //! ==============API=================
   const [clients, setClients] = useState([]);
 
   const getClients = useCallback(async () => {
     try {
-      const response = await axiosInstance.get('/user/1/clients');
-      // const response = await axiosInstance.get(`/user/${userId}/clients`);
+      // const response = await axiosInstance.get('/user/1/clients');
+      const response = await axiosInstance.get(`/user/${userId}/clients`);
       setClients(response.data);
       console.log(response.data);
     } catch (error) {

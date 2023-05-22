@@ -56,6 +56,9 @@ const cardStyles = {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
   },
 };
+const cardContentStyles = {
+  height: '15em',
+}
 // ----------------------------------------------------------------------
 
 ClientCard.propTypes = {
@@ -124,7 +127,7 @@ export default function ClientCard({ client }) {
             <StyledCover alt={firstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
           </StyledCardMedia>
 
-          <CardContent>
+          <CardContent sx={cardContentStyles}>
 
             <Typography variant="h4">
               {`${firstName} ${lastName}`}
