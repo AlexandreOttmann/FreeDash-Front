@@ -1,12 +1,23 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
+//mui
 import { Card, Typography, Box, Container, Divider, Button } from "@mui/material";
+
+
+
+//slider
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+//utils
 import Iconify from "../../../../components/iconify/Iconify";
-import { Link } from "react-router-dom";
+
 
 export default function CurrentMission({ displayMissions }) {
+
+
 
   //Settings for the slider
   const settings = {
@@ -27,7 +38,7 @@ export default function CurrentMission({ displayMissions }) {
         boxShadow: 0,
         paddingX: 3,
         color: (theme) => theme.palette['primary'].lighter,
-        bgcolor: (theme) => theme.palette['primary'].main,
+        bgcolor: (theme) => theme.palette['secondary'].main,
 
       }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -40,7 +51,11 @@ export default function CurrentMission({ displayMissions }) {
             displayMissions.map((mission) => (
               <Container key={mission.id}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2, }}>
-                  <Typography variant="h5" align={'left'} >{mission.name}</Typography>
+                  <Typography sx={{
+                    transform: 'translateY(-50 %)',
+                    transition: 'transform 0.5s linear'
+
+                  }} variant="h5" align={'left'} >{mission.name}</Typography>
                   <Typography variant="h5" align={'right'} >{mission.startDate}</Typography>
                 </Box>
                 <Link to={`/dashboard/mission/${mission.id}`}>

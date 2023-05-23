@@ -7,8 +7,8 @@ import { Link, Container, Typography, Divider, Stack, Button, Card, TextField, F
 
 //hooks
 import useResponsive from '../../../hooks/useReponsive';
-import { retrieveUserId } from '../../../utils/retrieveUserId';
-import { axiosInstance } from '../../../api/axios'
+
+import { axiosPrivateInstance } from '../../../api/axios'
 
 //styles
 const StyledRoot = styled('div')(({ theme }) => ({
@@ -20,18 +20,18 @@ const StyledRoot = styled('div')(({ theme }) => ({
 
 export default function NewClientPage() {
 
-  const userId = retrieveUserId()
+
   const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [lastName, setLastName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [address, setAddress] = useState('')
-  const [zipCode, setZipCode] = useState('')
+  const [zipCode, setZipCode] = useState(75000)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
-  const [siret, setSiret] = useState('')
+  const [siret, setSiret] = useState(0)
   const [provenance, setProvenance] = useState('')
   const [commentary, setCommentary] = useState('')
   const [error, setError] = useState('')
@@ -42,8 +42,7 @@ export default function NewClientPage() {
   const handleAddClient = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.post(`/user/${userId}/clients`, {
-        // const response = await axiosInstance.post(`/user/1/clients`, {
+      const response = await axiosPrivateInstance.post(`/clients`, {
         email,
         firstName,
         lastName,
@@ -92,6 +91,7 @@ export default function NewClientPage() {
 
             <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
               <TextField
+                required
                 fullWidth
                 label="Nom"
                 variant="outlined"
@@ -99,6 +99,7 @@ export default function NewClientPage() {
                 onChange={(e) => setLastName(e.target.value)}
               />
               <TextField
+                required
                 fullWidth
                 label="Prénom"
                 variant="outlined"
@@ -110,6 +111,7 @@ export default function NewClientPage() {
             <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
               <TextField
                 fullWidth
+                required
                 label="Email"
                 variant="outlined"
                 value={email}

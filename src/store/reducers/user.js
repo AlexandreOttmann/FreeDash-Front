@@ -13,7 +13,8 @@ import {
 } from 'react-redux';
 //utils
 import {
-  axiosInstance
+  axiosInstance,
+  axiosPrivateInstance,
 } from '../../api/axios'
 import {
   retrieveUserId
@@ -55,13 +56,12 @@ export const login = createAsyncThunk(
     const {
       data
     } = await axiosInstance.post('/login', {
-        email,
-        password,
-      })
+      email,
+      password,
+    })
       .then((data) => {
         localStorage.setItem('jwt', JSON.stringify(data))
         const decodedToken = jwt_decode(data.data.accessToken)
-        console.log('jeton décodé', decodedToken.id)
         thunkAPI.dispatch(setToken(decodedToken))
         resolve()
         return data
@@ -74,12 +74,9 @@ export const login = createAsyncThunk(
 
 export const retrieveUserData = createAsyncThunk('user/RETRIEVE_USER_DATA',
   async (_, thunkAPI) => {
-    const token = localStorage.getItem('jwt')
-    const decodedToken = jwt_decode(token)
-    const userIdFromToken = decodedToken.id
     const {
       data
-    } = await axiosInstance.get(`/user/${userIdFromToken}`)
+    } = await axiosPrivateInstance.get(`/user`)
     return data
   }
 );

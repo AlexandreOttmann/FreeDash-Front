@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet-async"
 import { useParams } from 'react-router';
 import { useNavigate } from "react-router-dom";
 //utils
-import { axiosInstance } from '../../../api/axios'
-import { retrieveUserId } from '../../../utils/retrieveUserId';
+import { axiosPrivateInstance } from '../../../api/axios'
+
 
 //mui
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Avatar, Container, Typography, Divider, Stack, Button, Card, CardContent, Box } from '@mui/material';
@@ -12,6 +12,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 //Component
 import EditMission from "./Sections/EditMission";
+import DateRangeDisplay from "./Sections/DateRangeDisplay";
 import SvgColor from "../../../components/svg-color/SvgColor";
 import Iconify from "../../../components/iconify/Iconify";
 
@@ -81,7 +82,7 @@ export default function MissionDetailsPage() {
 
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/mission/${idmission}`)
+      await axiosPrivateInstance.delete(`/mission/${idmission}`)
       navigate('/dashboard/mission')
     } catch (error) {
       console.log("La mission n'a pas pu être supprimée", error)
@@ -103,7 +104,7 @@ export default function MissionDetailsPage() {
   const GetMission = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.get(`/mission/${idmission}`)
+      const response = await axiosPrivateInstance.get(`/mission/${idmission}`)
       console.log(response.data)
       setMission(response.data)
       setLoading(false)
@@ -153,14 +154,14 @@ export default function MissionDetailsPage() {
                 color: 'background.paper',
               }}
             />
-            <StyledAvatar alt={mission?.clientFirstName} src="/src/assets/images/avatars/1.jpg" sx={{
+            <StyledAvatar alt={mission?.clientFirstName} src={`/src/assets/images/avatars/avatar_${Math.floor(Math.random() * (24 - 1 + 1) + 1)}.jpg`} sx={{
               width: 100, height: 100,
             }} />
             <Typography variant="h6" gutterBottom sx={{ zIndex: 10 }}>
               {mission?.clientFirstName} {mission?.clientLastName}
             </Typography>
 
-            <StyledCover alt={mission?.clientFirstName} src="/src/assets/images/covers/cover_1.jpg" />
+            <StyledCover alt={mission?.clientFirstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * (24 - 1 + 1) + 1)}.jpg`} />
 
             <StyledInfo>
               <StyledButton>
@@ -178,6 +179,8 @@ export default function MissionDetailsPage() {
 
             <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mt: 3 }}>
               <Stack spacing={2} sx={{ width: { md: '100%' } }}>
+
+                <DateRangeDisplay startDate={mission?.startDate} endDate={mission?.endDate} />
                 <Typography variant="subtitle2" gutterBottom>
                   Date de début
                 </Typography>

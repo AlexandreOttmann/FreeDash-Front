@@ -4,7 +4,7 @@ import { filter } from 'lodash';
 import { Link } from 'react-router-dom';
 
 //api
-import { axiosInstance } from '../../../api/axios';
+import { axiosPrivateInstance } from '../../../api/axios';
 //mui
 import { Avatar, Button, Card, Checkbox, Container, IconButton, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography, TablePagination, Popover, MenuItem, Paper } from '@mui/material';
 import { useTheme } from '@mui/material';
@@ -70,7 +70,7 @@ export default function MissionPage() {
   const getMissions = useCallback(async () => {
     try {
       //! => Change user ID from localStorage
-      const response = await axiosInstance.get(`user/${userId}/mission`);
+      const response = await axiosPrivateInstance.get(`/mission`);
       // const response = await axiosInstance.get('/user/1/mission');
       console.log(response.data)
       setMissions(response.data);

@@ -19,7 +19,7 @@ import TotalYearlyRevenue from './Sections/TotalYearlyRevenue';
 import { retrieveUserId } from '../../../utils/retrieveUserId';
 import { retrieveUserData } from '../../../store/reducers/user';
 
-import { axiosInstance } from '../../../api/axios'
+import { axiosInstance, axiosPrivateInstance } from '../../../api/axios'
 import { last } from 'lodash';
 import { fi } from 'date-fns/locale';
 
@@ -159,7 +159,7 @@ export default function DashboardPage() {
 
   const getClients = useCallback(async () => {
     try {
-      const response = await axiosInstance.get(`user/${userId}/clients`);
+      const response = await axiosPrivateInstance.get(`/clients`);
       // const response = await axiosInstance.get(`/user/1/clients`);
 
       setClients(response.data);
@@ -175,7 +175,7 @@ export default function DashboardPage() {
   const getMissions = useCallback(async () => {
     try {
       //! => Change user ID from localStorage
-      const response = await axiosInstance.get(`user/${userId}/mission`);
+      const response = await axiosPrivateInstance.get(`/mission`);
       // const response = await axiosInstance.get('/user/1/mission');
 
       // set Mission Number
@@ -233,7 +233,7 @@ export default function DashboardPage() {
 
 
         <Grid container spacing={5}>
-          <Grid item xs={12} sm={12} md={8}>
+          <Grid item xs={12} sm={8} md={8}>
             <WelcomeSection />
           </Grid>
 

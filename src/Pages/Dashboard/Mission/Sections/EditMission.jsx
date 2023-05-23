@@ -16,7 +16,7 @@ import dayjs from "dayjs";
 //hooks
 
 import { retrieveUserId } from '../../../../utils/retrieveUserId';
-import { axiosInstance } from "../../../../api/axios";
+import { axiosPrivateInstance } from "../../../../api/axios";
 
 
 
@@ -48,8 +48,7 @@ export default function EditMission({ details, missionId, handleClose }) {
   const GetClientList = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.get(`/user/${userId}/clients`)
-      // const response = await axiosInstance.get(`/user/1/clients`)
+      const response = await axiosPrivateInstance.get(`/clients`)
       console.log(response.data)
       setClientList(response.data)
       setLoading(false)
@@ -63,8 +62,7 @@ export default function EditMission({ details, missionId, handleClose }) {
   const handleEditMission = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.patch(`/mission/${missionId}`, {
-        // const response = await axiosInstance.post(`/user/1/mission`, {
+      const response = await axiosPrivateInstance.patch(`/mission/${missionId}`, {
         name, //string
         startDate, //date
         endDate, //date
@@ -75,7 +73,6 @@ export default function EditMission({ details, missionId, handleClose }) {
         declarate, //boolean
         clientId,
       })
-      console.log('requête lancée avec les données : ', response)
       setSuccess('La mission a bien été modifiée')
       setLoading(false)
       window.location.reload();
