@@ -64,8 +64,9 @@ const TABLE_HEAD = [
 export default function MissionPage() {
 
   const userId = retrieveUserId()
-  //! ==============API=================
   const [missions, setMissions] = useState([]);
+
+  //! ==============API=================
   const getMissions = useCallback(async () => {
     try {
       //! => Change user ID from localStorage
