@@ -1,6 +1,6 @@
 import ReactApexChart from "react-apexcharts";
 
-import { Card, CardHeader, Box } from '@mui/material';
+import { Card, CardHeader, Box, Typography } from '@mui/material';
 
 
 // components
@@ -34,7 +34,6 @@ export default function YearlyRevenueSection({ title, subheader, chartLabels, ch
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
-
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
         <ReactApexChart type="line" series={chartData} options={chartOptions} height={364} />
       </Box>

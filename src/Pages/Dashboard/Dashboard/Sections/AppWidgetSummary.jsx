@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 // utils
-// import { fShortenNumber } from '../../../utils/formatNumber';
+
 // components
 import Iconify from '../../../../components/iconify/Iconify';
 // ----------------------------------------------------------------------
@@ -67,7 +67,7 @@ export default function AppWidgetSummary({ title, total, price, icon, color, sx,
       {
         price && (
           <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-            Pour un total de {price} €
+            Il vous reste {price} € à déclarer
           </Typography>
         )
       }

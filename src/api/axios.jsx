@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 
-const BASE_URL = 'http://localhost:3000';
+// const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://freedash-api.up.railway.app/';
 
 
 export const axiosInstance = axios.create({

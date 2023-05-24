@@ -39,49 +39,51 @@ export default function CurrentMission({ displayMissions }) {
         paddingX: 3,
         color: (theme) => theme.palette['primary'].lighter,
         bgcolor: (theme) => theme.palette['secondary'].main,
-
+        height: '100%',
+        minHeight: '100%',
       }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant="subtitle1" align={'left'} >Mission en cours</Typography>
       </Box>
-
-      <Container>
-        <Slider {...settings}>
-          {
-            displayMissions.map((mission) => (
-              <Container key={mission.id}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2, }}>
-                  <Typography sx={{
-                    transform: 'translateY(-50 %)',
-                    transition: 'transform 0.5s linear'
-
-                  }} variant="h5" align={'left'} >{mission.name}</Typography>
-                  <Typography variant="h5" align={'right'} >{mission.startDate}</Typography>
-                </Box>
-                <Link to={`/dashboard/mission/${mission.id}`}>
-                  <Typography variant="subtitle2" align={'left'} >{mission.commentary}</Typography>
-                </Link>
-              </Container>
-            )
-            )
-          }
-        </Slider>
-
-        <Divider sx={{ mt: 5 }} />
-
-        <Box sx={{ p: 2, textAlign: 'right', }}>
-          <Link to={`/dashboard/mission/`}>
-            <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-              Voir toutes les missions
-            </Button>
-          </Link>
+      {displayMissions.length === 0 ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '10em', height: '100%' }}>
+          <Typography variant="subtitle2" align={'left'} >Vous n'avez pas de mission en cours...</Typography>
         </Box>
-      </Container>
+      ) : (
 
+        <Container>
+          <Slider {...settings}>
+            {
+              displayMissions.map((mission) => (
+                <Container key={mission.id}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2, }}>
+                    <Typography sx={{
+                      transform: 'translateY(-50 %)',
+                      transition: 'transform 0.5s linear'
 
+                    }} variant="h5" align={'left'} >{mission.name}</Typography>
+                    <Typography variant="h5" align={'right'} >{mission.startDate}</Typography>
+                  </Box>
+                  <Link to={`/dashboard/mission/${mission.id}`}>
+                    <Typography variant="subtitle2" align={'left'} >{mission.commentary}</Typography>
+                  </Link>
+                </Container>
+              )
+              )
+            }
+          </Slider>
 
+          <Divider sx={{ mt: 5 }} />
 
-
+          <Box sx={{ p: 2, textAlign: 'right', }}>
+            <Link to={`/dashboard/mission/`}>
+              <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
+                Voir toutes les missions
+              </Button>
+            </Link>
+          </Box>
+        </Container>
+      )}
     </Card>
   )
 

@@ -160,7 +160,7 @@ export default function DashboardPage() {
   const getClients = useCallback(async () => {
     try {
       const response = await axiosPrivateInstance.get(`/clients`);
-      // const response = await axiosInstance.get(`/user/1/clients`);
+
 
       setClients(response.data);
 
@@ -233,7 +233,7 @@ export default function DashboardPage() {
 
 
         <Grid container spacing={5}>
-          <Grid item xs={12} sm={8} md={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <WelcomeSection />
           </Grid>
 

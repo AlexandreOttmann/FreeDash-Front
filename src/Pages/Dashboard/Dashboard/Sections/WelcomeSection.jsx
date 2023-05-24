@@ -25,7 +25,7 @@ export default function WelcomeSection({ sx, ...other }) {
         color: 'black',
         bgcolor: (theme) => theme.palette['primary'].lighter,
         minHeight: '100%',
-
+        minWidth: '100%',
       }}
     >
       <Grid container spacing={0} sx={{ justifyContent: 'space-between' }}>

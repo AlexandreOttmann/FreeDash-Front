@@ -50,16 +50,24 @@ export default function ClientsPage() {
             Nouveau Client
           </Button>
         </Stack>
-
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <ClientSearch clients={clients} />
-          {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
-        </Stack>
-        <Grid container spacing={3}>
-          {clients.map((client, index) => (
-            <ClientCard key={index} client={client} index={index} />
-          ))}
-        </Grid>
+        {clients.length === 0 ? (
+          <>
+            <Typography variant="h4" sx={{ my: 5 }} align="center">Vous n'avez pas encore ajouté de client</Typography>
+            <Link to='/dashboard/newclient'><Typography variant='body1' align="center">Voulez-vous ajouter un premier client ?</Typography></Link>
+          </>
+        ) : (
+          <>
+            <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
+              <ClientSearch clients={clients} />
+              {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
+            </Stack>
+            <Grid container spacing={3}>
+              {clients.map((client, index) => (
+                <ClientCard key={index} client={client} index={index} />
+              ))}
+            </Grid>
+          </>
+        )}
       </Container>
     </>
   )
