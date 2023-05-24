@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 //mui
 import { Card, Typography, Grid, Avatar, Button } from "@mui/material";
 import { Dialog, DialogContent, DialogTitle, Slide } from '@mui/material';
-
-//utils
+//components
 import EditClient from './EditClient';
+//utils
 import Iconify from '../../../../components/iconify/Iconify';
 import { fDatefr } from '../../../../utils/formatTime';
 
@@ -36,8 +36,6 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
 
   const [open, setOpen] = useState(false);
 
-  console.log('client', client)
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -61,7 +59,7 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
             sx={{ width: 100, height: 100 }}
           />
           <Typography variant="h4">{client.firstName} {client.lastName}</Typography>
-          <Typography variant="caption">Date de création : {fDatefr(client.createdAt)}</Typography>
+          <Typography variant="caption">Date d'ajout : {fDatefr(client.createdAt)}</Typography>
           <Typography variant="body1"> {client.email}</Typography>
 
           <Typography variant="body1" > {client.provenance} </Typography>
@@ -73,11 +71,11 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
           <Typography variant="body1" >Adresse: {client.address}  </Typography>
           <Typography variant="body1" >{client.zipCode} | {client.city} </Typography>
           <Typography variant="body1" >{client.country} </Typography>
-          <Typography variant="body1" ><Iconify icon={'eva:phone-call-outline'} />  {client.phoneNumber} </Typography>
+          <Typography variant="body1" ><Iconify icon={'eva:phone-call-outline'} width={17} /> +{client.phoneNumber} </Typography>
           <Typography variant="body1" >SIRET : {client.siret} </Typography>
-
         </Grid>
-        <Grid item xs={2} margin={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: '100%' }}>
+
+        <Grid item xs={2} margin={2} sx={{ marginLeft: 'auto' }}>
           <Button variant="outlined" onClick={handleClickOpen}>Modifier</Button>
         </Grid>
       </Grid>

@@ -14,6 +14,22 @@ const StyledSection = styled('div')(({ theme }) => ({
 const ProfilePage = () => {
   const profile = useSelector((state) => state.profile);
 
+import { useSelector } from 'react-redux';
+import ProfileForm from './section/ProfileForm';
+import { Container } from '@mui/material';
+import styled from '@emotion/styled';
+
+const StyledSection = styled('div')(({ theme }) => ({
+  maxWidth: 600,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  boxShadow: theme.customShadows.card,
+}));
+
+const ProfilePage = () => {
+  const profile = useSelector((state) => state.profile);
+
   return (
     <div style={{ display: 'flex' }}>
       <StyledSection>

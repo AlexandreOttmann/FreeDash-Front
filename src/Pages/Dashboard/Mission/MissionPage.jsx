@@ -1,15 +1,18 @@
 import { Helmet } from 'react-helmet-async';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, forwardRef } from 'react';
 import { filter } from 'lodash';
 import { Link } from 'react-router-dom';
 
 //api
-import { axiosInstance } from '../../../api/axios';
+import { axiosPrivateInstance } from '../../../api/axios';
 //mui
-import { Avatar, Button, Card, Checkbox, Container, IconButton, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography, TablePagination, Popover, MenuItem, Paper } from '@mui/material';
+import {
+  Avatar, Button, Card, Checkbox, Container, IconButton, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography, TablePagination, Popover, MenuItem, Paper,
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide
+} from '@mui/material';
 import { useTheme } from '@mui/material';
 //components
-import Scrollbar from '../../../components/scrollbar/Scrollbar';
+
 import Iconify from '../../../components/iconify';
 import Label from '../../../components/label'
 //sections
@@ -17,8 +20,12 @@ import { UserListHead, UserListToolbar } from '../../../sections/@dashboard/user
 
 //mock
 import USERLIST from '../../../_mock/user';
-//utils
-import { retrieveUserId } from '../../../utils/retrieveUserId';
+
+//Transition for modale
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 //===============UTILS=================
 
@@ -50,7 +57,7 @@ function applySortFilter(array, comparator, query) {
   }
   return stabilizedThis.map((el) => el[0]);
 }
-//==============FIXED DATA=======================
+//==============FIXED DATA for table header=======================
 const TABLE_HEAD = [
   { id: 'clientFirstName', label: 'Client', alignRight: false },
   { id: 'commentary', label: 'Nom de la mission', alignRight: false },
@@ -63,15 +70,12 @@ const TABLE_HEAD = [
 
 export default function MissionPage() {
 
-  const userId = retrieveUserId()
   const [missions, setMissions] = useState([]);
-
+  const [idToDelete, setIdToDelete] = useState(null)
   //! ==============API=================
   const getMissions = useCallback(async () => {
     try {
-      //! => Change user ID from localStorage
-      const response = await axiosInstance.get(`user/${userId}/mission`);
-      // const response = await axiosInstance.get('/user/1/mission');
+      const response = await axiosPrivateInstance.get(`/mission`);
       console.log(response.data)
       setMissions(response.data);
     } catch (error) {
@@ -82,10 +86,12 @@ export default function MissionPage() {
   useEffect(() => {
     getMissions();
   }, []);
-  //========================================
+
 
   //==============UTILS FOR STATES====================
   const [open, setOpen] = useState(null);
+
+  const [openMissionDelete, setOpenMissionDelete] = useState(false);
 
   const [page, setPage] = useState(0);
 
@@ -99,13 +105,37 @@ export default function MissionPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleOpenMenu = (event) => {
+  const handleOpenMenu = (event, id) => {
     setOpen(event.currentTarget);
+    setIdToDelete(id)
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
+
+  //  Handle opening modale for delete
+  const handleDeleteMissionClickOpen = () => {
+    setOpenMissionDelete(true);
+    handleCloseMenu()
+
+  };
+
+  const handleCloseMissioneDelete = () => {
+    setOpenMissionDelete(false);
+  };
+
+  const handleMissionDelete = async () => {
+    try {
+      await axiosPrivateInstance.delete(`/mission/${idToDelete}`);
+      window.location.reload();
+    } catch (error) {
+      console.log("La mission n'a pas pu être supprimée", error);
+    }
+  };
+
+  //=================HANDLE SORTING=================
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -115,7 +145,7 @@ export default function MissionPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = filteredUsers.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -176,105 +206,111 @@ export default function MissionPage() {
             Nouvelle mission
           </Button>
         </Stack>
+        {filteredUsers.length === 0 ? (
+          <>
+            <Typography variant="h4" sx={{ my: 5 }} align="center">Vous n'avez pas encore ajouté de mission</Typography>
+            <Link to='/dashboard/newmission'><Typography variant='body1' align="center">Voulez-vous ajouter une première mission ?</Typography></Link>
+          </>
+        ) : (
+          <Card>
+            <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
-        <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <UserListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={filteredUsers.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                  onSelectAllClick={handleSelectAllClick}
+                />
+                {/*! ===================mapping of our missions ==========================*/}
+                <TableBody>
+                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    const { id, name, totalPrice, declarate, status, client_id, clientFirstName, clientLastName } = row;
+                    const selectedUser = selected.indexOf(id) !== -1;
 
-          <TableContainer sx={{ minWidth: 800 }}>
-            <Table>
-              <UserListHead
-                order={order}
-                orderBy={orderBy}
-                headLabel={TABLE_HEAD}
-                rowCount={USERLIST.length}
-                numSelected={selected.length}
-                onRequestSort={handleRequestSort}
-                onSelectAllClick={handleSelectAllClick}
-              />
-              {/*! ===================mapping of our missions ==========================*/}
-              <TableBody>
-                {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                  const { id, name, totalPrice, declarate, status, client_id, clientFirstName, clientLastName } = row;
-                  const selectedUser = selected.indexOf(id) !== -1;
+                    return (
+                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                        <TableCell padding="checkbox">
+                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                        </TableCell>
 
-                  return (
-                    <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                      </TableCell>
+                        <TableCell component="th" scope="row" padding="none">
+                          <Stack direction="row" alignItems="center" spacing={2}>
+                            <Avatar alt={name} src={'/assets/images/avatars/avatar_1.jpg'} />
+                            <Typography component={Link} to={`/dashboard/client/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
+                              {clientFirstName} {clientLastName}
+                            </Typography>
+                          </Stack>
+                        </TableCell>
 
-                      <TableCell component="th" scope="row" padding="none">
-                        <Stack direction="row" alignItems="center" spacing={2}>
-                          <Avatar alt={name} src={'/assets/images/avatars/avatar_1.jpg'} />
-                          <Typography component={Link} to={`/dashboard/client/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
-                            {clientFirstName} {clientLastName}
+                        <TableCell align="left" style={{ textDecoration: 'none' }}><Link to={`/dashboard/mission/${id}`}>{name}</Link></TableCell>
+
+                        <TableCell align="left">{totalPrice}€</TableCell>
+
+                        <TableCell align="left">{declarate ? 'Oui' : 'Non'}</TableCell>
+
+                        <TableCell align="left">
+                          <Label color={(status === 'En Cours' && 'warning') || 'success'}>{status}</Label>
+                        </TableCell>
+
+                        <TableCell align="right">
+                          <IconButton size="large" color="inherit" onClick={(event) => handleOpenMenu(event, id)}>
+                            <Iconify icon={'eva:more-vertical-fill'} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  {/* ========================= Conditionnal render ========================== */}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+
+                {isNotFound && (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <Paper
+                          sx={{
+                            textAlign: 'center',
+                          }}
+                        >
+                          <Typography variant="h6" paragraph>
+                            Not found
                           </Typography>
-                        </Stack>
-                      </TableCell>
 
-                      <TableCell align="left" style={{ textDecoration: 'none' }}><Link to={`/dashboard/mission/${id}`}>{name}</Link></TableCell>
-
-                      <TableCell align="left">{totalPrice}€</TableCell>
-
-                      <TableCell align="left">{declarate ? 'Oui' : 'Non'}</TableCell>
-
-                      <TableCell align="left">
-                        <Label color={(status === 'En Cours' && 'warning') || 'success'}>{status}</Label>
-                      </TableCell>
-
-                      <TableCell align="right">
-                        <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                          <Iconify icon={'eva:more-vertical-fill'} />
-                        </IconButton>
+                          <Typography variant="body2">
+                            No results found for &nbsp;
+                            <strong>&quot;{filterName}&quot;</strong>.
+                            <br /> Try checking for typos or using complete words.
+                          </Typography>
+                        </Paper>
                       </TableCell>
                     </TableRow>
-                  );
-                })}
-                {/* ========================= Conditionnal render ========================== */}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
+                  </TableBody>
                 )}
-              </TableBody>
+              </Table>
+            </TableContainer>
 
-              {isNotFound && (
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                      <Paper
-                        sx={{
-                          textAlign: 'center',
-                        }}
-                      >
-                        <Typography variant="h6" paragraph>
-                          Not found
-                        </Typography>
-
-                        <Typography variant="body2">
-                          No results found for &nbsp;
-                          <strong>&quot;{filterName}&quot;</strong>.
-                          <br /> Try checking for typos or using complete words.
-                        </Typography>
-                      </Paper>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              )}
-            </Table>
-          </TableContainer>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={missions.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={missions.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Card>
+        )}
       </Container>
 
       <Popover
@@ -296,15 +332,44 @@ export default function MissionPage() {
         }}
       >
         <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
+          <Button sx={{ color: 'warning.main' }}>
+            <Link to={`/dashboard/mission/${idToDelete}`}>
+              <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+              Edit
+            </Link>
+          </Button>
         </MenuItem>
 
         <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
+          <Button onClick={handleDeleteMissionClickOpen} sx={{ color: 'error.main' }}>
+            <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+            Delete
+          </Button>
         </MenuItem>
       </Popover>
+      {/* DELETE MODALE */}
+      <Dialog
+        open={openMissionDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseMissioneDelete}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle color="error">{"Supprimer la mission"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description" >
+            Êtes-vous sûr de vouloir supprimer cette mission ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseMissioneDelete} color="success">
+            Annuler
+          </Button>
+          <Button onClick={handleMissionDelete} color="error">
+            Supprimer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 

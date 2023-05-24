@@ -8,6 +8,8 @@ export default function CalendarSection() {
     <Card>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar sx={{
+          minHeight: 250,
+          maxHeight: 300,
           //  width: '500px' 
         }} />
       </LocalizationProvider>

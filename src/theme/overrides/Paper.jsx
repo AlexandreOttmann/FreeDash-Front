@@ -9,6 +9,7 @@ export default function Paper() {
       styleOverrides: {
         root: {
           backgroundImage: 'none',
+          backdropFilter: 'blur(3px)',
         },
       },
     },

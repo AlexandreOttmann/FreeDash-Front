@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router";
-import { axiosInstance } from '../../../../api/axios';
+import { axiosInstance, axiosPrivateInstance } from '../../../../api/axios';
 
 import { Container, Typography, Divider, Stack, Button, Card, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
@@ -28,7 +28,7 @@ export default function EditMission({ details }) {
   const handleEditClient = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.patch(`/clients/${details.id}`, {
+      const response = await axiosPrivateInstance.patch(`/clients/${details.id}`, {
         address,
         city,
         commentary,
