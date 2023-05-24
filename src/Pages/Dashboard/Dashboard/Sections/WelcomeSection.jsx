@@ -12,37 +12,28 @@ import Iconify from '../../../../components/iconify/Iconify';
 import dashboard from '../../../../assets/illustrations/dashboard_illustration.png'
 
 
-const StyledIcon = styled('div')(({ theme }) => ({
-  margin: 'auto',
-  display: 'flex',
-  borderRadius: '50%',
-  alignItems: 'center',
-  width: theme.spacing(8),
-  height: theme.spacing(8),
-  justifyContent: 'center',
-  marginBottom: theme.spacing(3),
-}));
 
 
 
-export default function WelcomeSection({ color = 'primary', sx, ...other }) {
+
+export default function WelcomeSection({ sx, ...other }) {
   return (
     <Card
       sx={{
         py: 2,
         paddingX: 3,
         color: 'black',
-        bgcolor: '#fff',
+        bgcolor: (theme) => theme.palette['primary'].lighter,
         minHeight: '100%',
-
+        minWidth: '100%',
       }}
     >
-      <Grid container spacing={0}>
+      <Grid container spacing={0} sx={{ justifyContent: 'space-between' }}>
 
-        <Grid item xs={6} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 3 }}>
+        <Grid item xs={12} md={6} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', justifyItems: 'space-between', gap: 3 }}>
           <Typography variant="h4" >Bienvenue sur votre Dashboard</Typography>
           <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-            Wesh Keny
+            Nous espérons que vous trouverez ici toutes les informations dont vous avez besoin.
           </Typography>
 
           <Link to='/dashboard/newmission'>
@@ -63,7 +54,7 @@ export default function WelcomeSection({ color = 'primary', sx, ...other }) {
             autoplay
             loop
             mode="normal"
-            style={{ height: "300px" }}
+            style={{ height: "250px" }}
             src="https://assets6.lottiefiles.com/packages/lf20_BgywoUBeiL.json"
           />
 

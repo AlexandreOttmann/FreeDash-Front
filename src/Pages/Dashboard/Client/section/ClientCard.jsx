@@ -2,17 +2,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Card, Grid, Avatar, Typography, CardContent, Button } from '@mui/material';
+import { Box, Card, Grid, Avatar, Typography, CardContent, Button, Stack } from '@mui/material';
 
 // utils
 import { fDatefr } from '../../../../utils/formatTime';
-import { fShortenNumber } from '../../../../utils/formatNumber';
-//
 import SvgColor from '../../../../components/svg-color';
 import Iconify from '../../../../components/iconify';
-import { useCallback, useEffect, useState } from 'react';
-import { axiosInstance } from '../../../../api/axios';
-import { retrieveUserId } from '../../../../utils/retrieveUserId';
 
 // ----------------------------------------------------------------------
 
@@ -56,6 +51,7 @@ const cardStyles = {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
   },
 };
+
 // ----------------------------------------------------------------------
 
 ClientCard.propTypes = {
@@ -66,39 +62,6 @@ export default function ClientCard({ client }) {
 
   const { firstName, lastName, createdAt, id, email } = client;
 
-
-  const userId = retrieveUserId()
-
-  const [missionsNumber, setMissionsNumber] = useState(0);
-
-  const getMissionsNumber = useCallback(async () => {
-    try {
-      const response = await axiosInstance.get(`user/1/mission`);
-      // const response = await axiosInstance.get(`user/${userId}/mission`);
-
-      const filteredList = response.data.filter(mission => mission.clientId !== id)
-
-      // console.log('la reponse', filteredList)
-
-      setMissionsNumber(response.data);
-
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-
-  useEffect(() => {
-    getMissionsNumber()
-  }, [getMissionsNumber])
-
-
-  //! number à modifier pour prendre le nombre de missions du client ici j'ai mis id en attendant pour afficher un nombre
-  const POST_INFO = [
-    { number: id, icon: 'eva:file-text-outline' },
-  ];
-
-  // console.log(client)
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Card sx={{ position: 'relative', ...cardStyles }}>
@@ -124,36 +87,33 @@ export default function ClientCard({ client }) {
             <StyledCover alt={firstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
           </StyledCardMedia>
 
-          <CardContent>
 
+          <CardContent sx={{ height: '15em', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <Typography variant="h4">
               {`${firstName} ${lastName}`}
             </Typography>
             <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
               Date de création : {fDatefr(createdAt)}
             </Typography>
-
-
             <StyledInfo>
-
               <Box
-
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   ml: 1.5,
                 }}
               >
-                {/* <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} /> */}
-                <Typography variant="caption">{email}</Typography>
               </Box>
 
             </StyledInfo>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
-              <Button size="medium" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-                Détails du client
-              </Button>
-            </Box>
+            <Stack sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', mt: 1 }}>
+              <Typography variant="caption">{email}</Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+                <Button size="medium" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
+                  Détails du client
+                </Button>
+              </Box>
+            </Stack>
           </CardContent>
         </Link>
       </Card>

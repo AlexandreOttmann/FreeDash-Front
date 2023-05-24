@@ -175,10 +175,12 @@ export default function RegisterPage() {
         )}
         {success ? (
           <StyledSection>
-            <Card>Success!</Card>
-            <p>
-              <a to="/login">Connectez-vous</a>
-            </p>
+            <Container maxWidth="sm" sx={{ minHeight: '10em', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Typography variant="h3" sx={{ textAlign: 'center' }}>Success!</Typography>
+              <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                <Link to="/login">Connectez-vous</Link>
+              </Typography>
+            </Container>
           </StyledSection>
         ) : (
           //-------------------------------------------------
@@ -279,11 +281,13 @@ export default function RegisterPage() {
                       />
                     </Tooltip>
                   </Stack>
-                  <Button onClick={handleSubmit}
-                    disabled={!validName || !validPwd || !validMatch ? true : false}
-                  >
-                    Sign Up
-                  </Button>
+                  <Stack spacing={2} sx={{ my: 5 }}>
+                    <Button onClick={handleSubmit} variant="contained"
+                      disabled={!validName || !validPwd || !validMatch ? true : false}
+                    >
+                      Sign Up
+                    </Button>
+                  </Stack>
                 </Box>
                 <Typography variant="body1">
                   Déjà inscrit ?{" "}<Link to="/login">Se connecter</Link>

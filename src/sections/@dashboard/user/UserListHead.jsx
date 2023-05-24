@@ -41,7 +41,7 @@ export default function UserListHead({
   };
   const theme = useTheme()
   return (
-    <TableHead sx={{ backgroundColor: theme.palette.primary.main }}>
+    <TableHead sx={{ backgroundColor: theme.palette.primary.lighter, color: 'black' }}>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox

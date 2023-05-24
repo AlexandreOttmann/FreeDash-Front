@@ -4,29 +4,23 @@ import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import Iconify from '../../../components/iconify';
 import { Link } from 'react-router-dom';
-import { axiosInstance } from '../../../api/axios';
+import { axiosPrivateInstance } from '../../../api/axios';
 import { useCallback, useEffect, useState } from 'react';
 
 import { ClientCard, ClientSearch } from './section';
-// mock
-// import Account from '../../../_mock/account';
-import { retrieveUserId } from '../../../utils/retrieveUserId';
-import { UserListToolbar } from '../../../sections/@dashboard/user';
+
 
 // ----------------------------------------------------------------------
 
 
 export default function ClientsPage() {
 
-  // const userId = retrieveUserId()
-
   //! ==============API=================
   const [clients, setClients] = useState([]);
 
   const getClients = useCallback(async () => {
     try {
-      const response = await axiosInstance.get('/user/1/clients');
-      // const response = await axiosInstance.get(`/user/${userId}/clients`);
+      const response = await axiosPrivateInstance.get(`/clients`);
       setClients(response.data);
       console.log(response.data);
     } catch (error) {
@@ -40,15 +34,6 @@ export default function ClientsPage() {
 
   //==============UTILS FOR STATES====================
 
-  // const [selected, setSelected] = useState([]);
-  // const [filterName, setFilterName] = useState('');
-  // const [page, setPage] = useState(0);
-
-
-  // const handleFilterByName = (event) => {
-  //   setPage(0);
-  //   setFilterName(event.target.value);
-  // };
 
   return (
     <>
@@ -65,17 +50,24 @@ export default function ClientsPage() {
             Nouveau Client
           </Button>
         </Stack>
-
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <ClientSearch clients={clients} />
-          {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
-
-        </Stack>
-        <Grid container spacing={3}>
-          {clients.map((client, index) => (
-            <ClientCard key={index} client={client} index={index} />
-          ))}
-        </Grid>
+        {clients.length === 0 ? (
+          <>
+            <Typography variant="h4" sx={{ my: 5 }} align="center">Vous n'avez pas encore ajouté de client</Typography>
+            <Link to='/dashboard/newclient'><Typography variant='body1' align="center">Voulez-vous ajouter un premier client ?</Typography></Link>
+          </>
+        ) : (
+          <>
+            <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
+              <ClientSearch clients={clients} />
+              {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
+            </Stack>
+            <Grid container spacing={3}>
+              {clients.map((client, index) => (
+                <ClientCard key={index} client={client} index={index} />
+              ))}
+            </Grid>
+          </>
+        )}
       </Container>
     </>
   )

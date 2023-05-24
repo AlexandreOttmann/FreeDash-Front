@@ -11,8 +11,8 @@ const StyledIcon = styled('div')(({ theme }) => ({
   display: 'flex',
   borderRadius: '50%',
   alignItems: 'center',
-  width: theme.spacing(5),
-  height: theme.spacing(5),
+  width: '3em',
+  height: '3em',
   justifyContent: 'center',
   marginBottom: theme.spacing(3),
 }));
@@ -20,11 +20,19 @@ const StyledIcon = styled('div')(({ theme }) => ({
 export default function TopClientsSection({ clients }) {
 
   return (
-    <Card sx={{ height: 500 }}>
-      <Scrollbar>
-        <CardHeader title={"Top Clients"} />
+    <Card sx={{
+      height: 'fit-content', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+      minHeight: 250,
 
+    }}>
 
+      <CardHeader title={"Top Clients"} />
+
+      {clients.length == 0 ? (
+        <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center', p: 3 }}>
+          Vous n'avez pas encore ajouté de client
+        </Typography>
+      ) : (
         <Stack spacing={3} sx={{ p: 3 }} >
           {clients.map((client, index) => {
             while (index < 5) {
@@ -35,18 +43,19 @@ export default function TopClientsSection({ clients }) {
           }
           )}
         </Stack>
+      )}
 
 
-        <Divider />
+      <Divider />
 
-        <Link to='/dashboard/client' >
-          <Box sx={{ p: 2, textAlign: 'right' }}>
-            <Button size="small" color="inherit" underline="hover" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-              Tous les clients
-            </Button>
-          </Box>
-        </Link>
-      </Scrollbar>
+      <Link to='/dashboard/client' >
+        <Box sx={{ p: 2, textAlign: 'right' }}>
+          <Button size="small" color="inherit" underline="hover" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
+            Tous les clients
+          </Button>
+        </Box>
+      </Link>
+
     </Card>
 
   )

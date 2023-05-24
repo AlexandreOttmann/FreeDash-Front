@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import ReactApexChart from 'react-apexcharts';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader } from '@mui/material';
+import { Card, CardHeader, Typography, Container } from '@mui/material';
 // utils
 import { fNumber } from '../../../../utils/formatNumber';
 // components
@@ -44,6 +44,7 @@ export default function TotalYearlyRevenue({ title, subheader, chartColors, char
   const chartLabels = chartData.map((i) => i.label);
 
   const chartSeries = chartData.map((i) => i.value);
+  console.log('chartData', chartSeries)
 
   const chartOptions = useChart({
     colors: chartColors,
@@ -68,10 +69,22 @@ export default function TotalYearlyRevenue({ title, subheader, chartColors, char
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
+      {chartSeries[0] == 0 ? (
+        <Container sx={{
+          py: 15,
+          boxShadow: 0,
+          textAlign: 'center',
+          minHeight: 250,
+          maxHeight: 250,
 
-      <StyledChartWrapper dir="ltr">
-        <ReactApexChart type="pie" series={chartSeries} options={chartOptions} height={280} />
-      </StyledChartWrapper>
+        }}>
+          <Typography variant="body">Vous n'avez pas encore ajouté de revenu</Typography>
+        </Container>
+      ) : (
+        <StyledChartWrapper dir="ltr">
+          <ReactApexChart type="pie" series={chartSeries} options={chartOptions} height={280} />
+        </StyledChartWrapper>
+      )}
     </Card>
   );
 }

@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 // @mui
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider as MUIThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles';
-import { amber, deepOrange, grey, blueGrey, indigo } from '@mui/material/colors';
+
 
 //reducer
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,19 +32,23 @@ export default function ThemeProvider({ children }) {
   const themeOptions = useMemo(
     () => ({
       palette: {
-        primary: {
-          ...amber,
-          ...(isDarkMode && {
-            main: deepOrange[300]
-          }),
-        },
+        ...palette,
         mode: isDarkMode ? 'dark' : 'light',
         background: {
           ...(isDarkMode && {
-            default: '#151B23',
-            paper: '#212B36'
+            default: '#161C24',
+            paper: '#212B36',
+            neutral: 'rgba(145, 158, 171, 0.16)'
           })
-        }
+        },
+        text: {
+          ...(isDarkMode && {
+            primary: '#fff',
+            secondary: '#919EAB',
+            disabled: '#637381',
+          })
+        },
+
       },
       shape: { borderRadius: 6 },
       typography,

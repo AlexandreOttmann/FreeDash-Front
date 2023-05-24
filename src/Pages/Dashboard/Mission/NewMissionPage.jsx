@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 //hooks
 import useResponsive from '../../../hooks/useReponsive';
 import { retrieveUserId } from '../../../utils/retrieveUserId';
-import { axiosInstance } from '../../../api/axios'
+import { axiosPrivateInstance } from '../../../api/axios'
 
 //styles
 const StyledRoot = styled('div')(({ theme }) => ({
@@ -27,7 +27,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 
 export default function NewMissionPage() {
 
-  const userId = retrieveUserId()
+
   const navigate = useNavigate()
 
   const now = dayjs()
@@ -52,7 +52,7 @@ export default function NewMissionPage() {
   const GetClientList = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.get(`/user/${userId}/clients`)
+      const response = await axiosPrivateInstance.get(`/clients`)
       // const response = await axiosInstance.get(`/user/1/clients`)
       console.log(response.data)
       setClientList(response.data)
@@ -67,8 +67,7 @@ export default function NewMissionPage() {
   const handleAddMission = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.post(`/user/${userId}/mission`, {
-        // const response = await axiosInstance.post(`/user/1/mission`, {
+      const response = await axiosPrivateInstance.post(`/mission`, {
         name, //string
         startDate, //date
         endDate, //date
