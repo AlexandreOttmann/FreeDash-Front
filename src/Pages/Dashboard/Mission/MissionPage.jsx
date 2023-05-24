@@ -1,15 +1,18 @@
 import { Helmet } from 'react-helmet-async';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, forwardRef } from 'react';
 import { filter } from 'lodash';
 import { Link } from 'react-router-dom';
 
 //api
 import { axiosPrivateInstance } from '../../../api/axios';
 //mui
-import { Avatar, Button, Card, Checkbox, Container, IconButton, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography, TablePagination, Popover, MenuItem, Paper } from '@mui/material';
+import {
+  Avatar, Button, Card, Checkbox, Container, IconButton, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography, TablePagination, Popover, MenuItem, Paper,
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide
+} from '@mui/material';
 import { useTheme } from '@mui/material';
 //components
-import Scrollbar from '../../../components/scrollbar/Scrollbar';
+
 import Iconify from '../../../components/iconify';
 import Label from '../../../components/label'
 //sections
@@ -17,8 +20,12 @@ import { UserListHead, UserListToolbar } from '../../../sections/@dashboard/user
 
 //mock
 import USERLIST from '../../../_mock/user';
-//utils
-import { retrieveUserId } from '../../../utils/retrieveUserId';
+
+//Transition for modale
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 //===============UTILS=================
 
@@ -50,7 +57,7 @@ function applySortFilter(array, comparator, query) {
   }
   return stabilizedThis.map((el) => el[0]);
 }
-//==============FIXED DATA=======================
+//==============FIXED DATA for table header=======================
 const TABLE_HEAD = [
   { id: 'clientFirstName', label: 'Client', alignRight: false },
   { id: 'commentary', label: 'Nom de la mission', alignRight: false },
@@ -68,10 +75,8 @@ export default function MissionPage() {
   //! ==============API=================
   const getMissions = useCallback(async () => {
     try {
-      //! => Change user ID from localStorage
+
       const response = await axiosPrivateInstance.get(`/mission`);
-      // const response = await axiosInstance.get('/user/1/mission');
-      console.log(response.data)
       setMissions(response.data);
     } catch (error) {
       console.log(error);
@@ -81,10 +86,12 @@ export default function MissionPage() {
   useEffect(() => {
     getMissions();
   }, []);
-  //========================================
+
 
   //==============UTILS FOR STATES====================
   const [open, setOpen] = useState(null);
+
+  const [openMissionDelete, setOpenMissionDelete] = useState(false);
 
   const [page, setPage] = useState(0);
 
@@ -107,6 +114,29 @@ export default function MissionPage() {
     setOpen(null);
   };
 
+
+  //  Handle opening modale for delete
+  const handleDeleteMissionClickOpen = () => {
+    setOpenMissionDelete(true);
+    handleCloseMenu()
+
+  };
+
+  const handleCloseMissioneDelete = () => {
+    setOpenMissionDelete(false);
+  };
+
+  const handleMissionDelete = async () => {
+    try {
+      await axiosPrivateInstance.delete(`/mission/${idToDelete}`);
+      window.location.reload();
+    } catch (error) {
+      console.log("La mission n'a pas pu être supprimée", error);
+    }
+  };
+
+  //=================HANDLE SORTING=================
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -115,7 +145,7 @@ export default function MissionPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = filteredUsers.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -187,7 +217,7 @@ export default function MissionPage() {
                 order={order}
                 orderBy={orderBy}
                 headLabel={TABLE_HEAD}
-                rowCount={USERLIST.length}
+                rowCount={filteredUsers.length}
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -296,18 +326,44 @@ export default function MissionPage() {
         }}
       >
         <MenuItem>
-          <Link to={`/dashboard/mission/${idToDelete}`}>
-
-            <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-            Edit
-          </Link>
+          <Button sx={{ color: 'warning.main' }}>
+            <Link to={`/dashboard/mission/${idToDelete}`}>
+              <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+              Edit
+            </Link>
+          </Button>
         </MenuItem>
 
         <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
+          <Button onClick={handleDeleteMissionClickOpen} sx={{ color: 'error.main' }}>
+            <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+            Delete
+          </Button>
         </MenuItem>
       </Popover>
+      {/* DELETE MODALE */}
+      <Dialog
+        open={openMissionDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseMissioneDelete}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle color="error">{"Supprimer la mission"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description" >
+            Êtes-vous sûr de vouloir supprimer cette mission ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseMissioneDelete} color="success">
+            Annuler
+          </Button>
+          <Button onClick={handleMissionDelete} color="error">
+            Supprimer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 

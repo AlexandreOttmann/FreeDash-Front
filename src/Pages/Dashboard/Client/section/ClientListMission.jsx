@@ -88,7 +88,6 @@ export default function ClientListMission({ missions, index }) {
   };
 
   const handleCloseMissioneDelete = () => {
-
     setOpenMissionDelete(false);
   };
 
