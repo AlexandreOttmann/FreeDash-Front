@@ -22,7 +22,7 @@ const MENU_OPTIONS = [
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-    link: '/profil',
+    link: '/dashboard/profil',
   },
 ];
 

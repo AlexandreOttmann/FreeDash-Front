@@ -1,24 +1,36 @@
-import { useCallback, useEffect, useState, forwardRef } from 'react';
+import { useState, forwardRef } from 'react';
+import PropTypes from 'prop-types';
 
-
-import { styled, alpha } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
 //mui
-import { Card, Typography, Grid, CardMedia, Avatar, Button } from "@mui/material";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Container, Divider, Stack, CardContent, Box } from '@mui/material';
+import { Card, Typography, Grid, Avatar, Button } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Slide } from '@mui/material';
 
 //utils
-import { useParams } from "react-router";
-import illustration from '../../../../assets/illustrations/table_illustration.png'
-import { retrieveUserId } from '../../../../utils/retrieveUserId';
-import { axiosInstance } from '../../../../api/axios';
-
 import EditClient from './EditClient';
+import Iconify from '../../../../components/iconify/Iconify';
+import { fDatefr } from '../../../../utils/formatTime';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+DetailsSection.propTypes = {
+  client: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    createdAt: PropTypes.string,
+    email: PropTypes.string,
+    provenance: PropTypes.string,
+    address: PropTypes.string,
+    zipCode: PropTypes.number,
+    city: PropTypes.string,
+    country: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    siret: PropTypes.string,
+  }),
+  missionsNumber: PropTypes.number,
+  totalGain: PropTypes.number,
+};
 
 export default function DetailsSection({ client, missionsNumber, totalGain }) {
 
@@ -49,6 +61,7 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
             sx={{ width: 100, height: 100 }}
           />
           <Typography variant="h4">{client.firstName} {client.lastName}</Typography>
+          <Typography variant="caption">Date de création : {fDatefr(client.createdAt)}</Typography>
           <Typography variant="body1"> {client.email}</Typography>
 
           <Typography variant="body1" > {client.provenance} </Typography>
@@ -60,7 +73,7 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
           <Typography variant="body1" >Adresse: {client.address}  </Typography>
           <Typography variant="body1" >{client.zipCode} | {client.city} </Typography>
           <Typography variant="body1" >{client.country} </Typography>
-          <Typography variant="body1" >{client.phoneNumber} </Typography>
+          <Typography variant="body1" ><Iconify icon={'eva:phone-call-outline'} />  {client.phoneNumber} </Typography>
           <Typography variant="body1" >SIRET : {client.siret} </Typography>
 
         </Grid>

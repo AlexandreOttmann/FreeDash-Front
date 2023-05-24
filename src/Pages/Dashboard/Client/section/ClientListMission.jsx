@@ -1,14 +1,14 @@
-import { Avatar, Card, Checkbox, IconButton, MenuItem, Paper, Popover, Stack, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Typography } from "@mui/material";
+import { Avatar, Button, Card, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, MenuItem, Paper, Popover, Slide, Stack, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Tooltip, Typography } from "@mui/material";
 import { UserListHead, UserListToolbar } from "../../../../sections/@dashboard/user";
 import Scrollbar from "../../../../components/scrollbar/Scrollbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Label from "../../../../components/label/Label";
 import Iconify from "../../../../components/iconify/Iconify";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 
 import { filter } from "lodash";
-
-
+import { axiosInstance } from "../../../../api/axios";
+import MissionDeleteButton from "./MissionDeleteButton";
 
 
 // ----------------------------------------------------------------------
@@ -57,8 +57,6 @@ function applySortFilter(array, comparator, query) {
 export default function ClientListMission({ missions, index }) {
   //==============UTILS FOR STATES====================
 
-  const [open, setOpen] = useState(null);
-
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -70,15 +68,6 @@ export default function ClientListMission({ missions, index }) {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -131,6 +120,31 @@ export default function ClientListMission({ missions, index }) {
   const isNotFound = !filteredUsers.length && !!filterName;
 
 
+  //handle modal
+  const navigate = useNavigate();
+  const [openDelete, setOpenDelete] = useState(false)
+
+  const handleDeleteClickOpen = () => {
+    setOpenDelete(true);
+  };
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.delete(`/mission/${id}`)
+      navigate('/dashboard/client')
+    } catch (error) {
+      console.log("La mission n'a pas pu être supprimée", error)
+    }
+  }
+
+  //Handle slide up transition
+  const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
   return (
     <Card>
       <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -149,7 +163,7 @@ export default function ClientListMission({ missions, index }) {
             />
             <TableBody>
               {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                const { id, name, commentary, totalPrice, declarate, status, client_id } = row;
+                const { id, name, totalPrice, declarate, status, client_id } = row;
                 const selectedUser = selected.indexOf(id) !== -1;
                 console.log("j'ai cet id", id);
                 return (
@@ -170,20 +184,15 @@ export default function ClientListMission({ missions, index }) {
                       <Label color={(status === 'En Cours' && 'warning') || 'success'}>{status}</Label>
                     </TableCell>
                     <TableCell align="left">{totalPrice}€</TableCell>
-
                     <TableCell align="left" ></TableCell>
-
-
-
                     <TableCell align="left">{declarate ? 'Oui' : 'Non'}</TableCell>
-
-
-
-
                     <TableCell align="right">
-                      <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                        <Iconify icon={'eva:more-vertical-fill'} />
-                      </IconButton>
+                      {/* <Tooltip title="Supprimer"> */}
+                      {/* <IconButton size="large" color="inherit" onClick={handleDeleteClickOpen}>
+                          <Iconify icon={'eva:trash-2-outline'} />
+                        </IconButton> */}
+                      <MissionDeleteButton missionId={id} link={`/dashboard/client`} />
+                      {/* </Tooltip> */}
                     </TableCell>
                   </TableRow>
                 );
@@ -210,7 +219,6 @@ export default function ClientListMission({ missions, index }) {
                       <Typography variant="h6" paragraph>
                         Not found
                       </Typography>
-
                       <Typography variant="body2">
                         No results found for &nbsp;
                         <strong>&quot;{filterName}&quot;</strong>.
@@ -234,35 +242,30 @@ export default function ClientListMission({ missions, index }) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <Popover
-        open={Boolean(open)}
-        anchorEl={open}
-        onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: {
-            p: 1,
-            width: 140,
-            '& .MuiMenuItem-root': {
-              px: 1,
-              typography: 'body2',
-              borderRadius: 0.75,
-            },
-          },
-        }}
+      {/* Modal for deletion confirmation */}
+      {/* <Dialog
+        open={openDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseDelete}
+        aria-describedby="alert-dialog-slide-description"
       >
-        <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
-
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
-        </MenuItem>
-      </Popover>
-    </Card>
+        <DialogTitle color="error">{"Supprimer la mission"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description" >
+            Êtes-vous sûr de vouloir supprimer cette mission ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDelete} color="success">
+            Annuler
+          </Button>
+          <Button onClick={handleDelete} color="error">
+            Supprimer
+          </Button>
+        </DialogActions>
+      </Dialog> */}
+    </Card >
 
   )
 }
