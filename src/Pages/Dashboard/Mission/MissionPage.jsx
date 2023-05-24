@@ -63,9 +63,8 @@ const TABLE_HEAD = [
 
 export default function MissionPage() {
 
-  const userId = retrieveUserId()
   const [missions, setMissions] = useState([]);
-
+  const [idToDelete, setIdToDelete] = useState(null)
   //! ==============API=================
   const getMissions = useCallback(async () => {
     try {
@@ -99,8 +98,9 @@ export default function MissionPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleOpenMenu = (event) => {
+  const handleOpenMenu = (event, id) => {
     setOpen(event.currentTarget);
+    setIdToDelete(id)
   };
 
   const handleCloseMenu = () => {
@@ -224,7 +224,7 @@ export default function MissionPage() {
                       </TableCell>
 
                       <TableCell align="right">
-                        <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                        <IconButton size="large" color="inherit" onClick={(event) => handleOpenMenu(event, id)}>
                           <Iconify icon={'eva:more-vertical-fill'} />
                         </IconButton>
                       </TableCell>
@@ -296,8 +296,11 @@ export default function MissionPage() {
         }}
       >
         <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
+          <Link to={`/dashboard/mission/${idToDelete}`}>
+
+            <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+            Edit
+          </Link>
         </MenuItem>
 
         <MenuItem sx={{ color: 'error.main' }}>
