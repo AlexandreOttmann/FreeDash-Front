@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Box, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
 import SvgColor from '../../../components/svg-color';
 import Iconify from '../../../components/iconify';
 
@@ -53,8 +54,8 @@ TeamCard.propTypes = {
 };
 
 export default function TeamCard({ post, index }) {
-  const { avatar, displayName, role, cover } = post;
-  
+  const { avatar, displayName, role, cover, url } = post;
+
   return (
     <Grid item xs={12} sm={index === 0 ? 12 : 6} md={index === 0 ? 6 : 3}>
       <Card sx={{ position: 'relative' }}>
@@ -126,6 +127,7 @@ export default function TeamCard({ post, index }) {
             color="inherit"
             variant="subtitle2"
             underline="hover"
+            to={url}
             sx={{
               ...(index === 0 && { typography: 'h5', height: 60 }),
               ...(index === 0 || index === 1 || index === 2) && {
@@ -144,7 +146,7 @@ export default function TeamCard({ post, index }) {
                 ml: index === 0 ? 0 : 1.5,
                 ...(index === 0 || index === 1 || index === 2) && {
                   color: 'grey.500',
-                },    
+                },
               }}
             >
               {role}

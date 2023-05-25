@@ -14,7 +14,7 @@ import {
   MenuItem,
   Button,
 } from '@mui/material';
-import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // utils
 import { bgBlur } from '../../utils/cssStyles';
 //store
@@ -26,11 +26,8 @@ import useResponsive from '../../hooks/useReponsive';
 import Iconify from '../../components/iconify/Iconify';
 import Logo from '../../components/logo/Logo';
 import DarkToggle from '../../components/button/DarkToggle';
-//
-import { StyledNavItem } from '../../components/side-section/styles';
 import AccountPopover from './AccountPopover';
 
-// import NotificationsPopover from './NotificationsPopover';
 
 // ----------------------------------------------------------------------
 
@@ -43,9 +40,6 @@ const HEADER_DESKTOP = 92;
 const StyledRoot = styled(AppBar)(({ theme }) => ({
   ...bgBlur({ color: theme.palette.background.default }),
   boxShadow: 'none',
-  // [theme.breakpoints.up('lg')]: {
-  //   width: `calc(100% - ${NAV_WIDTH + 1}px)`,
-  // },
 }));
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -197,15 +191,23 @@ export default function Navbar({
           {isLogged ? (
             <AccountPopover onLogoutClick={onLogoutClick} userData={userData} />
           ) : (
-            <>
-              <Link underline="none" to="/login" component={RouterLink}>
-                Se connecter
-              </Link>
-              <Divider orientation="vertical" flexItem />
-              <Link underline="none" to="/register" component={RouterLink}>
-                S'inscrire
-              </Link>
-            </>
+            isDesktop ? (
+              <>
+                <Link underline="none" to="/login" component={RouterLink}>
+                  Se connecter
+                </Link>
+                <Divider orientation="vertical" flexItem />
+                <Link underline="none" to="/register" component={RouterLink}>
+                  S'inscrire
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link underline="none" to="/login" component={RouterLink}>
+                  Se connecter
+                </Link>
+              </>
+            )
           )}
         </Stack>
       </StyledToolbar>

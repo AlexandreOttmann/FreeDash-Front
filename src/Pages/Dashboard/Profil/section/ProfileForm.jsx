@@ -54,7 +54,6 @@ export default function ProfileForm({ profile }) {
   }
 
 
-
   useEffect(() => {
     setFirstName(profile?.firstName || '')
     setLastName(profile?.lastName || '')

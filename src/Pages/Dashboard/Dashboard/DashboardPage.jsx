@@ -100,6 +100,7 @@ export default function DashboardPage() {
     const revenueEvolution = new Array(11).fill(0);
     let previousRevenue = 0;
 
+
     filteredMissions.forEach(mission => {
       previousRevenue += +mission.totalPrice
 
@@ -107,7 +108,7 @@ export default function DashboardPage() {
       const monthIndex = Math.abs(new Date().getMonth() + endDate.getMonth());
       revenueEvolution[monthIndex + 2] = previousRevenue
     })
-    console.log('revenueEvolution', revenueEvolution)
+
     return revenueEvolution
   }
 
@@ -127,7 +128,7 @@ export default function DashboardPage() {
 
   const handleMonthlyRevenue = (missions) => {
     const filteredMissions = missions.filter(mission => mission.status !== 'En Cours' && new Date(mission.endDate) > new Date(new Date().setMonth(new Date().getMonth() - 11)));
-    console.log('filtered', filteredMissions);
+
 
     const monthlyRevenue = new Array(11).fill(0);
 
@@ -219,10 +220,7 @@ export default function DashboardPage() {
     setLastMonths(months)
   }, []);
   //========================================
-  //DATA A CALCULER:
-  // TOTAL CLIENT
-  // Total mission 
-  // Total mission not declared
+
   return (
     <>
       <Helmet>

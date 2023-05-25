@@ -1,20 +1,19 @@
 import { Helmet } from "react-helmet-async"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 //mui
 import { styled } from '@mui/material/styles';
 import { Container, Typography, Divider, Stack, Button, Card, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 //mui date
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import fr from 'dayjs/locale/fr'
 import { frFR } from "@mui/x-date-pickers/locales";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+
 //hooks
-import useResponsive from '../../../hooks/useReponsive';
-import { retrieveUserId } from '../../../utils/retrieveUserId';
 import { axiosPrivateInstance } from '../../../api/axios'
 
 //styles
@@ -92,7 +91,6 @@ export default function NewMissionPage() {
 
   useEffect(() => {
     GetClientList()
-    console.log(clientList)
   }, [])
 
 
@@ -109,10 +107,24 @@ export default function NewMissionPage() {
             Créer une nouvelle mission
           </Typography>
 
-          {!clientList ?
-            (<Typography variant="h1" gutterBottom position={'center'}>
-              Vous devez d'abord créer un client
-            </Typography>) : (
+
+          {
+            loading && (
+              <Typography variant="h4" gutterBottom>
+                Chargement...
+              </Typography>
+            )
+          }
+          {clientList.length == 0 ?
+            (
+              <Card sx={{ mt: 10 }}>
+                <Typography variant="h3" gutterBottom sx={{ my: 5, textAlign: 'center', color: (theme) => theme.palette['warning'].main, }}>
+                  Vous devez d'abord créer un client
+                </Typography>
+                <Typography variant="h4" sx={{ my: 5 }} align="center">Vous n'avez pas encore ajouté de client</Typography>
+                <Link to='/dashboard/newclient'><Typography variant='body1' align="center" sx={{ mb: 5 }} gutterBottom>Voulez-vous ajouter un premier client ?</Typography></Link>
+              </Card>
+            ) : (
 
 
               <Card sx={{ p: 3, mb: 3 }}>

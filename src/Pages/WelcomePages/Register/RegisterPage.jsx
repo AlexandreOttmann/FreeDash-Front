@@ -14,7 +14,7 @@ import {
   Container,
   Typography,
   IconButton,
-  Divider,
+
   Stack,
   Button,
   TextField,
@@ -267,7 +267,7 @@ export default function RegisterPage() {
                       open={matchPwd.length > 0 && !validMatch}
                     >
                       <TextField
-                        helperText="Le mot de passe doit être compris entre 8 et 24 caractères, inclure une Majuscule, Minuscule, un Caractère spécial et un nombre minimum"
+                        helperText="Le mot de passe doit être compris entre 8 et 24 caractères, inclure une Majuscule, une Minuscule, un Caractère spécial et un nombre minimum"
                         name="password"
                         label="Confirmer le mot de Passe"
                         type={showPassword ? 'text' : 'password'}
@@ -285,7 +285,7 @@ export default function RegisterPage() {
                     <Button onClick={handleSubmit} variant="contained"
                       disabled={!validName || !validPwd || !validMatch ? true : false}
                     >
-                      Sign Up
+                      S'enregistrer
                     </Button>
                   </Stack>
                 </Box>

@@ -56,7 +56,7 @@ export default function CurrentMission({ displayMissions }) {
             {
               displayMissions.map((mission) => (
                 <Container key={mission.id}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2, }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2 }}>
                     <Typography sx={{
                       transform: 'translateY(-50 %)',
                       transition: 'transform 0.5s linear'

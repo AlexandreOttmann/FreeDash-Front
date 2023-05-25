@@ -1,19 +1,11 @@
 import { Link } from 'react-router-dom';
 import * as LottiePlayer from "@lottiefiles/lottie-player";
 
-
 //mui
-import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography, Button, Box, Container, Grid, CardMedia } from "@mui/material";
+import { Card, Typography, Button, Grid } from "@mui/material";
 
 //utils
 import Iconify from '../../../../components/iconify/Iconify';
-
-import dashboard from '../../../../assets/illustrations/dashboard_illustration.png'
-
-
-
-
 
 
 export default function WelcomeSection({ sx, ...other }) {
