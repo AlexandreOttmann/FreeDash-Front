@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import { useParams } from "react-router";
-import { axiosInstance } from '../../../../api/axios';
+import { axiosPrivateInstance } from '../../../../api/axios';
 
 import { Container, Typography, Divider, Stack, Button, Card, TextField } from '@mui/material';
 
@@ -16,6 +16,7 @@ export default function ProfileForm({ profile }) {
   const [zipCode, setZipCode] = useState(profile?.zipCode || '')
   const [city, setCity] = useState(profile?.city || '')
   const [country, setCountry] = useState(profile?.country || '')
+  const [occupation, setOccupation] = useState(profile?.occupation || '')
   const [siret, setSiret] = useState(profile?.siret || '')
   const [iban, setIban] = useState(profile?.iban || '')
   const [bic, setBic] = useState(profile?.bic || '')
@@ -23,10 +24,10 @@ export default function ProfileForm({ profile }) {
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleEditClient = async () => {
+  const handleEditUser = async () => {
     setLoading(true)
     try {
-      const response = await axiosInstance.patch(`/user/${profile.id}`, {
+      const response = await axiosPrivateInstance.patch(`/user`, {
         firstName,
         lastName,
         email,
@@ -35,6 +36,7 @@ export default function ProfileForm({ profile }) {
         zipCode,
         city,
         country,
+        occupation,
         siret,
         iban,
         bic
@@ -62,6 +64,7 @@ export default function ProfileForm({ profile }) {
     setZipCode(profile?.zipCode || '')
     setCity(profile?.city || '')
     setCountry(profile?.country || '')
+    setOccupation(profile?.occupation || '')
     setIban(profile?.iban || '')
     setBic(profile?.bic || '')
     setSiret(profile?.siret || '')
@@ -149,6 +152,13 @@ export default function ProfileForm({ profile }) {
           </Stack>
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
+            <TextField
+              fullWidth
+              label="Poste"
+              value={occupation}
+              onChange={(e) => setOccupation(e.target.value)}
+              variant="outlined"
+            />
 
             <TextField
               fullWidth
@@ -164,14 +174,14 @@ export default function ProfileForm({ profile }) {
               fullWidth
               label="IBAN"
               value={iban}
-              onChange={(e) => setSiret(e.target.value)}
+              onChange={(e) => setIban(e.target.value)}
               variant="outlined"
             />
             <TextField
               fullWidth
               label="BIC"
               value={bic}
-              onChange={(e) => setSiret(e.target.value)}
+              onChange={(e) => setBic(e.target.value)}
               variant="outlined"
             />
           </Stack>
@@ -204,7 +214,7 @@ export default function ProfileForm({ profile }) {
 
               variant="contained"
               color="primary"
-              onClick={handleEditClient}
+              onClick={handleEditUser}
             >
               Modifier
             </Button>
@@ -212,7 +222,7 @@ export default function ProfileForm({ profile }) {
         </Card>
 
 
-      </Container>
+      </Container >
     </>
   )
 }
