@@ -31,10 +31,6 @@ import ProfilPage from './Pages/Dashboard/Profil/ProfilPage';
 
 export default function Router() {
 
-
-  // To replace with token check
-
-
   const routes = useRoutes([
     {
       element: <HomeLayout />,
@@ -62,10 +58,10 @@ export default function Router() {
         { path: 'newmission', element: <NewMissionPage /> }
       ],
     },
-    // {
-    //   path: '*',
-    //   element: <Navigate to="/404" replace />,
-    // },
+    {
+      path: '*',
+      element: <Navigate to="/404" replace />,
+    },
   ]);
 
   return routes;

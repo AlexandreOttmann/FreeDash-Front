@@ -59,7 +59,6 @@ export default function ClientsPage() {
           <>
             <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
               <ClientSearch clients={clients} />
-              {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
             </Stack>
             <Grid container spacing={3}>
               {clients.map((client, index) => (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
@@ -21,24 +21,14 @@ export default function LoginForm() {
 
   const dispatch = useDispatch();
 
-  const retrieveId = retrieveUserId()
+  const [error, setError] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // ----------------- GPT
-  // const handleLogins = () => {
-  //   const credentials = { email, password };
-  //   axios.post('/api/login', credentials)
-  //     .then(response => {
-  //       dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
-  //       navigate('/dashboard');
-  //     })
-  //     .catch(error => {
-  //       dispatch({ type: 'LOGIN_FAILURE', payload: error.response.data });
-  //     });
-  // };
+  const errorLogin = useSelector((state) => state.user.errorLogin)
+
   // ---------------------------
   const handleLogin = (e) => {
     e.preventDefault()
@@ -52,8 +42,10 @@ export default function LoginForm() {
       }))
       setEmail('')
       setPassword('')
+      setError(false)
     } catch (err) {
       console.log(err)
+      setError(true)
     }
   };
 
@@ -61,7 +53,7 @@ export default function LoginForm() {
     e.preventDefault()
     try {
       dispatch(login({
-        email: 'keny.legoat@gmail.com', password: '123.Keny!', resolve() {
+        email: 'ottmann.alex@gmail.com', password: '123.Freedash!', resolve() {
           navigate('/dashboard')
         }
       }))
@@ -75,12 +67,13 @@ export default function LoginForm() {
   return (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" onChange={e => setEmail(e.target.value)} />
+        <TextField name="email" label="Adresse Email" onChange={e => setEmail(e.target.value)} />
         <TextField
           name="password"
           onChange={e => setPassword(e.target.value)}
           label="Mot de Passe"
           type={showPassword ? 'text' : 'password'}
+          helperText={<Typography variant="body" color={theme => theme.palette["error"].main}>{errorLogin}</Typography>}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -95,22 +88,26 @@ export default function LoginForm() {
       {/*//! To implemente on  V2 "Remember ME" */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         <Stack direction="row" alignItems="center">
-          <Checkbox name="remember" label="Remember me" />
+          <Checkbox name="remember" label="Se souvenir de moi" />
           Se souvenir de moi
         </Stack>
 
         {/*//! To implemente on  V2 "Forgot Password" */}
         <Link variant="subtitle2" underline="hover">
-          Forgot password?
+          Mot de passe oublié ?
         </Link>
       </Stack>
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleLogin}>
-        Login
+        Se connecter
       </LoadingButton>
       <LoadingButton sx={{ my: 5, bgcolor: 'red' }} size="small" type="submit" variant="contained" onClick={handleDemoLogin}>
-        Login DEMO
+        DEMO
       </LoadingButton>
+
+      <Typography variant="body2" align="center">
+        {error && error.message}
+      </Typography>
     </>
   );
 }

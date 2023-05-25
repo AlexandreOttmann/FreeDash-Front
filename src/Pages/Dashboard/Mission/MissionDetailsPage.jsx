@@ -14,7 +14,7 @@ import { useTheme } from '@mui/material/styles';
 import EditMission from "./Sections/EditMission";
 import DateRangeDisplay from "./Sections/DateRangeDisplay";
 import SvgColor from "../../../components/svg-color/SvgColor";
-import Iconify from "../../../components/iconify/Iconify";
+
 
 //Handle slide up transition
 const Transition = forwardRef(function Transition(props, ref) {

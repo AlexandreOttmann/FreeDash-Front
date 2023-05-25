@@ -41,12 +41,8 @@ const Main = styled('div')(({ theme }) => ({
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    console.log('Je suis dans le dashborad layout');
-  }, []);
 
   const user = isLogged()
-  console.log('reset')
 
   return (
     <StyledRoot>
