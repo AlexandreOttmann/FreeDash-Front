@@ -153,7 +153,6 @@ export default function ClientListMission({ missions, index }) {
   // Handle Delete modal
   const navigate = useNavigate();
 
-
   return (
     <>
       <Card>
