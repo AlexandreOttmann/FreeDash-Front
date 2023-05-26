@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 //store
@@ -51,7 +51,7 @@ export default function DashboardLayout() {
       <Main>
         <Outlet />
       </Main>
-      {/* <Footer/> */}
     </StyledRoot>
   );
 }
+

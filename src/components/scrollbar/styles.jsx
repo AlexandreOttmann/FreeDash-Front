@@ -28,5 +28,9 @@ export const StyledScrollbar = styled(SimpleBar)(({ theme }) => ({
   },
   '& .simplebar-mask': {
     zIndex: 'inherit',
+
+  },
+  '& .simplebar-placeholder': {
+    display: 'none',
   },
 }));

@@ -25,7 +25,6 @@ export default function HomePage() {
           width: '200vw',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          // backgroundPosition: 'center',
           backgroundImage: `url(${'/src/assets/illustrations/herosection2.png'})`,
           filter: 'blur(5px)',
         }}
@@ -45,7 +44,6 @@ export default function HomePage() {
               sx={{
                 marginBottom: "2rem",
                 height: '70%',
-
               }}
               startIcon={<Iconify icon="bi:lightning-charge-fill" />}
             >
@@ -173,7 +171,6 @@ export default function HomePage() {
                   </Typography>
                 </Card>
               </Grid>
-
 
             </Grid>
           </Container>

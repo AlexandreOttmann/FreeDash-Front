@@ -25,8 +25,6 @@ import MissionDetailsPage from './Pages/Dashboard/Mission/MissionDetailsPage';
 import NewMissionPage from './Pages/Dashboard/Mission/NewMissionPage';
 import ProfilPage from './Pages/Dashboard/Profil/ProfilPage';
 
-// import Page404 from './pages/Page404';
-
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -55,7 +53,9 @@ export default function Router() {
         { path: 'newclient', element: <NewClientPage /> },
         { path: 'mission', element: <MissionPage /> },
         { path: 'mission/:idmission', element: <MissionDetailsPage /> },
-        { path: 'newmission', element: <NewMissionPage /> }
+        { path: 'newmission', element: <NewMissionPage /> },
+
+
       ],
     },
     {
