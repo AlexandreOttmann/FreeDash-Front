@@ -11,7 +11,7 @@ const StyledIcon = styled('div')(({ theme }) => ({
   display: 'flex',
   borderRadius: '50%',
   alignItems: 'center',
-  width: '3em',
+  minWidth: '3em',
   height: '3em',
   justifyContent: 'center',
   marginBottom: theme.spacing(3),
@@ -73,7 +73,7 @@ function ClientItem({ client, index }) {
       <Box component="img" alt={name} src={`/src/assets/images/avatars/avatar_${Math.floor(Math.random() * (24 - 1) + 1)
         }.jpg`} sx={{ width: 48, height: 48, borderRadius: 10, flexShrink: 0 }} />
 
-      <Box sx={{ minWidth: 240, flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, minWidth: '100px' }}>
         <Link color="inherit" variant="subtitle2" underline="hover" to={`/dashboard/client/${missions[0].clientId}`}>
           {name}
         </Link>
@@ -100,7 +100,7 @@ function ClientItem({ client, index }) {
             }),
           }}
         >
-          <Iconify icon={'ant-design:trophy-outlined'} width={24} height={24} />
+          <Iconify icon={'ant-design:trophy-outlined'} width={'24px'} height={'24px'} />
         </StyledIcon>
       )
 

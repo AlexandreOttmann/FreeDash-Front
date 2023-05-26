@@ -60,6 +60,7 @@ export default function DashboardPage() {
 
   const handleRevenueNotDeclared = (missions) => {
     const notDeclaredMissions = missions.filter(mission => !mission.declarate)
+    console.log('LES MISSIONS', notDeclaredMissions)
     const revenueNotDeclared = notDeclaredMissions.reduce((acc, mission) => acc + +mission.totalPrice, 0)
     return revenueNotDeclared
   }
@@ -235,7 +236,7 @@ export default function DashboardPage() {
             <WelcomeSection />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={4} >
             <CurrentMission displayMissions={currentMissions} />
           </Grid>
 
@@ -286,7 +287,6 @@ export default function DashboardPage() {
               chartData={[
                 { label: 'Revenus non déclarés', value: totalRevenueNotDeclared },
                 { label: 'Revenus déclarés', value: totalRevenueDeclared },
-
               ]}
               chartColors={[
                 theme.palette.primary.main,

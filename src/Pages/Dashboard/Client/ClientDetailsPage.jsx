@@ -85,8 +85,6 @@ export default function ClientDetailsPage() {
     try {
       const response = await axiosPrivateInstance.get(`/clients/${idclient}`);
       setClient(response.data);
-      console.log(response.data)
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -97,6 +95,7 @@ export default function ClientDetailsPage() {
     try {
       const response = await axiosPrivateInstance.get(`/missions/${idclient}`);
       setMissions(response?.data);
+      console.log(response?.data);
       setMissionsNumber(response?.data?.length)
     } catch (error) {
       console.log(error);

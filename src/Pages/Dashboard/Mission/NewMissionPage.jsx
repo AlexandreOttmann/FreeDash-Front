@@ -45,6 +45,9 @@ export default function NewMissionPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
+  const [gotClient, setGotClient] = useState(false)
+
+  const [checkStatus, setCheckStatus] = useState(false)
 
 
 
@@ -55,6 +58,7 @@ export default function NewMissionPage() {
       // const response = await axiosInstance.get(`/user/1/clients`)
       console.log(response.data)
       setClientList(response.data)
+      if (response.data.length > 0) { setGotClient(true) }
       setLoading(false)
     } catch (error) {
       console.log(error)
@@ -80,6 +84,7 @@ export default function NewMissionPage() {
       console.log('requête lancée avec les données : ', response)
       setSuccess('La mission a bien été ajoutée')
       setLoading(false)
+
       navigate('/dashboard/mission')
 
     } catch (error) {
@@ -92,6 +97,7 @@ export default function NewMissionPage() {
   useEffect(() => {
     GetClientList()
   }, [])
+
 
 
   return (
@@ -115,7 +121,7 @@ export default function NewMissionPage() {
               </Typography>
             )
           }
-          {clientList.length == 0 ?
+          {gotClient == false ?
             (
               <Card sx={{ mt: 10 }}>
                 <Typography variant="h3" gutterBottom sx={{ my: 5, textAlign: 'center', color: (theme) => theme.palette['warning'].main, }}>
@@ -137,6 +143,7 @@ export default function NewMissionPage() {
                   <TextField
                     fullWidth
                     label="Nom"
+                    required
                     variant="outlined"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -208,14 +215,15 @@ export default function NewMissionPage() {
                     value={commentary}
                     onChange={(e) => setCommentary(e.target.value)}
                   />
-                  <FormControl fullWidth variant="outlined">
-                    <InputLabel id="demo-simple-select-outlined-label">Déclaré</InputLabel>
+                  <FormControl fullWidth variant="outlined" >
+                    <InputLabel id="demo-simple-select-outlined-label" >Déclaré</InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
                       value={declarate}
                       onChange={(e) => setDeclarate(e.target.value)}
                       label="Déclaré"
+                      disabled={status == 'En Cours'}
                     >
 
                       <MenuItem value={true}>Oui</MenuItem>
@@ -225,7 +233,7 @@ export default function NewMissionPage() {
                 </Stack>
 
                 <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-                  <FormControl fullWidth variant="outlined">
+                  <FormControl fullWidth variant="outlined" required>
                     <InputLabel id="demo-simple-select-outlined-label">Client</InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"

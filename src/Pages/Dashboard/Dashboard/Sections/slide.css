@@ -1,0 +1,16 @@
+
+
+.slick-dots {
+  top: 0;
+  /* bottom:auto; */
+  text-align: right !important;
+  right: 0 !important;
+  z-index: 10;
+  padding-right: 20px !important;
+  padding-top: 10px;
+}
+
+.slick-dots li button:before {
+  font-size: 8px;
+  opacity: 0.5;
+}

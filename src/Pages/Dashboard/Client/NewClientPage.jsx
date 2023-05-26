@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //mui
 import { styled } from '@mui/material/styles';
@@ -19,7 +19,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 
 
 export default function NewClientPage() {
-
+  const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   const navigate = useNavigate()
 
@@ -41,33 +41,45 @@ export default function NewClientPage() {
 
   const handleAddClient = async () => {
     setLoading(true)
-    try {
-      const response = await axiosPrivateInstance.post(`/clients`, {
-        email,
-        firstName,
-        lastName,
-        address,
-        zipCode,
-        city,
-        country,
-        phoneNumber,
-        siret,
-        provenance,
-        commentary,
-      })
-      console.log(response)
-      setSuccess('Le client a bien été ajouté')
-      setLoading(false)
-      navigate('/dashboard/client')
+    if (error == '') {
+      try {
+        const response = await axiosPrivateInstance.post(`/clients`, {
+          email,
+          firstName,
+          lastName,
+          address,
+          zipCode,
+          city,
+          country,
+          phoneNumber,
+          siret,
+          provenance,
+          commentary,
+        })
+        console.log(response)
+        setSuccess('Le client a bien été ajouté')
+        setLoading(false)
+        navigate('/dashboard/client')
 
-    } catch (error) {
-      console.log(error)
-      setError('Une erreur est survenue')
+      } catch (error) {
+        console.log(error)
+        setError('Une erreur est survenue')
+        setLoading(false)
+      }
+    } else {
       setLoading(false)
+      setError('Veuillez corriger les erreurs')
     }
   }
 
 
+  useEffect(() => {
+    if (email && !EMAIL_REGEX.test(email)) {
+      setError('Email invalide')
+    } else {
+      setError('')
+    }
+  }, [email])
   return (
 
     <>
@@ -114,6 +126,7 @@ export default function NewClientPage() {
                 required
                 label="Email"
                 variant="outlined"
+                helperText={error}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -207,7 +220,7 @@ export default function NewClientPage() {
 
             <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
               <Button
-
+                disabled={error != ''}
                 variant="contained"
                 color="primary"
                 onClick={handleAddClient}

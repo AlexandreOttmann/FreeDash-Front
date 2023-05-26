@@ -44,7 +44,7 @@ export default function TotalYearlyRevenue({ title, subheader, chartColors, char
   const chartLabels = chartData.map((i) => i.label);
 
   const chartSeries = chartData.map((i) => i.value);
-  console.log('chartData', chartSeries)
+
 
   const chartOptions = useChart({
     colors: chartColors,
