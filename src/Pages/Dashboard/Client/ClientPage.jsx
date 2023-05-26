@@ -62,6 +62,7 @@ export default function ClientsPage() {
             </Stack>
             <Grid container spacing={3}>
               {clients.map((client, index) => (
+
                 <ClientCard key={index} client={client} index={index} />
               ))}
             </Grid>

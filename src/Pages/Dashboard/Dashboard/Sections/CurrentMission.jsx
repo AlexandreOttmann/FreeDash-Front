@@ -61,7 +61,7 @@ export default function CurrentMission({ displayMissions }) {
     dotsClass: 'slick-dots slick-thumb ',
     infinite: true,
     arrows: false,
-    draggable: true,
+
     speed: 1000,
     easing: 'ease-in-out',
     slidesToShow: 1,
