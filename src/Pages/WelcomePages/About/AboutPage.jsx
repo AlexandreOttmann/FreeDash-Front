@@ -40,11 +40,7 @@ export default function AboutPage() {
           <Typography variant="h2" style={styles.title}>Mentions légales</Typography>
           <Typography variant="body1" style={styles.paragraph}>
             Nom de l'entreprise : FreeDash<br />
-            Adresse : [Adresse de l'entreprise]<br />
 
-            Téléphone : [Numéro de téléphone de l'entreprise]<br />
-
-            Directeur de publication : [Nom du directeur de publication]
           </Typography>
 
           <Typography variant='h3' style={styles.title}>Conditions d'utilisation :</Typography>

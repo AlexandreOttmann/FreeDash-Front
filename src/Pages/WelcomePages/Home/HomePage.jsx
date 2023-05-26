@@ -4,8 +4,8 @@ import { Grid, Card, Container, Typography, Button } from '@mui/material';
 import Iconify from '../../../components/iconify/Iconify';
 
 // Images
-import dashboard from '../../../assets/illustrations/dashboard_illustration.png'
-import dashboard2 from '../../../assets/illustrations/like_illustration.png'
+import dashboard from '/src/assets/illustrations/dashboard_illustration.png'
+import dashboard2 from '/src/assets/illustrations/like_illustration.png'
 
 // ----------------------------------------------------------------------
 

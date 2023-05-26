@@ -233,6 +233,11 @@ export default function MissionDetailsPage() {
                 </Typography>
               </Grid>
             </Grid>
+            <StyledInfo>
+              <Button onClick={handleDeleteClickOpen}>
+                Supprimer la mission
+              </Button>
+            </StyledInfo>
           </Stack>
         </Card>
         {/* </Card > */}
