@@ -7,13 +7,14 @@ import { axiosPrivateInstance } from '../../../api/axios'
 
 
 //mui
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Avatar, Container, Typography, Divider, Stack, Button, Card, CardContent, Box } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Avatar, Container, Typography, Divider, Stack, Button, Card, Grid } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 //Component
 import EditMission from "./Sections/EditMission";
-import DateRangeDisplay from "./Sections/DateRangeDisplay";
 import SvgColor from "../../../components/svg-color/SvgColor";
+import Label from "../../../components/label/Label";
+import { fDatefr } from "../../../utils/formatTime";
 
 
 //Handle slide up transition
@@ -56,7 +57,6 @@ const StyledInfo = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(3),
   color: theme.palette.text.disabled,
 }));
-
 
 
 
@@ -131,8 +131,6 @@ export default function MissionDetailsPage() {
         <Typography variant="h4" gutterBottom>
           Détails de la mission
         </Typography>
-        {/* <Card sx={{ mt: 3, p: 3 }}> */}
-
         <Card sx={{ position: 'relative' }}>
           <StyledCardMedia
             sx={{
@@ -169,77 +167,73 @@ export default function MissionDetailsPage() {
               </StyledButton>
             </StyledInfo>
           </StyledCardMedia>
-
-
           <Stack spacing={3} sx={{ mt: 3, p: 3 }}>
             <Typography variant="h6" gutterBottom sx={{ pt: 3 }}>
               {mission?.name}
             </Typography>
             <Divider />
-
-            <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mt: 3 }}>
-              <Stack spacing={2} sx={{ width: { md: '100%' } }}>
-
-                <DateRangeDisplay startDate={mission?.startDate} endDate={mission?.endDate} />
+            <Grid container spacing={2} sx={{ mt: 3 }}>
+              <Grid item xs={12} sm={6}>
                 <Typography variant="subtitle2" gutterBottom>
                   Date de début
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {mission?.startDate}
+                  {fDatefr(mission?.startDate)}
                 </Typography>
-
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <Typography variant="subtitle2" gutterBottom>
                   Date de fin
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {mission?.endDate}
+                  {fDatefr(mission?.endDate)}
                 </Typography>
-
-                <Typography variant="subtitle2" gutterBottom>
-                  Statut
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {mission?.status}
-                </Typography>
-
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <Typography variant="subtitle2" gutterBottom>
                   Prix total
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {mission?.totalPrice}€
+                  {mission?.totalPrice}€ TTC
                 </Typography>
-
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <Typography variant="subtitle2" gutterBottom>
                   Tva
                 </Typography>
                 <Typography variant="body2" gutterBottom>
                   {mission?.tva}%
                 </Typography>
-
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="subtitle2" gutterBottom>
+                  Statut
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  <Label color={(mission?.status === 'En Cours' && 'warning') || 'success'}>{mission?.status}</Label>
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <Typography variant="subtitle2" gutterBottom>
                   Déclarée
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {mission?.declarate ? 'Oui' : 'Non'}
-                </Typography>
+                  <Label color={(mission?.declarate === 'Non' && 'success') || 'error'}>{mission?.declarate ? 'Oui' : 'Non'}</Label>
 
-                <Typography variant="subtitle2" gutterBottom>
+                </Typography>
+              </Grid>
+              <Divider sx={{ width: '100%', my: 2 }} />
+              <Grid item xs={12} sm={6}>
+
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }} gutterBottom >
                   Commentaire
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography variant="body2">
                   {mission?.commentary}
                 </Typography>
-
-
-                <StyledInfo>
-                  <Button onClick={handleDeleteClickOpen}>
-                    Supprimer la mission
-                  </Button>
-                </StyledInfo>
-              </Stack>
-            </Stack>
+              </Grid>
+            </Grid>
           </Stack>
-
         </Card>
         {/* </Card > */}
 
