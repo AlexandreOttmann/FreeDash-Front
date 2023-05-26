@@ -229,7 +229,7 @@ export default function MissionPage() {
                 />
                 {/*! ===================mapping of our missions ==========================*/}
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                     const { id, name, totalPrice, declarate, status, client_id, clientFirstName, clientLastName } = row;
                     const selectedUser = selected.indexOf(id) !== -1;
 
@@ -241,7 +241,7 @@ export default function MissionPage() {
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={'/assets/images/avatars/avatar_1.jpg'} />
+                            <Avatar alt={name} src={`/assets/images/avatars/avatar_${index + 1}.jpg`} />
                             <Typography component={Link} to={`/dashboard/client/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
                               {clientFirstName} {clientLastName}
                             </Typography>
