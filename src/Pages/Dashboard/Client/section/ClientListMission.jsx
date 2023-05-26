@@ -173,7 +173,7 @@ export default function ClientListMission({ missions, index }) {
               <TableBody>
                 {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                   const { id, name, totalPrice, declarate, status, client_id } = row;
-                  const selectedUser = selected.indexOf(id) !== -1;
+                  const selectedUser = selected.indexOf(name) !== -1;
                   return (
 
                     <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>

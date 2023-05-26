@@ -54,7 +54,7 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
     >
       <Grid container margin={1}>
 
-        <Grid item xs={12} sm={5} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: 3, }}>
+        <Grid xs={12} sm={5} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: 3, }}>
           <Avatar alt={client.firstName}
             src={`/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
             sx={{ width: 100, height: 100 }}
