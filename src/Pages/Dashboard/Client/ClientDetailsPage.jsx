@@ -7,11 +7,9 @@ import { useCallback, useEffect, useState, forwardRef } from 'react';
 
 //hooks
 import { axiosPrivateInstance } from '../../../api/axios';
-import { retrieveUserId } from '../../../utils/retrieveUserId';
 
 // @mui
 import { styled } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
 
 import {
   Button,
@@ -131,6 +129,9 @@ export default function ClientDetailsPage() {
       {client.length != 0 ? (
         <>
           <Container>
+          <Typography variant="h4" gutterBottom>
+            Détails du client
+          </Typography>
 
             <DetailsSection client={client} missionsNumber={missionsNumber} totalGain={totalGain} />
             <ClientCommentary client={client} />
