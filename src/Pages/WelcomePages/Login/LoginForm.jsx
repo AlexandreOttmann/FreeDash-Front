@@ -11,11 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../../store/reducers/user';
 
 // ----------------------------------------------------------------------
-//utils
-import { retrieveUserId } from '../../../utils/retrieveUserId';
 
 
-// eslint-disable-next-line react/prop-types
+
 export default function LoginForm() {
   const navigate = useNavigate();
 

@@ -8,8 +8,7 @@ import { useOutletContext } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 // components
 
-import Iconify from '../../../components/iconify';
-import Logo from '../../../components/logo/Logo';
+
 import LoginForm from './LoginForm';
 
 import AlreadyConnected from './AlreadyConnected';
