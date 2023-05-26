@@ -79,7 +79,6 @@ export default function Navbar({
     navigate('/')
   }
 
-  //! TO DO : REQUEST USERID on API HERE TO DISPATCH DATA INTO NAVBAR
 
   const dispatch = useDispatch()
 
@@ -99,7 +98,6 @@ export default function Navbar({
 
     }
   }, [])
-
 
 
   const isDesktop = useResponsive('up', 'lg');

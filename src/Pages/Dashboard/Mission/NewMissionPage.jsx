@@ -55,8 +55,6 @@ export default function NewMissionPage() {
     setLoading(true)
     try {
       const response = await axiosPrivateInstance.get(`/clients`)
-      // const response = await axiosInstance.get(`/user/1/clients`)
-      console.log(response.data)
       setClientList(response.data)
       if (response.data.length > 0) { setGotClient(true) }
       setLoading(false)

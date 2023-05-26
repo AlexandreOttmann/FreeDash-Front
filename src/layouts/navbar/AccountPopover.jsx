@@ -94,7 +94,6 @@ export default function AccountPopover({ onLogoutClick, userData }) {
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
             <MenuItem
-
               key={option.label} onClick={handleClose}>
               <Link to={option.link} >
                 {option.label}

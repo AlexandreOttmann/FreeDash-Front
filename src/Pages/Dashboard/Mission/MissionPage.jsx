@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material';
 //components
-
+import Scrollbar from '../../../components/scrollbar/Scrollbar';
 import Iconify from '../../../components/iconify';
 import Label from '../../../components/label'
 //sections
@@ -212,93 +212,94 @@ export default function MissionPage() {
             <Link to='/dashboard/newmission'><Typography variant='body1' align="center">Voulez-vous ajouter une première mission ?</Typography></Link>
           </>
         ) : (
-          <Card>
+          <Card >
             <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
+            <Scrollbar>
+              <TableContainer sx={{ minWidth: 800 }}>
+                <Table>
+                  <UserListHead
+                    order={order}
+                    orderBy={orderBy}
+                    headLabel={TABLE_HEAD}
+                    rowCount={filteredUsers.length}
+                    numSelected={selected.length}
+                    onRequestSort={handleRequestSort}
+                    onSelectAllClick={handleSelectAllClick}
+                  />
+                  {/*! ===================mapping of our missions ==========================*/}
+                  <TableBody>
+                    {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                      const { id, name, totalPrice, declarate, status, client_id, clientFirstName, clientLastName } = row;
+                      const selectedUser = selected.indexOf(id) !== -1;
 
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={filteredUsers.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                {/*! ===================mapping of our missions ==========================*/}
-                <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                    const { id, name, totalPrice, declarate, status, client_id, clientFirstName, clientLastName } = row;
-                    const selectedUser = selected.indexOf(id) !== -1;
+                      return (
+                        <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                          <TableCell padding="checkbox">
+                            <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                          </TableCell>
 
-                    return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
+                          <TableCell component="th" scope="row" padding="none">
+                            <Stack direction="row" alignItems="center" spacing={2}>
+                              <Avatar alt={name} src={`/assets/images/avatars/avatar_${client_id}.jpg`} />
+                              <Typography component={Link} to={`/dashboard/client/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
+                                {clientFirstName} {clientLastName}
+                              </Typography>
+                            </Stack>
+                          </TableCell>
 
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={`/assets/images/avatars/avatar_${index + 1}.jpg`} />
-                            <Typography component={Link} to={`/dashboard/client/${client_id}`} variant="subtitle2" style={{ textDecoration: 'none' }} noWrap>
-                              {clientFirstName} {clientLastName}
+                          <TableCell align="left" style={{ textDecoration: 'none' }}><Link to={`/dashboard/mission/${id}`}>{name}</Link></TableCell>
+
+                          <TableCell align="left">{totalPrice}€</TableCell>
+
+                          <TableCell align="left">{declarate ? 'Oui' : 'Non'}</TableCell>
+
+                          <TableCell align="left">
+                            <Label color={(status === 'En Cours' && 'warning') || 'success'}>{status}</Label>
+                          </TableCell>
+
+                          <TableCell align="right">
+                            <IconButton size="large" color="inherit" onClick={(event) => handleOpenMenu(event, id)}>
+                              <Iconify icon={'eva:more-vertical-fill'} />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                    {/* ========================= Conditionnal render ========================== */}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+
+                  {isNotFound && (
+                    <TableBody>
+                      <TableRow>
+                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                          <Paper
+                            sx={{
+                              textAlign: 'center',
+                            }}
+                          >
+                            <Typography variant="h6" paragraph>
+                              Not found
                             </Typography>
-                          </Stack>
-                        </TableCell>
 
-                        <TableCell align="left" style={{ textDecoration: 'none' }}><Link to={`/dashboard/mission/${id}`}>{name}</Link></TableCell>
-
-                        <TableCell align="left">{totalPrice}€</TableCell>
-
-                        <TableCell align="left">{declarate ? 'Oui' : 'Non'}</TableCell>
-
-                        <TableCell align="left">
-                          <Label color={(status === 'En Cours' && 'warning') || 'success'}>{status}</Label>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={(event) => handleOpenMenu(event, id)}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
-                          </IconButton>
+                            <Typography variant="body2">
+                              No results found for &nbsp;
+                              <strong>&quot;{filterName}&quot;</strong>.
+                              <br /> Try checking for typos or using complete words.
+                            </Typography>
+                          </Paper>
                         </TableCell>
                       </TableRow>
-                    );
-                  })}
-                  {/* ========================= Conditionnal render ========================== */}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
+                    </TableBody>
                   )}
-                </TableBody>
-
-                {isNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <Paper
-                          sx={{
-                            textAlign: 'center',
-                          }}
-                        >
-                          <Typography variant="h6" paragraph>
-                            Not found
-                          </Typography>
-
-                          <Typography variant="body2">
-                            No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
-                            <br /> Try checking for typos or using complete words.
-                          </Typography>
-                        </Paper>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
+                </Table>
+              </TableContainer>
+            </Scrollbar>
 
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}

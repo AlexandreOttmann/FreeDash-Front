@@ -232,11 +232,11 @@ export default function DashboardPage() {
 
 
         <Grid container spacing={5}>
-          <Grid item xs={12} sm={12} md={8}>
+          <Grid item xs={12} md={12} xl={8}>
             <WelcomeSection />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={4} >
+          <Grid item xs={12} lg={12} xl={4} >
             <CurrentMission displayMissions={currentMissions} />
           </Grid>
 
