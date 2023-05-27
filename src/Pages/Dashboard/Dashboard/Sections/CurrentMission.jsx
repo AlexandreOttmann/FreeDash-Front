@@ -61,9 +61,9 @@ export default function CurrentMission({ displayMissions }) {
     dotsClass: 'slick-dots slick-thumb ',
     infinite: true,
     arrows: false,
-    draggable: true,
+
     speed: 1000,
-    // easing: 'ease-in-out',
+    easing: 'ease-in-out',
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -75,7 +75,6 @@ export default function CurrentMission({ displayMissions }) {
     <Box
       sx={{
         borderRadius: 3,
-        // backgroundColor: 'rgba(22, 28, 36, 0.64)',
         color: (theme) => theme.palette['primary'].lighter,
         height: '100%',
         width: '100%',
@@ -83,11 +82,10 @@ export default function CurrentMission({ displayMissions }) {
 
       <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', borderRadius: 3, backgroundColor: (theme) => alpha(theme.palette['primary'].dark, 0.8) }}>
 
-        <Box sx={{ position: 'absolute', zIndex: 1, top: 10, left: 20, }}>
+        <Box sx={{ position: 'absolute', zIndex: 1, top: 15, left: 20, }}>
           <Typography variant="subtitle1" align={'left'} >Mission en cours</Typography>
         </Box>
         <Slider {...settings}>
-
           {displayMissions.length === 0 ? (
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
               <Typography variant="subtitle2" align={'center'} sx={{ m: 10 }} >Vous n'avez pas de mission en cours...</Typography>
@@ -146,12 +144,8 @@ export default function CurrentMission({ displayMissions }) {
             )
             )
           )}
-
         </Slider>
-
-
-
-        <Box sx={{ textAlign: 'right', position: 'absolute', bottom: 0, right: 0, zIndex: 11 }}>
+        <Box sx={{ textAlign: 'right', position: 'absolute', bottom: 10, right: 0, zIndex: 11 }}>
           <Link to={`/dashboard/mission/`}>
             <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
               Toutes les missions

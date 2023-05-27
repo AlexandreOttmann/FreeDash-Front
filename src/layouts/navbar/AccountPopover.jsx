@@ -93,13 +93,12 @@ export default function AccountPopover({ onLogoutClick, userData }) {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
-            <MenuItem
-
-              key={option.label} onClick={handleClose}>
-              <Link to={option.link} >
+            <Link to={option.link} key={option.label}  >
+              <MenuItem
+                onClick={handleClose}>
                 {option.label}
-              </Link>
-            </MenuItem>
+              </MenuItem>
+            </Link>
           ))}
         </Stack>
 

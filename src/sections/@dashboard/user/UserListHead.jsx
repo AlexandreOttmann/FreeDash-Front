@@ -41,7 +41,7 @@ export default function UserListHead({
   };
   const theme = useTheme()
   return (
-    <TableHead sx={{ backgroundColor: theme.palette.primary.lighter, color: 'black' }}>
+    <TableHead sx={{ backgroundColor: theme.palette.primary.lighter, }}>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
@@ -52,6 +52,7 @@ export default function UserListHead({
         </TableCell>
         {headLabel.map((headCell) => (
           <TableCell
+            sx={{ color: 'black' }}
             key={crypto.randomUUID()}
             align={headCell.alignRight ? 'right' : 'left'}
             sortDirection={orderBy === headCell.id ? order : false}

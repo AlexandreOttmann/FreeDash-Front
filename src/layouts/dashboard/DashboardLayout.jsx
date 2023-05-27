@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 //store
@@ -38,9 +38,9 @@ const Main = styled('div')(({ theme }) => ({
   },
 }));
 
+
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
-
 
   const user = isLogged()
 
@@ -51,7 +51,7 @@ export default function DashboardLayout() {
       <Main>
         <Outlet />
       </Main>
-      {/* <Footer/> */}
     </StyledRoot>
   );
 }
+
