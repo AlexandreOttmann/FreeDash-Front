@@ -4,9 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 
 // components
-import Iconify from '../../../components/iconify/Iconify';
-
-
+import MotionSection from '../../../sections/@dashboard/user/MotionSection';
 // sections
 import WelcomeSection from './Sections/WelcomeSection';
 import CurrentMission from './Sections/CurrentMission';
@@ -17,11 +15,10 @@ import YearlyRevenueSection from './Sections/YearlyRevenueSection';
 import TotalYearlyRevenue from './Sections/TotalYearlyRevenue';
 //utils
 import { retrieveUserId } from '../../../utils/retrieveUserId';
-import { retrieveUserData } from '../../../store/reducers/user';
 
-import { axiosInstance, axiosPrivateInstance } from '../../../api/axios'
-import { last } from 'lodash';
-import { fi } from 'date-fns/locale';
+
+import { axiosPrivateInstance } from '../../../api/axios'
+
 
 
 export default function DashboardPage() {
@@ -233,69 +230,89 @@ export default function DashboardPage() {
 
         <Grid container spacing={5}>
           <Grid item xs={12} md={12} xl={8}>
-            <WelcomeSection />
+            <MotionSection delayTime={0}>
+              <WelcomeSection />
+            </MotionSection>
           </Grid>
 
           <Grid item xs={12} lg={12} xl={4} >
-            <CurrentMission displayMissions={currentMissions} />
+            <MotionSection delayTime={0.1}>
+              <CurrentMission displayMissions={currentMissions} />
+            </MotionSection>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Total de Missons" total={totalMission} color="info" icon={'material-symbols:add-box-outline-rounded'} />
+            <MotionSection delayTime={0.2}>
+              <AppWidgetSummary title="Total de Missons" total={totalMission} color="info" icon={'material-symbols:add-box-outline-rounded'} />
+            </MotionSection>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Total de Clients" total={totalClient} color="warning" icon={'material-symbols:person'} />
+            <MotionSection delayTime={0.4}>
+              <AppWidgetSummary title="Total de Clients" total={totalClient} color="warning" icon={'material-symbols:person'} />
+            </MotionSection>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Missions non déclarées" total={totalMissionNotDeclared} price={totalRevenueNotDeclared} color="error" icon={'ic:round-access-time-filled'} />
+            <MotionSection delayTime={0.6}>
+              <AppWidgetSummary title="Missions non déclarées" total={totalMissionNotDeclared} price={totalRevenueNotDeclared} color="error" icon={'ic:round-access-time-filled'} />
+            </MotionSection>
           </Grid>
 
+
           <Grid item xs={12} sm={6} md={4}>
-            <TopClientsSection clients={topClients} />
+            <MotionSection delayTime={0.8}>
+              <TopClientsSection clients={topClients} />
+            </MotionSection>
           </Grid>
 
           <Grid item xs={12} sm={12} md={8}>
-            <YearlyRevenueSection
-              title="Evolution du chiffre d'affaire"
-              subheader="sur les derniers mois"
-              chartLabels={lastMonths}
-              chartData={[
-                {
-                  name: "Chiffre d'affaire mensuel",
-                  type: 'column',
-                  fill: 'solid',
-                  data: monthlyRevenue,
-                },
-                {
-                  name: "Evolution du chiffre d'affaire",
-                  type: 'area',
-                  fill: 'gradient',
-                  data: revenueEvolution
-                },
-              ]} />
+            <MotionSection delayTime={1}>
+              <YearlyRevenueSection
+                title="Evolution du chiffre d'affaire"
+                subheader="sur les derniers mois"
+                chartLabels={lastMonths}
+                chartData={[
+                  {
+                    name: "Chiffre d'affaire mensuel",
+                    type: 'column',
+                    fill: 'solid',
+                    data: monthlyRevenue,
+                  },
+                  {
+                    name: "Evolution du chiffre d'affaire",
+                    type: 'area',
+                    fill: 'gradient',
+                    data: revenueEvolution
+                  },
+                ]} />
+            </MotionSection>
           </Grid>
 
           <Grid item xs={12} sm={6} md={6}>
-            <CalendarSection />
+            <MotionSection delayTime={1}>
+              <CalendarSection />
+            </MotionSection>
           </Grid>
 
           <Grid item xs={12} sm={6} md={6}>
-            <TotalYearlyRevenue
-              title="Répartition des revenus"
-              chartData={[
-                { label: 'Revenus non déclarés', value: totalRevenueNotDeclared },
-                { label: 'Revenus déclarés', value: totalRevenueDeclared },
-              ]}
-              chartColors={[
-                theme.palette.primary.main,
-                theme.palette.info.main,
-                theme.palette.warning.main,
-                theme.palette.error.main,
-              ]}
-            />
+            <MotionSection delayTime={1}>
+              <TotalYearlyRevenue
+                title="Répartition des revenus"
+                chartData={[
+                  { label: 'Revenus non déclarés', value: totalRevenueNotDeclared },
+                  { label: 'Revenus déclarés', value: totalRevenueDeclared },
+                ]}
+                chartColors={[
+                  theme.palette.primary.main,
+                  theme.palette.info.main,
+                  theme.palette.warning.main,
+                  theme.palette.error.main,
+                ]}
+              />
+            </MotionSection>
           </Grid>
+
         </Grid>
       </Container>
     </>

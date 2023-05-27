@@ -38,9 +38,9 @@ const Main = styled('div')(({ theme }) => ({
   },
 }));
 
+
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
-
 
   const user = isLogged()
 

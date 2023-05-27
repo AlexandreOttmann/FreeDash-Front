@@ -9,6 +9,8 @@ import { fDatefr } from '../../../../utils/formatTime';
 import SvgColor from '../../../../components/svg-color';
 import Iconify from '../../../../components/iconify';
 
+//component
+import MotionSection from '../../../../sections/@dashboard/user/MotionSection';
 // ----------------------------------------------------------------------
 
 const StyledCardMedia = styled('div')({
@@ -58,65 +60,67 @@ ClientCard.propTypes = {
   client: PropTypes.object.isRequired,
 };
 
-export default function ClientCard({ client }) {
+export default function ClientCard({ client, index }) {
 
   const { firstName, lastName, createdAt, id, email } = client;
 
   return (
     <Grid item xs={12} sm={6} md={3}>
-      <Card sx={{ position: 'relative', ...cardStyles }}>
-        <Link to={`/dashboard/client/${id}`} >
-          <StyledCardMedia>
-            <SvgColor
-              color="paper"
-              src="/assets/icons/shape-avatar.svg"
-              sx={{
-                width: 80,
-                height: 36,
-                zIndex: 9,
-                bottom: -15,
-                position: 'absolute',
-                color: 'background.paper',
-              }}
-            />
-            <StyledAvatar
-              alt={firstName}
-              src={`/src/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
-            />
-
-            <StyledCover alt={firstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
-          </StyledCardMedia>
-
-
-          <CardContent sx={{ height: '15em', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <Typography variant="h4">
-              {`${firstName} ${lastName}`}
-            </Typography>
-            <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-              Date de création : {fDatefr(createdAt)}
-            </Typography>
-            <StyledInfo>
-              <Box
+      <MotionSection delayTime={0.2 * index}>
+        <Card sx={{ position: 'relative', ...cardStyles }}>
+          <Link to={`/dashboard/client/${id}`} >
+            <StyledCardMedia>
+              <SvgColor
+                color="paper"
+                src="/assets/icons/shape-avatar.svg"
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  ml: 1.5,
+                  width: 80,
+                  height: 36,
+                  zIndex: 9,
+                  bottom: -15,
+                  position: 'absolute',
+                  color: 'background.paper',
                 }}
-              >
-              </Box>
+              />
+              <StyledAvatar
+                alt={firstName}
+                src={`/src/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
+              />
 
-            </StyledInfo>
-            <Stack sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', mt: 1 }}>
-              <Typography variant="caption">{email}</Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
-                <Button size="medium" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-                  Détails du client
-                </Button>
-              </Box>
-            </Stack>
-          </CardContent>
-        </Link>
-      </Card>
+              <StyledCover alt={firstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
+            </StyledCardMedia>
+
+
+            <CardContent sx={{ height: '15em', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <Typography variant="h4">
+                {`${firstName} ${lastName}`}
+              </Typography>
+              <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
+                Date de création : {fDatefr(createdAt)}
+              </Typography>
+              <StyledInfo>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    ml: 1.5,
+                  }}
+                >
+                </Box>
+
+              </StyledInfo>
+              <Stack sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', mt: 1 }}>
+                <Typography variant="caption">{email}</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+                  <Button size="medium" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
+                    Détails du client
+                  </Button>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Link>
+        </Card>
+      </MotionSection>
     </Grid >
   );
 }

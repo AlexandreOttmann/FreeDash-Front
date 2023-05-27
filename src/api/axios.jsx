@@ -15,8 +15,6 @@ export const axiosPrivateInstance = axios.create({
 
 axiosPrivateInstance.interceptors.request.use((config) => {
     const token = JSON.parse(localStorage.getItem('jwt'));
-    console.log('config', token.data)
-
     if (token) {
         config.headers.Authorization = `Bearer ${token.data.accessToken}`;
     }

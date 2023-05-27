@@ -33,8 +33,6 @@ const ProfilePage = () => {
     try {
       const response = await axiosPrivateInstance.get(`/user`);
       setUser(response.data);
-      console.log(response.data)
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
