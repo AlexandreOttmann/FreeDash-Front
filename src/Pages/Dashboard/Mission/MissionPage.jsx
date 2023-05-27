@@ -237,7 +237,9 @@ export default function MissionPage() {
                       <AnimatePresence>
                         {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                           const { id, name, totalPrice, declarate, status, client_id, clientFirstName, clientLastName } = row;
-                          const selectedUser = selected.indexOf(id) !== -1;
+                          const selectedUser = selected.indexOf(name) !== -1;
+
+
 
                           return (
                             <TableRow
