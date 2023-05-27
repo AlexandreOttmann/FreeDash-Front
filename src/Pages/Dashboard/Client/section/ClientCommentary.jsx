@@ -10,10 +10,10 @@ export default function ClientCommentary({ client }) {
         py: 2,
         paddingX: 3,
       }}>
-      <Typography variant="h6" sx={{ fontWeight: 'bold' }} gutterBottom>
+      <Typography variant="h6" sx={{ fontWeight: 'bold' }} gutterBottom marginLeft={5}>
         Commentaire :
       </Typography>
-      <Typography variant="body2">
+      <Typography variant="body2" marginLeft={5}>
         {client.commentary}
       </Typography>
     </Card >

@@ -1,5 +1,4 @@
-const team = [
-  {
+const team = [{
     cover: '../assets/images/covers/cover_1.jpg',
     avatar: '../assets/images/avatars/avatar_8.jpg',
     displayName: 'Sandra',
@@ -17,7 +16,7 @@ const team = [
     cover: '../assets/images/covers/cover_3.jpg',
     avatar: '../assets/images/avatars/avatar_13.jpg',
     displayName: 'Clément ',
-    role: 'Front',
+    role: 'Back',
     url: 'https://github.com/C-Rollot'
 
   },
