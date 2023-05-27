@@ -215,6 +215,7 @@ export default function MissionPage() {
             <Link to='/dashboard/newmission'><Typography variant='body1' align="center">Voulez-vous ajouter une première mission ?</Typography></Link>
           </>
         ) : (
+
           <Card >
             <MotionSection delayTime={0.1}>
               <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />

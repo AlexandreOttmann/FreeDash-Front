@@ -2,9 +2,7 @@ import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 //mui
-
-import { Card, Typography, Grid, Avatar, Button, Divider, Chip } from "@mui/material";
-
+import { Card, Typography, Grid, Avatar, Button, Divider, Chip, Stack } from "@mui/material";
 import { Dialog, DialogContent, DialogTitle, Slide } from '@mui/material';
 //components
 import EditClient from './EditClient';
@@ -56,7 +54,8 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
     >
       <Grid container margin={1}>
 
-        <Grid item xs={12} sm={5} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: 3, }}>
+
+        <Grid xs={12} sm={5} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: 3, }}>
           <Avatar alt={client.firstName}
             src={`/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
             sx={{ width: 100, height: 100 }}
@@ -69,28 +68,27 @@ export default function DetailsSection({ client, missionsNumber, totalGain }) {
           <Typography variant="body1" ><strong>SIRET : </strong> {client.siret} </Typography>
         </Grid>
 
-
-        <Grid xs={4} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 1.5, textAlign: 'center' }}>
+        <Grid xs={12} sm={5} margin={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 1.5, textAlign: 'center' }}>
           <Chip label="Adresse" variant="outlined" />
           <Typography variant="body1" >{client.address}  </Typography>
           <Typography variant="body1" >{client.zipCode} | {client.city} </Typography>
           <Typography variant="body1" >{client.country} </Typography>
         </Grid >
-        <Grid xs={2} marginBottom={1} sx={{ marginLeft: 'auto' }}>
-          <Button variant="outlined" onClick={handleClickOpen}>Modifier</Button>
-        </Grid>
       </Grid>
-      <Divider sx={{ width: '100%', marginTop:4 }} />
-      <Grid container spacing={4} sx={{ margin: 'auto', my:2 }}>
-        <Grid item xs={6}>
+      <Divider sx={{ width: '100%', marginTop: 4 }} />
+      <Grid container spacing={4} sx={{ margin: 'auto', my: 2 }}>
+        <Grid item xs={12} md={5}>
           <Typography variant="subtitle1">Nombre de missions: {missionsNumber}</Typography>
 
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={5}>
           <Typography variant="subtitle1">Total des missions avec {client.firstName}: {totalGain}€ HT</Typography>
         </Grid>
       </Grid>
 
+      <Stack direction="row" spacing={2} justifyContent="flex-end" sx={{ padding: 2 }}>
+        <Button variant="outlined" onClick={handleClickOpen}>Modifier</Button>
+      </Stack>
 
       <Dialog
         scroll="body"
