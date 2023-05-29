@@ -43,12 +43,18 @@ export default function ProfileForm({ profile }) {
   };
 
   const handleUserDelete = async () => {
-    try {
-      await axiosPrivateInstance.delete(`/user`);
-      localStorage.removeItem('jwt');
-      navigate('/register', { replace: true });
-    } catch (error) {
-      console.log("La mission n'a pas pu être supprimée", error);
+    if (email === "ottmann.alex@gmail.com") {
+      setError('Vous ne pouvez pas supprimer ce compte')
+      return
+    } else {
+
+      try {
+        await axiosPrivateInstance.delete(`/user`);
+        localStorage.removeItem('jwt');
+        navigate('/register', { replace: true });
+      } catch (error) {
+        console.log("La mission n'a pas pu être supprimée", error);
+      }
     }
   };
 
