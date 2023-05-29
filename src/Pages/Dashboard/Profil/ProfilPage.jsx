@@ -1,9 +1,20 @@
 import ProfileForm from './section/ProfileForm';
 import { Container } from '@mui/material';
 import styled from '@emotion/styled';
+import PasswordForm from './section/PasswordForm';
 import { useCallback, useEffect, useState } from 'react';
 import { axiosPrivateInstance } from '../../../api/axios';
 import useResponsive from '../../../hooks/useReponsive';
+
+
+// ==============States TabList=================
+
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 
 const StyledSection = styled('div')(({ theme }) => ({
@@ -24,6 +35,12 @@ const ProfilePage = () => {
 
   const mdUp = useResponsive('up', 'md');
 
+  // ==============States TabList=================
+
+  const [value, setValue] = React.useState('1');
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   // ==============States API=================
   const [user, setUser] = useState([]);
@@ -55,9 +72,26 @@ const ProfilePage = () => {
       )}
 
       <Container maxWidth="md">
-        <ProfileForm profile={user} />
+        <Box sx={{ width: '100%', typography: 'body1' }}>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={handleChange}>
+                <Tab label="Général" value="1" />
+                <Tab label="Mot de passe" value="2" />
+              </TabList>
+            </Box>
+            <TabPanel value="1">
+              <ProfileForm profile={user} />
+            </TabPanel>
+            <TabPanel value="2">
+              <PasswordForm profile={user} />
+            </TabPanel>
+          </TabContext>
+        </Box>
       </Container>
     </StyledRoot>
+
+
   );
 };
 
