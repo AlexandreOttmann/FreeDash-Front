@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
-
+import dayjs from 'dayjs';
 // components
 import MotionSection from '../../../sections/@dashboard/user/MotionSection';
 // sections
@@ -91,23 +91,28 @@ export default function DashboardPage() {
   }
 
   const handleRevenueEvolution = (missions) => {
-    // get the missions with status "Terminé"
-    const filteredMissions = missions.filter(mission => mission.status !== 'En Cours' && new Date(mission.endDate) > new Date(new Date().setMonth(new Date().getMonth() - 11)))
+    const today = dayjs(); // Date d'aujourd'hui
+    const elevenMonthsAgo = today.subtract(11, 'month'); // 11 mois avant aujourd'hui
 
-    filteredMissions.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
-    const revenueEvolution = new Array(11).fill(0);
-    let previousRevenue = 0;
+    const filteredMissions = missions.filter(mission => mission.status === 'Terminé'); // Filtrer les missions avec le statut "Terminé"
 
+    const initialRevenue = filteredMissions
+      .filter(mission => dayjs(mission.endDate).isBefore(elevenMonthsAgo)) // Récupérer les missions terminées avant le début de l'année en cours
+      .reduce((total, mission) => total + +mission.totalPrice, 0); // Calculer la somme des prix totaux
 
-    filteredMissions.forEach(mission => {
-      previousRevenue += +mission.totalPrice
+    const revenueArray = [initialRevenue]; // Tableau initial avec la somme des prix totaux
 
-      const endDate = new Date(mission.endDate)
-      const monthIndex = Math.abs(new Date().getMonth() + endDate.getMonth());
-      revenueEvolution[monthIndex + 2] = previousRevenue
-    })
+    // Ajouter le totalPrice des missions aux mois suivants
+    for (let i = 1; i < 11; i++) {
+      const currentMonth = elevenMonthsAgo.add(i, 'month');
+      const totalRevenue = filteredMissions
+        .filter(mission => dayjs(mission.endDate).isSame(currentMonth, 'month')) // Filtrer les missions avec une endDate dans le mois courant
+        .reduce((total, mission) => total + +mission.totalPrice, revenueArray[i - 1]); // Calculer la somme en tenant compte de la valeur précédente
 
-    return revenueEvolution
+      revenueArray.push(totalRevenue);
+    }
+    console.log('REVENUEARRAY', revenueArray)
+    return revenueArray;
   }
 
   const lastElevenMonths = () => {

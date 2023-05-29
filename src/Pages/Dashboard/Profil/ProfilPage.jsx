@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { useSelector } from 'react-redux';
+
 //@mui
 import { Container, Box } from '@mui/material';
 import styled from '@emotion/styled';
@@ -35,6 +37,9 @@ const ProfilePage = () => {
   const mdUp = useResponsive('up', 'md');
   const isPresent = useIsPresent();
   const theme = useTheme();
+
+
+  const isDarkMode = useSelector(state => state.user.isDarkMode)
   // ==============States API=================
   const [user, setUser] = useState([]);
 
@@ -86,7 +91,7 @@ const ProfilePage = () => {
         exit={{ scaleY: 1, transition: { duration: 1, ease: "anticipate" } }}
         style={{
           originY: isPresent ? 0 : 1,
-          backgroundColor: theme.palette["primary"].lighter
+          backgroundColor: isDarkMode ? theme.palette["grey"][800] : theme.palette["grey"][300],
         }}
         className="privacy-screen"
       />

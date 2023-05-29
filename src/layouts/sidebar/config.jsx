@@ -26,12 +26,12 @@ const sideConfig = [
   {
     title: 'nouvelle mission',
     path: '/dashboard/newmission',
-    icon: icon('ic_blog'),
+    icon: icon('ic_addmission'),
   },
   {
     title: 'nouveau client',
     path: '/dashboard/newclient',
-    icon: icon('ic_lock'),
+    icon: icon('ic_addclient'),
   },
   {
     title: 'Not found',

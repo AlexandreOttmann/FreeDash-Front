@@ -38,6 +38,7 @@ export default function CurrentMission({ displayMissions }) {
   const theme = useTheme();
   const boxSX = {
     height: '250px',
+    marginX: 2,
     "&:hover": {
       color: theme.palette['warning'].light,
       transition: 'all 0.5s ease',
