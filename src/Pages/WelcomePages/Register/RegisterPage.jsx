@@ -103,17 +103,6 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if button enabled with JS hack
-    const v1 = USER_REGEX.test(user);
-    const v2 = PWD_REGEX.test(pwd);
-    //! Remove before deployment, it check if the value goes trough the submit
-    if (!v1 || !v2) {
-      setErrMsg('Invalid Entry');
-      return;
-    }
-    //! Remove before deployment,
-    console.log(firstname, lastname, user, pwd);
-
     try {
       const response = await axiosInstance.post(
         REGISTER_URL,
@@ -125,9 +114,6 @@ export default function RegisterPage() {
         }
         // JSON.stringify({ firstname, lastname, user, pwd }),
       );
-      // TODO: remove console.logs before deployment
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response))
       setSuccess(true);
       //clear state and controlled inputs
       setUser('');
@@ -145,12 +131,6 @@ export default function RegisterPage() {
     }
   };
 
-  function checkLogged() {
-    const userLogged = isLogged()
-    if (userLogged) {
-
-    }
-  }
 
   const mdUp = useResponsive('up', 'md');
   return (

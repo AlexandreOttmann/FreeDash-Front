@@ -1,35 +1,22 @@
-
-import ProfileForm from './section/ProfileForm';
-import { Container } from '@mui/material';
-import styled from '@emotion/styled';
-import PasswordForm from './section/PasswordForm';
-
 import { useCallback, useEffect, useState } from 'react';
-
 import { useSelector } from 'react-redux';
-
 //@mui
-import { Container, Box } from '@mui/material';
-import styled from '@emotion/styled';
+import { Container, Box, ListItem, ListItemIcon, Tab } from '@mui/material';
+
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useTheme } from '@mui/material';
+import styled from '@emotion/styled';
 //motion
 import { motion, useIsPresent } from 'framer-motion';
 import "./transition.css"
 //hooks & utils
 import { axiosPrivateInstance } from '../../../api/axios';
 import useResponsive from '../../../hooks/useReponsive';
+import SvgColor from '../../../components/svg-color/SvgColor';
 //sections
 import ProfileForm from './section/ProfileForm';
+import PasswordForm from './section/PasswordForm';
 
-
-// ==============States TabList=================
-
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 
 
 const StyledSection = styled('div')(({ theme }) => ({
@@ -43,26 +30,49 @@ const StyledSection = styled('div')(({ theme }) => ({
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex',
-    position: 'relative'
+    position: 'relative',
+    minHeight: '100vh',
   },
 }));
 
+
+export const StyledNavItemIcon = styled(ListItemIcon)({
+  width: 22,
+  height: 22,
+  color: 'inherit',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+// export const StyledNavItem = styled(ListItem){
+
+// }
+
+
+const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
+
+
 const ProfilePage = () => {
 
+  const [value, setValue] = useState('1');
+  const [user, setUser] = useState([]);
+
+  //store
+  const isDarkMode = useSelector(state => state.user.isDarkMode)
+
+  //hooks
   const mdUp = useResponsive('up', 'md');
   const isPresent = useIsPresent();
   const theme = useTheme();
 
   // ==============States TabList=================
 
-  const [value, setValue] = React.useState('1');
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const isDarkMode = useSelector(state => state.user.isDarkMode)
   // ==============States API=================
-  const [user, setUser] = useState([]);
 
   //fetching user details
   const getUser = useCallback(async () => {
@@ -80,9 +90,7 @@ const ProfilePage = () => {
 
   return (
 
-
     <StyledRoot>
-
       {mdUp && (
         <StyledSection>
           <motion.div
@@ -98,30 +106,40 @@ const ProfilePage = () => {
       )}
 
       <Container maxWidth="md">
-
         <motion.div
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.5 }}
         >
-         <Box sx={{ width: '100%', typography: 'body1' }}>
-          <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <TabList onChange={handleChange}>
-                <Tab label="Général" value="1" />
-                <Tab label="Mot de passe" value="2" />
-              </TabList>
-            </Box>
-            <TabPanel value="1">
-              <ProfileForm profile={user} />
-            </TabPanel>
-            <TabPanel value="2">
-              <PasswordForm profile={user} />
-            </TabPanel>
-          </TabContext>
-        </Box>
+          <Box sx={{ width: '100%', typography: 'body1' }}>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList onChange={handleChange}>
+                  <Tab label={
+                    <ListItem alignItems='center'>
+                      <StyledNavItemIcon>{icon('ic_user')}</StyledNavItemIcon>
+                      Général
+                    </ListItem>
+                  }
+                    value="1"
+                  />
+                  <Tab label={
+                    <ListItem alignItems='center'>
+                      <StyledNavItemIcon>{icon('ic_lock')}</StyledNavItemIcon>
+                      Mot de passe
+                    </ListItem>
+                  } value="2" />
+                </TabList>
+              </Box>
+              <TabPanel value="1">
+                <ProfileForm profile={user} />
+              </TabPanel>
+              <TabPanel value="2">
+                <PasswordForm />
+              </TabPanel>
+            </TabContext>
+          </Box>
         </motion.div>
-
       </Container>
       <motion.div
         initial={{ scaleY: 1, opacity: 1 }}
@@ -133,12 +151,7 @@ const ProfilePage = () => {
         }}
         className="privacy-screen"
       />
-
-
-
     </StyledRoot>
-
-
   );
 };
 

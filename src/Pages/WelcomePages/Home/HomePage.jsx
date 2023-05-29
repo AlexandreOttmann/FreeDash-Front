@@ -102,9 +102,7 @@ export default function HomePage() {
                   margin: "auto"
                 }}
               >
-
                 <img src={dashboard} alt="Dashboard preview" />
-
               </Grid>
 
               <Grid item
@@ -144,34 +142,8 @@ export default function HomePage() {
                   margin: "auto"
                 }}
               >
-
                 <img src={dashboard2} alt="Dashboard preview" />
-
               </Grid>
-              <Grid item
-                xs={12}
-                sm={6}
-                md={6}
-                sx={{
-                  width: "100%",
-                  margin: "auto"
-                }}
-              >
-                <Card
-                  sx={{
-                    py: 2,
-                    paddingX: 3,
-                    bgcolor: (theme) => theme.palette['warning'].main,
-                    minHeight: '100%',
-                    minWidth: '100%',
-                    color: 'white'
-                  }}>
-                  <Typography variant="h5">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis facere placeat nobis doloremque recusandae fuga ut animi tenetur at saepe.
-                  </Typography>
-                </Card>
-              </Grid>
-
             </Grid>
           </Container>
         </Container>

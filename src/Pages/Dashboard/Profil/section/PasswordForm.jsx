@@ -1,50 +1,61 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { axiosPrivateInstance } from '../../../../api/axios';
 
-import { Container, Typography, Divider, Stack, Button, Card, TextField } from '@mui/material';
-
-export default function PasswordForm({ profile }) {
+import { Container, Typography, Divider, Stack, Button, Card, TextField, IconButton, InputAdornment } from '@mui/material';
 
 
-  const [currentPassword, setCurrentPassword] = useState(profile?.password || '');
-  const [newPassword, setNewPassword] = useState(profile?.password || '');
-  const [confirmPassword, setConfirmPassword] = useState(profile?.password || '');
+import Iconify from '../../../../components/iconify/Iconify';
+
+export default function PasswordForm() {
+
+  //Password regex
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-_.!@#$%]).{8,24}$/;
+
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleEditPassword = async () => {
-    setLoading(true)
-    try {
-      const response = await axiosPrivateInstance.patch(`/user`, {
-        currentPassword,
-        newPassword,
-        confirmPassword,
-      })
-      console.log(response.data)
-      setSuccess('Votre mot de passe a bien été modifié')
-      setLoading(false)
-      window.location.reload();
 
-    } catch (error) {
-      console.log(error)
-      setError('Une erreur est survenue')
-      setLoading(false)
+  const [testPassword, setTestPassword] = useState(false)
+
+  const handleEditPassword = async (e) => {
+    e.preventDefault()
+    if (PWD_REGEX.test(newPassword)) {
+      setTestPassword(true)
+      if (newPassword !== confirmPassword) {
+        setError('Les mots de passe ne correspondent pas')
+        return
+      } else {
+        setLoading(true)
+        try {
+          const response = await axiosPrivateInstance.patch(`/user`, {
+            currentPassword,
+            confirmPassword,
+          })
+          setSuccess('Votre mot de passe a bien été modifié')
+          setLoading(false)
+        } catch (error) {
+          console.log(error)
+          setError('Une erreur est survenue')
+          setLoading(false)
+        }
+      }
+    } else {
+      setTestPassword(false)
+      setError('Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial')
     }
   }
-
-  useEffect(() => {
-    setNewPassword('')
-    setConfirmPassword('')
-  }, [profile])
-
 
   return (
     <>
       <Container maxWidth="md">
-
         <Card sx={{ p: 3, mb: 3 }}>
           <Typography variant="h6" gutterBottom>
             Modification de mon mot de passe
@@ -56,7 +67,18 @@ export default function PasswordForm({ profile }) {
               fullWidth
               label="Mot de passe actuel"
               value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
               variant="outlined"
+              type={showPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                      <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Stack>
 
@@ -67,6 +89,8 @@ export default function PasswordForm({ profile }) {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               variant="outlined"
+              type={showPassword ? "text" : "password"}
+
             />
           </Stack>
 
@@ -77,12 +101,13 @@ export default function PasswordForm({ profile }) {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               variant="outlined"
+              type={showPassword ? "text" : "password"}
             />
           </Stack>
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              {error && 'erreur'}
+            <Typography variant="caption" color="error" gutterBottom>
+              {error ? error : ''}
             </Typography>
             <Typography variant="h6" gutterBottom>
               {success && 'success'}
@@ -90,14 +115,13 @@ export default function PasswordForm({ profile }) {
           </Stack>
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              {loading && 'loading'}
+            <Typography variant="caption" gutterBottom>
+              {loading && 'Chargement...'}
             </Typography>
           </Stack>
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
             <Button
-
               variant="contained"
               color="primary"
               onClick={handleEditPassword}
