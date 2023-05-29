@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box } from '@mui/material';
 
-import illustration from '/src/assets/illustrations/404_illustration.png';
+import illustration from '/assets/illustrations/404_illustration.png';
 
 // ----------------------------------------------------------------------
 

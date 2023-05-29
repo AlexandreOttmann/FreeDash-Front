@@ -13,11 +13,11 @@ export default function ProfileForm({ profile }) {
   const [email, setEmail] = useState(profile?.email || '')
   const [phoneNumber, setPhoneNumber] = useState(profile?.phoneNumber || '')
   const [address, setAddress] = useState(profile?.address || '')
-  const [zipCode, setZipCode] = useState(profile?.zipCode || '')
+  const [zipCode, setZipCode] = useState(profile?.zipCode || 0)
   const [city, setCity] = useState(profile?.city || '')
   const [country, setCountry] = useState(profile?.country || '')
   const [occupation, setOccupation] = useState(profile?.occupation || '')
-  const [siret, setSiret] = useState(profile?.siret || '')
+  const [siret, setSiret] = useState(profile?.siret || 0)
   const [iban, setIban] = useState(profile?.iban || '')
   const [bic, setBic] = useState(profile?.bic || '')
   const [error, setError] = useState('')
@@ -58,15 +58,15 @@ export default function ProfileForm({ profile }) {
     setFirstName(profile?.firstName || '')
     setLastName(profile?.lastName || '')
     setEmail(profile?.email || '')
-    setPhoneNumber(profile?.phoneNumber || 0)
+    setPhoneNumber(profile?.phoneNumber || '')
     setAddress(profile?.address || '')
-    setZipCode(profile?.zipCode || '')
+    setZipCode(profile?.zipCode || 0)
     setCity(profile?.city || '')
     setCountry(profile?.country || '')
     setOccupation(profile?.occupation || '')
     setIban(profile?.iban || '')
     setBic(profile?.bic || '')
-    setSiret(profile?.siret || '')
+    setSiret(profile?.siret || 0)
 
   }, [profile])
 
@@ -125,6 +125,7 @@ export default function ProfileForm({ profile }) {
             />
             <TextField
               fullWidth
+              type='number'
               label="Code postal"
               value={zipCode}
               onChange={(e) => setZipCode(e.target.value)}
@@ -161,6 +162,7 @@ export default function ProfileForm({ profile }) {
 
             <TextField
               fullWidth
+              type='number'
               label="Siret"
               value={siret}
               onChange={(e) => setSiret(e.target.value)}
@@ -185,6 +187,9 @@ export default function ProfileForm({ profile }) {
             />
           </Stack>
 
+          <Typography variant="caption" gutterBottom color={"error"}>
+            Ces informations servent uniquement à pouvoir remplir la facture de votre client lors de son émission.
+          </Typography>
 
 
 

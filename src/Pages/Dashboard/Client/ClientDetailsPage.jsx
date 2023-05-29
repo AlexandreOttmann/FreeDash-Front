@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { useCallback, useEffect, useState, forwardRef } from 'react';
-
 //hooks
 import { axiosPrivateInstance } from '../../../api/axios';
 
@@ -28,7 +27,8 @@ import DetailsSection from './section/DetailsSection';
 import ClientListMission from './section/ClientListMission';
 import ClientCommentary from './section/ClientCommentary';
 
-
+//components
+import MotionSection from '../../../sections/@dashboard/user/MotionSection';
 // ----------------------------------------------------------------------
 
 //Handle slide up transition
@@ -128,29 +128,31 @@ export default function ClientDetailsPage() {
       {client.length != 0 ? (
         <>
           <Container>
-          <Typography variant="h4" gutterBottom>
-            Détails du client
-          </Typography>
+            <MotionSection delayTime={0.3}>
+              <Typography variant="h4" gutterBottom>
+                Détails du client
+              </Typography>
 
-            <DetailsSection client={client} missionsNumber={missionsNumber} totalGain={totalGain} />
-            <ClientCommentary client={client} />
+              <DetailsSection client={client} missionsNumber={missionsNumber} totalGain={totalGain} />
+              <ClientCommentary client={client} />
 
-            {/* Check if there is mission with this client */}
-            {missions.length == 0 ? (
-              <>
-                <Typography variant="h4" sx={{ my: 5 }} align="center">Vous n'avez pas encore de mission avec ce client</Typography>
-                <Link to='/dashboard/newmission'><Typography variant='body1' align="center">Voulez-vous ajouter une première mission ?</Typography></Link>
-              </>
-            ) : (
-              <ClientListMission missions={missions} />
-            )}
+              {/* Check if there is mission with this client */}
+              {missions.length == 0 ? (
+                <>
+                  <Typography variant="h4" sx={{ my: 5 }} align="center">Vous n'avez pas encore de mission avec ce client</Typography>
+                  <Link to='/dashboard/newmission'><Typography variant='body1' align="center">Voulez-vous ajouter une première mission ?</Typography></Link>
+                </>
+              ) : (
+                <ClientListMission missions={missions} />
+              )}
 
-            {/* Delete client button */}
-            <StyledInfo>
-              <Button variant="contained"
-                onClick={handleDeleteClickOpen}
-              >Supprimer le client</Button>
-            </StyledInfo>
+              {/* Delete client button */}
+              <StyledInfo>
+                <Button variant="outlined" color="error"
+                  onClick={handleDeleteClickOpen}
+                >Supprimer le client</Button>
+              </StyledInfo>
+            </MotionSection>
           </Container>
 
           {/* Modal for deletion confirmation */}
@@ -178,7 +180,9 @@ export default function ClientDetailsPage() {
           </Dialog>
         </>
       ) : (
-        <Typography variant="h4" sx={{ my: 5 }} align="center">Aucun client correspondant...</Typography>
+        <MotionSection delayTime={0.3}>
+          <Typography variant="h4" sx={{ my: 5 }} align="center">Aucun client correspondant...</Typography>
+        </MotionSection >
       )}
     </>
   );

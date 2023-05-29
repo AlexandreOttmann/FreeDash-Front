@@ -84,10 +84,10 @@ export default function ClientCard({ client, index }) {
               />
               <StyledAvatar
                 alt={firstName}
-                src={`/src/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
+                src={`/assets/images/avatars/avatar_${Math.floor(Math.random() * 23 + 1)}.jpg`}
               />
 
-              <StyledCover alt={firstName} src={`/src/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
+              <StyledCover alt={firstName} src={`/assets/images/covers/cover_${Math.floor(Math.random() * 23 + 1)}.jpg`} />
             </StyledCardMedia>
 
 

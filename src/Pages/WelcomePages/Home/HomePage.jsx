@@ -4,8 +4,8 @@ import { Grid, Card, Container, Typography, Button } from '@mui/material';
 import Iconify from '../../../components/iconify/Iconify';
 
 // Images
-import dashboard from '/src/assets/illustrations/dashboard_illustration.png'
-import dashboard2 from '/src/assets/illustrations/like_illustration.png'
+import dashboard from '/assets/illustrations/dashboard_illustration.png'
+import dashboard2 from '/assets/illustrations/like_illustration.png'
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ export default function HomePage() {
           width: '200vw',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          backgroundImage: `url(${'/src/assets/illustrations/herosection2.png'})`,
+          backgroundImage: `url(${'/assets/illustrations/herosection2.png'})`,
           filter: 'blur(5px)',
         }}
           maxWidth="xl" />

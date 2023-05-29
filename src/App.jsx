@@ -17,7 +17,6 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <ThemeProvider>
-
             <StyledChart />
             <Router />
           </ThemeProvider>

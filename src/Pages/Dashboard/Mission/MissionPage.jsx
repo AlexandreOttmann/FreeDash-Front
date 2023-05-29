@@ -210,10 +210,10 @@ export default function MissionPage() {
           </Button>
         </Stack>
         {missions.length === 0 ? (
-          <>
+          <MotionSection delayTime={0.3}>
             <Typography variant="h4" sx={{ my: 5 }} align="center">Vous n'avez pas encore ajouté de mission</Typography>
             <Link to='/dashboard/newmission'><Typography variant='body1' align="center">Voulez-vous ajouter une première mission ?</Typography></Link>
-          </>
+          </MotionSection>
         ) : (
 
           <Card >
@@ -355,17 +355,17 @@ export default function MissionPage() {
           },
         }}
       >
-        <MenuItem>
-          <Button sx={{ color: 'warning.main' }}>
-            <Link to={`/dashboard/mission/${idToDelete}`}>
+        <Link to={`/dashboard/mission/${idToDelete}`}>
+          <MenuItem>
+            <Button sx={{ color: 'warning.main' }}>
               <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
               Edit
-            </Link>
-          </Button>
-        </MenuItem>
+            </Button>
+          </MenuItem>
+        </Link>
 
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Button onClick={handleDeleteMissionClickOpen} sx={{ color: 'error.main' }}>
+        <MenuItem sx={{ color: 'error.main' }} onClick={handleDeleteMissionClickOpen}>
+          <Button sx={{ color: 'error.main' }}>
             <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
             Delete
           </Button>

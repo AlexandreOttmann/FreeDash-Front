@@ -70,7 +70,7 @@ function ClientItem({ client, index }) {
   return (
     <Stack direction="row" alignItems="center" spacing={2} key={index}>
 
-      <Box component="img" alt={name} src={`/src/assets/images/avatars/avatar_${Math.floor(Math.random() * (24 - 1) + 1)
+      <Box component="img" alt={name} src={`/assets/images/avatars/avatar_${Math.floor(Math.random() * (24 - 1) + 1)
         }.jpg`} sx={{ width: 48, height: 48, borderRadius: 10, flexShrink: 0 }} />
 
       <Box sx={{ flexGrow: 1, minWidth: '100px' }}>
