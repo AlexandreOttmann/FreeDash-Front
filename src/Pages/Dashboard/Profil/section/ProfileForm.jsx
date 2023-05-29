@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
-import { axiosPrivateInstance } from '../../../../api/axios';
+import { useState, useEffect, forwardRef } from 'react';
+
+import { useNavigate } from 'react-router';
 
 import { Container, Typography, Divider, Stack, Button, Card, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
 
+import { axiosPrivateInstance } from '../../../../api/axios';
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function ProfileForm({ profile }) {
-
 
   const [firstName, setFirstName] = useState(profile?.firstName || '')
   const [lastName, setLastName] = useState(profile?.lastName || '')
@@ -23,6 +28,30 @@ export default function ProfileForm({ profile }) {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
+
+
+  const [openUserDelete, setOpenUserDelete] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleDeleteUserClickOpen = () => {
+    setOpenUserDelete(true);
+  };
+
+  const handleCloseUserDelete = () => {
+    setOpenUserDelete(false);
+  };
+
+  const handleUserDelete = async () => {
+    try {
+      await axiosPrivateInstance.delete(`/user`);
+      localStorage.removeItem('jwt');
+      navigate('/register', { replace: true });
+    } catch (error) {
+      console.log("La mission n'a pas pu être supprimée", error);
+    }
+  };
+
 
   const handleEditUser = async () => {
     setLoading(true)
@@ -213,7 +242,7 @@ export default function ProfileForm({ profile }) {
 
 
 
-          <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
+          <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'} sx={{ mb: 3 }}>
             <Button
 
               variant="contained"
@@ -222,11 +251,42 @@ export default function ProfileForm({ profile }) {
             >
               Modifier
             </Button>
+            <Button
+
+              variant="outlined"
+              color="error"
+              onClick={handleDeleteUserClickOpen}
+            >
+              Supprimer le compte
+            </Button>
           </Stack>
         </Card>
 
 
       </Container >
+
+      <Dialog
+        open={openUserDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseUserDelete}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle color="error">{"Supprimer le compte"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description" >
+            Êtes-vous sûr de vouloir supprimer votre compte ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseUserDelete} color="success">
+            Annuler
+          </Button>
+          <Button onClick={handleUserDelete} color="error">
+            Supprimer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

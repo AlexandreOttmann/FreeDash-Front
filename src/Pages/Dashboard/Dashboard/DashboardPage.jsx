@@ -57,7 +57,6 @@ export default function DashboardPage() {
 
   const handleRevenueNotDeclared = (missions) => {
     const notDeclaredMissions = missions.filter(mission => !mission.declarate)
-    console.log('LES MISSIONS', notDeclaredMissions)
     const revenueNotDeclared = notDeclaredMissions.reduce((acc, mission) => acc + +mission.totalPrice, 0)
     return revenueNotDeclared
   }
@@ -108,23 +107,19 @@ export default function DashboardPage() {
       const totalRevenue = filteredMissions
         .filter(mission => dayjs(mission.endDate).isSame(currentMonth, 'month')) // Filtrer les missions avec une endDate dans le mois courant
         .reduce((total, mission) => total + +mission.totalPrice, revenueArray[i - 1]); // Calculer la somme en tenant compte de la valeur précédente
-
       revenueArray.push(totalRevenue);
     }
-    console.log('REVENUEARRAY', revenueArray)
     return revenueArray;
   }
 
   const lastElevenMonths = () => {
     const dates = [];
     const today = new Date();
-
     for (let i = 10; i >= 0; i--) {
       const month = new Date(today.getFullYear(), today.getMonth() - i);
       const formattedDate = `${(month.getMonth() + 1).toString().padStart(2, '0')}/${month.getDate().toString().padStart(2, '0')}/${month.getFullYear()}`;
       dates.push(formattedDate);
     }
-
     return dates
   }
 
@@ -154,8 +149,6 @@ export default function DashboardPage() {
         monthlyRevenue[monthIndex] += +mission.totalPrice / totalMonths;
       }
     });
-
-    console.log('monthlyRevenue', monthlyRevenue);
     return monthlyRevenue.reverse();
   };
 
@@ -203,7 +196,6 @@ export default function DashboardPage() {
       setTotalRevenueDeclared(revenueDeclaredFromApi)
 
       const topClientsFromApi = handleTopClients(response.data)
-      console.log('TOP CLIENT', topClientsFromApi)
       setTopClients(topClientsFromApi)
 
       const revenueEvolutionFromApi = handleRevenueEvolution(response.data)

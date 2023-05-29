@@ -105,7 +105,6 @@ export default function MissionDetailsPage() {
     setLoading(true)
     try {
       const response = await axiosPrivateInstance.get(`/mission/${idmission}`)
-
       setMission(response.data)
       setLoading(false)
     } catch (error) {
