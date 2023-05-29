@@ -27,30 +27,31 @@ export default function PasswordForm() {
 
   const handleEditPassword = async (e) => {
     e.preventDefault()
-    if (PWD_REGEX.test(newPassword)) {
-      setTestPassword(true)
-      if (newPassword !== confirmPassword) {
-        setError('Les mots de passe ne correspondent pas')
-        return
-      } else {
-        setLoading(true)
-        try {
-          const response = await axiosPrivateInstance.patch(`/user`, {
-            currentPassword,
-            confirmPassword,
-          })
-          setSuccess('Votre mot de passe a bien été modifié')
-          setLoading(false)
-        } catch (error) {
-          console.log(error)
-          setError('Une erreur est survenue')
-          setLoading(false)
-        }
-      }
-    } else {
-      setTestPassword(false)
-      setError('Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial')
-    }
+    setError('Fonction désactivée pour le moment')
+    // if (PWD_REGEX.test(newPassword)) {
+    //   setTestPassword(true)
+    //   if (newPassword !== confirmPassword) {
+    //     setError('Les mots de passe ne correspondent pas')
+    //     return
+    //   } else {
+    //     setLoading(true)
+    //     try {
+    //       const response = await axiosPrivateInstance.patch(`/user`, {
+    //         currentPassword,
+    //         confirmPassword,
+    //       })
+    //       setSuccess('Votre mot de passe a bien été modifié')
+    //       setLoading(false)
+    //     } catch (error) {
+    //       console.log(error)
+    //       setError('Une erreur est survenue')
+    //       setLoading(false)
+    //     }
+    //   }
+    // } else {
+    //   setTestPassword(false)
+    //   setError('Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial')
+    // }
   }
 
   return (
