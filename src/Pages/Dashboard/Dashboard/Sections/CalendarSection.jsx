@@ -7,14 +7,12 @@ export default function CalendarSection() {
   return (
     <Card>
       <CardHeader title={"Votre agenda"} subheader={"sur le mois en cours"} />
-
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar sx={{
           minHeight: 250,
           maxHeight: 300,
         }} />
       </LocalizationProvider>
-
     </Card>
   )
 }
