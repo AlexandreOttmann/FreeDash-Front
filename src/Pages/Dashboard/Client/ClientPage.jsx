@@ -24,7 +24,6 @@ export default function ClientsPage() {
     try {
       const response = await axiosPrivateInstance.get(`/clients`);
       setClients(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

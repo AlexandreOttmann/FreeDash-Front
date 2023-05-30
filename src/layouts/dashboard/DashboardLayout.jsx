@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-//store
-import { useDispatch, useSelector } from 'react-redux';
-import { retrieveUserData } from '../../store/reducers/user';
+
 //Component
 import Navbar from '../navbar/index';
 import Sidebar from '../sidebar/index';

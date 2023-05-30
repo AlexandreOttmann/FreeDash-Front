@@ -78,7 +78,6 @@ export default function MissionPage() {
   const getMissions = useCallback(async () => {
     try {
       const response = await axiosPrivateInstance.get(`/mission`);
-      console.log(response.data)
       setMissions(response.data);
     } catch (error) {
       console.log(error);
@@ -329,6 +328,7 @@ export default function MissionPage() {
               </Scrollbar>
 
               <TablePagination
+                labelRowsPerPage={"Résultats par page"}
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
                 count={missions.length}

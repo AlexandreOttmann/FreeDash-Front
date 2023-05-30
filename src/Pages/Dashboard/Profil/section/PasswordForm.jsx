@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { axiosPrivateInstance } from '../../../../api/axios';
 
 import { Container, Typography, Divider, Stack, Button, Card, TextField, IconButton, InputAdornment } from '@mui/material';
 
 
 import Iconify from '../../../../components/iconify/Iconify';
+import { set } from 'lodash';
+import { color } from 'framer-motion';
 
-export default function PasswordForm() {
+export default function PasswordForm({ EmailCheck }) {
 
   //Password regex
   const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-_.!@#$%]).{8,24}$/;
@@ -22,37 +24,58 @@ export default function PasswordForm() {
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
-
+  const [EmailChecking, setEmailChecking] = useState(false)
   const [testPassword, setTestPassword] = useState(false)
+
 
   const handleEditPassword = async (e) => {
     e.preventDefault()
-    setError('Fonction désactivée pour le moment')
-    // if (PWD_REGEX.test(newPassword)) {
-    //   setTestPassword(true)
-    //   if (newPassword !== confirmPassword) {
-    //     setError('Les mots de passe ne correspondent pas')
-    //     return
-    //   } else {
-    //     setLoading(true)
-    //     try {
-    //       const response = await axiosPrivateInstance.patch(`/user`, {
-    //         currentPassword,
-    //         confirmPassword,
-    //       })
-    //       setSuccess('Votre mot de passe a bien été modifié')
-    //       setLoading(false)
-    //     } catch (error) {
-    //       console.log(error)
-    //       setError('Une erreur est survenue')
-    //       setLoading(false)
-    //     }
-    //   }
-    // } else {
-    //   setTestPassword(false)
-    //   setError('Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial')
-    // }
+    // setError('Fonction désactivée pour le moment')
+    if (PWD_REGEX.test(newPassword)) {
+      setTestPassword(true)
+      if (newPassword !== confirmPassword) {
+        setError('Les mots de passe ne correspondent pas')
+        return
+      } else if (newPassword === currentPassword) {
+        setError('Votre nouveau mot de passe doit être différent de l\'ancien')
+        return
+      }
+      else if (newPassword === '' || confirmPassword === '') {
+        setError('Veuillez remplir tous les champs')
+        return
+      }
+      else {
+        setLoading(true)
+        try {
+          const response = await axiosPrivateInstance.patch(`/updatepassword`, {
+            currentPassword,
+            confirmPassword,
+          })
+          setError('')
+          setCurrentPassword('')
+          setNewPassword('')
+          setConfirmPassword('')
+          setSuccess('Votre mot de passe a bien été modifié')
+          setLoading(false)
+        } catch (error) {
+          console.log(error)
+          setError('Une erreur est survenue')
+          setLoading(false)
+        }
+      }
+    } else {
+      setTestPassword(false)
+      setError('Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial')
+    }
   }
+
+  useEffect(() => {
+    setEmailChecking(EmailCheck === "ottmann.alex@gmail.com")
+    if (EmailChecking &&
+      setError('Vous ne pouvez pas modifier le compte de démo')
+    )
+      return
+  }, [EmailChecking])
 
   return (
     <>
@@ -65,6 +88,7 @@ export default function PasswordForm() {
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
             <TextField
+              disabled={EmailChecking}
               fullWidth
               label="Mot de passe actuel"
               value={currentPassword}
@@ -107,22 +131,27 @@ export default function PasswordForm() {
           </Stack>
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-            <Typography variant="caption" color="error" gutterBottom>
+            <Typography variant="body2" color="error" gutterBottom>
               {error ? error : ''}
             </Typography>
-            <Typography variant="h6" gutterBottom>
-              {success && 'success'}
+            <Typography variant="body2" color={
+              theme => theme.palette.success.main
+            } gutterBottom>
+              {success ? success : ''}
             </Typography>
           </Stack>
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-            <Typography variant="caption" gutterBottom>
+            <Typography variant="caption" gutterBottom color={
+              theme => theme.palette.warning.main
+            }>
               {loading && 'Chargement...'}
             </Typography>
           </Stack>
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
             <Button
+              disabled={EmailChecking}
               variant="contained"
               color="primary"
               onClick={handleEditPassword}

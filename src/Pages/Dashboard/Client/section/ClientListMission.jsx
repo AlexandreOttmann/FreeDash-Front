@@ -248,6 +248,7 @@ export default function ClientListMission({ missions, index }) {
         </Scrollbar>
 
         <TablePagination
+          labelRowsPerPage={"Résultats par page"}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={missions.length}

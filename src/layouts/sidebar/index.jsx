@@ -42,7 +42,7 @@ export default function Sidebar({ openSide, onCloseSide }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
-  useEffect
+
 
   const dispatch = useDispatch()
 

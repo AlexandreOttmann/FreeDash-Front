@@ -135,7 +135,7 @@ const ProfilePage = () => {
                 <ProfileForm profile={user} />
               </TabPanel>
               <TabPanel value="2">
-                <PasswordForm />
+                <PasswordForm EmailCheck={user?.email} />
               </TabPanel>
             </TabContext>
           </Box>

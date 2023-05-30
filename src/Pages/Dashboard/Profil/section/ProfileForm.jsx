@@ -61,6 +61,7 @@ export default function ProfileForm({ profile }) {
 
 
   const handleEditUser = async () => {
+
     setLoading(true)
     try {
       const response = await axiosPrivateInstance.patch(`/user`, {
@@ -228,22 +229,17 @@ export default function ProfileForm({ profile }) {
           </Typography>
 
 
-
-
+          <Typography variant="h6" gutterBottom color={theme => theme.palette['warning'].main}>
+            {error ? error : ''}
+          </Typography>
+          <Typography variant="h6" gutterBottom textAlign={'left'} color={theme => theme.palette['primary'].main}>
+            {success && 'Modifications enregistrées'}
+          </Typography>
 
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-            <Typography variant="h6" gutterBottom align='center'>
-              {error ? error : ''}
-            </Typography>
             <Typography variant="h6" gutterBottom>
-              {success && 'success'}
-            </Typography>
-          </Stack>
-
-          <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              {loading && 'loading'}
+              {loading && 'Chargement...'}
             </Typography>
           </Stack>
 
