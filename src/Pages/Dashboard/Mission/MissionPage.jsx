@@ -116,6 +116,11 @@ export default function MissionPage() {
     setOpen(null);
   };
 
+  //! A RETIRER QUAND LA FONCTION SERA FAITE
+  const handleGeneratePdf = async () => {
+    const idMission = idToDelete
+  }
+
 
   //  Handle opening modale for delete
   const handleDeleteMissionClickOpen = () => {
@@ -345,8 +350,8 @@ export default function MissionPage() {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
           sx: {
-            p: 1,
-            width: 140,
+            p: 1.5,
+            width: 170,
             '& .MuiMenuItem-root': {
               px: 1,
               typography: 'body2',
@@ -355,11 +360,19 @@ export default function MissionPage() {
           },
         }}
       >
+        {/* //! FONCTION CREER LE PDF  */}
+        <MenuItem sx={{ color: 'error.main' }} onClick={handleGeneratePdf}>
+          <Button sx={{ color: 'error.main' }}>
+            <Iconify icon={'eva:file-add-outline'} sx={{ mr: 2 }} />
+            Générer Pdf
+          </Button>
+        </MenuItem>
+
         <Link to={`/dashboard/mission/${idToDelete}`}>
           <MenuItem>
             <Button sx={{ color: 'warning.main' }}>
               <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-              Edit
+              Modifier
             </Button>
           </MenuItem>
         </Link>
@@ -367,9 +380,11 @@ export default function MissionPage() {
         <MenuItem sx={{ color: 'error.main' }} onClick={handleDeleteMissionClickOpen}>
           <Button sx={{ color: 'error.main' }}>
             <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-            Delete
+            Supprimer
           </Button>
         </MenuItem>
+
+
       </Popover>
       {/* DELETE MODALE */}
       <Dialog

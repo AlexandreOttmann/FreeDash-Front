@@ -44,7 +44,8 @@ export default function ProfileForm({ profile }) {
 
   const handleUserDelete = async () => {
     if (email === "ottmann.alex@gmail.com") {
-      setError('Vous ne pouvez pas supprimer ce compte')
+      setError('Vous ne pouvez pas supprimer ce compte petit malin')
+      handleCloseUserDelete()
       return
     } else {
 
@@ -76,7 +77,6 @@ export default function ProfileForm({ profile }) {
         iban,
         bic
       })
-      console.log(response.data)
       setSuccess('Votre profil a bien été modifié')
       setLoading(false)
       window.location.reload();
@@ -136,6 +136,7 @@ export default function ProfileForm({ profile }) {
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
             <TextField
               fullWidth
+              disabled={email === "ottmann.alex@gmail.com"}
               label="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -232,8 +233,8 @@ export default function ProfileForm({ profile }) {
 
 
           <Stack spacing={3} direction={{ xs: 'column', md: 'row' }} sx={{ mb: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              {error && 'erreur'}
+            <Typography variant="h6" gutterBottom align='center'>
+              {error ? error : ''}
             </Typography>
             <Typography variant="h6" gutterBottom>
               {success && 'success'}
