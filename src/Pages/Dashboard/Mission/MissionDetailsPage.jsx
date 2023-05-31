@@ -16,7 +16,7 @@ import SvgColor from "../../../components/svg-color/SvgColor";
 import Label from "../../../components/label/Label";
 import { fDatefr } from "../../../utils/formatTime";
 import MotionSection from "../../../sections/@dashboard/user/MotionSection";
-
+import GeneratePdf from "../../../components/generatePdf/GeneratePdf";
 //Handle slide up transition
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -174,10 +174,13 @@ export default function MissionDetailsPage() {
                   <Typography variant="h6" gutterBottom >
                     {mission?.name}
                   </Typography>
-                  <Typography variant="h6" gutterBottom sx={{ zIndex: 10 }}>
-                    Client :
-                    <Link to={`/dashboard/client/${mission?.client_id}`}>{' '}{mission?.clientFirstName} {mission?.clientLastName}</Link>
-                  </Typography>
+                  <Stack direction={'column'} alignItems={'start'}>
+                    <Typography variant="h6" gutterBottom sx={{ zIndex: 10 }}>
+                      Client :
+                      <Link to={`/dashboard/client/${mission?.client_id}`}>{' '}{mission?.clientFirstName} {mission?.clientLastName}</Link>
+                    </Typography>
+                    <GeneratePdf missionId={idmission} isMissionList={false} />
+                  </Stack>
                 </Stack>
                 <Divider />
                 <Grid container spacing={2} sx={{ mt: 3 }}>

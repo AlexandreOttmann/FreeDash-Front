@@ -17,6 +17,7 @@ import Iconify from '../../../components/iconify';
 import Label from '../../../components/label'
 import MotionSection from '../../../sections/@dashboard/user/MotionSection';
 import { AnimatePresence, motion } from 'framer-motion';
+import GeneratePdf from '../../../components/generatePdf/GeneratePdf';
 //sections
 import { UserListHead, UserListToolbar } from '../../../sections/@dashboard/user';
 
@@ -360,13 +361,9 @@ export default function MissionPage() {
           },
         }}
       >
-        {/* //! FONCTION CREER LE PDF  */}
-        <MenuItem sx={{ color: 'error.main' }} onClick={handleGeneratePdf}>
-          <Button sx={{ color: 'error.main' }}>
-            <Iconify icon={'eva:file-add-outline'} sx={{ mr: 2 }} />
-            Générer Pdf
-          </Button>
-        </MenuItem>
+        {/* //! FONCTION TO CREATE PDF, Render a MenuItem */}
+        <GeneratePdf missionId={idToDelete} isMissionList={true} />
+
 
         <Link to={`/dashboard/mission/${idToDelete}`}>
           <MenuItem>
