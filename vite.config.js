@@ -4,4 +4,18 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    include: ['prettier'],
+  },
+  prettier: {
+    semi: true,
+    singleQuote: true,
+    jsxSingleQuote: true,
+    trailingComma: 'es5',
+  },
+  server: {
+    mimeTypes: {
+      jsx: 'text/javascript',
+    },
+  },
 })

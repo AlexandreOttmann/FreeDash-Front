@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import {Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 
 //Component
 import Navbar from '../navbar/index';
 import Sidebar from '../sidebar/index';
-import Footer from '../footer/index';
+
 //@mui
 import { styled } from '@mui/material/styles';
+
+//utils
+import isLogged from '../../utils/isLogged';
 
 //--------------------------
 
@@ -33,17 +36,20 @@ const Main = styled('div')(({ theme }) => ({
   },
 }));
 
-export default function DashboardLayout(){
- const [open, setOpen] = useState(false);
-return(
+
+export default function DashboardLayout() {
+  const [open, setOpen] = useState(false);
+
+  const user = isLogged()
+
+  return (
     <StyledRoot>
-      <Navbar onOpenNav={() => setOpen(true)}  isDashboard={true}/>
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={true} isLogged={user} />
       <Sidebar openSide={open} onCloseSide={() => setOpen(false)} />
-        <Main>
-          <Outlet/>
-        </Main>
-      {/* <Footer/> */}
-    
-  </StyledRoot>
+      <Main>
+        <Outlet />
+      </Main>
+    </StyledRoot>
   );
 }
+

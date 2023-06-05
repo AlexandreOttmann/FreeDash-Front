@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import useResponsive from '../../hooks/useReponsive';
-import {Outlet} from 'react-router-dom';
+
+import { Outlet } from 'react-router-dom';
 import Navbar from '../navbar/index';
-import Footer from '../footer/index';
+
 
 
 //@mui
 import { styled } from '@mui/material/styles';
 
+//utils
+import isLogged from '../../utils/isLogged';
 
 //--------------------------
 
@@ -33,18 +35,18 @@ const Main = styled('div')(({ theme }) => ({
   },
 }));
 
-export default function HomeLayout(){
+export default function HomeLayout() {
+
+  const user = isLogged()
 
 
-  
   const [open, setOpen] = useState(false);
-return(
+  return (
     <StyledRoot>
-        <Navbar onOpenNav={() => setOpen(true)}  isDashboard={false}/>
-          <Main>
-            <Outlet/>
-          </Main>
-        {/* <Footer/> */}
-  </StyledRoot>
+      <Navbar onOpenNav={() => setOpen(true)} isDashboard={false} isLogged={user} />
+      <Main>
+        <Outlet />
+      </Main>
+    </StyledRoot>
   );
 }

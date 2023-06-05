@@ -11,18 +11,25 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@lottiefiles/lottie-player": "^1.7.1",
+    "@mui/x-date-pickers": "^6.4.0",
     "@react-pdf/renderer": "^3.1.9",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
-    "framer-motion": "^10.12.7",
+    "change-case": "^4.1.2",
+    "dayjs": "^1.11.7",
+    "framer-motion": "^10.12.16",
     "jsonwebtoken": "^9.0.0",
+    "jspdf": "^2.5.1",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router": "^6.11.0",
+    "react-slick": "^0.29.0",
     "redux": "^4.2.1",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@emotion/react": "^11.10.6",

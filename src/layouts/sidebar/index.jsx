@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+
 //! @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
 //! mock
 import account from '../../_mock/account';
 //! hooks
 import useResponsive from '../../hooks/useReponsive';
+//! store
+import { useDispatch, useSelector } from 'react-redux';
+import { retrieveUserData } from '../../store/reducers/user';
 //! components
 import Logo from '../../components/logo';
 import Scrollbar from '../../components/scrollbar/Scrollbar';
@@ -35,19 +39,41 @@ Sidebar.propTypes = {
 };
 
 export default function Sidebar({ openSide, onCloseSide }) {
-  const  {pathname}  = useLocation();
+  const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
 
+
+  const dispatch = useDispatch()
+
+  const userData = useSelector((state) => state.user.userData)
+
   useEffect(() => {
- 
+    const fetchData = async () => {
+      try {
+        dispatch(retrieveUserData())
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (userData) {
+
+      fetchData();
+
+    }
+  }, [])
+
+  useEffect(() => {
+
     if (openSide) {
       onCloseSide();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },  [ pathname]);
+  }, [pathname]);
 
-  const renderContent = (    
+
+
+  const renderContent = (
     <Scrollbar
       sx={{
         height: 1,
@@ -59,53 +85,29 @@ export default function Sidebar({ openSide, onCloseSide }) {
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" href='/dashboard/profil'>
+        <Link underline="none" to='/dashboard/profil'>
           <StyledAccount>
             <Avatar src={account.photoURL} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {userData?.firstName + ' ' + userData?.lastName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                {userData?.occupation}
               </Typography>
             </Box>
           </StyledAccount>
         </Link>
       </Box>
-
-{/* items list, every link displayed on sidebar */}
+      {/* items list, every link displayed on sidebar */}
       <SideSection data={sideConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
 
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/assets/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          />
-
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography gutterBottom variant="h6">
-              Get more?
-            </Typography>
-
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              From only $69
-            </Typography>
-          </Box>
-
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
-            Upgrade to Pro
-          </Button>
-        </Stack>
-      </Box>
     </Scrollbar>
-    
+
   );
 
   return (

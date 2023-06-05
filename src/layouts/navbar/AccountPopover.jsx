@@ -10,6 +10,11 @@ import account from '../../_mock/account';
 
 const MENU_OPTIONS = [
   {
+    label: 'Dashboard',
+    icon: 'eva:settings-2-fill',
+    link: '/dashboard',
+  },
+  {
     label: 'Home',
     icon: 'eva:home-fill',
     link: '/',
@@ -17,18 +22,13 @@ const MENU_OPTIONS = [
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-      link: '/profil',
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-      link: '/dashboard',
+    link: '/dashboard/profil',
   },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function AccountPopover({ onLogoutClick, userData }) {
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
@@ -82,10 +82,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {userData?.firstName + ' ' + userData?.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {userData?.email}
           </Typography>
         </Box>
 
@@ -93,19 +93,18 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
-            <MenuItem 
-          
-            key={option.label} onClick={handleClose}>
-            <Link to={option.link} >
-              {option.label}
-          </Link> 
-            </MenuItem>
+            <Link to={option.link} key={option.label}  >
+              <MenuItem
+                onClick={handleClose}>
+                {option.label}
+              </MenuItem>
+            </Link>
           ))}
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={onLogoutClick} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </Popover>

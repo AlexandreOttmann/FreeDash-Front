@@ -26,7 +26,7 @@ export default function GlobalStyles() {
         '#root': {
           width: '100%',
           height: '100%',
-         
+
         },
         input: {
           '&[type=number]': {
@@ -50,6 +50,10 @@ export default function GlobalStyles() {
           margin: 0,
           padding: 0,
         },
+        a: {
+          color: '#5BE584',
+          textDecoration: 'none',
+        }
       }}
     />
   );

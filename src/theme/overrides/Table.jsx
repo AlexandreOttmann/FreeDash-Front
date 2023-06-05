@@ -5,7 +5,7 @@ export default function Table(theme) {
     MuiTableCell: {
       styleOverrides: {
         head: {
-          color: theme.palette.text.secondary,
+          color: theme.palette.text.primary,
           backgroundColor: theme.palette.background.neutral,
         },
       },
